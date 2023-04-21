@@ -19,3 +19,9 @@
     - 無料
     - 15k文字/1回
     - 参考：https://sig9.org/archives/2448
+
+## エラー関連
+
+- googletrans
+  - 最新バージョンでエラー
+    - 解決：https://qiita.com/_yushuu/items/83c51e29771530646659

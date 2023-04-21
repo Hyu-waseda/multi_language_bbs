@@ -29,3 +29,7 @@ pip install -r requirements.txt
 	```shell
 	pip freeze > requirements.txt
 	```
+
+## 参考サイト
+
+- Googletrans本家：https://pypi.org/project/googletrans/
