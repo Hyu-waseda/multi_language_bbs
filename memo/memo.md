@@ -1,21 +1,21 @@
-# 研究内容(仮)
+# メモ
 
-先輩の卒論の動画内の英語テキスト自動翻訳が面白そうだった
+## 翻訳API（Deepl vs Google翻訳）
 
-- ツール系？
-- 開発
-- あわよくばWebサービス化
+- [Deepl API](https://chigusa-web.com/blog/deepl-api/)
 
-- エディっクス
-- 英語で授業
-- 日本語のまま英語の授業と言い張る
-- moodleを多言語化する
-- 自分の書き込みが何語で書いても自分の母語で見える
-- GoogleやDeeplのエンジン
-- 掲示板　ディスカッションボード　多言語化
-- 掲示板のエンジン
-- GoogleのAPIかませる
-- 夏頃に公開
+  - 無料版
+    - 1ヶ月に50万文字まで翻訳が可能
+    - 通常のDeeplが使えなくなる（ログアウトすればok）
 
-- 閲覧履歴
-  - 人に見られたくないものを自動削除
+  - 有料版
+    - 制限なし（有料）
+    - 優先的に翻訳
+    - 基本料金630円 + ご利用文字数分の料金（1文字あたり0.0025円）
+
+- Google 翻訳
+  - [Google API](https://translate.google.co.jp/about/forbusiness.html)とpythonのライブラリ[googletrans](https://pypi.org/project/googletrans/)がある
+  - googletransを使う
+    - 無料
+    - 15k文字/1回
+    - 参考：https://sig9.org/archives/2448
