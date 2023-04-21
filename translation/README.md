@@ -30,6 +30,11 @@ pip install -r requirements.txt
 	pip freeze > requirements.txt
 	```
 
+  - 指定できる言語：iso639-1 language codes
+    - https://ja.wikipedia.org/wiki/ISO_639-1%E3%82%B3%E3%83%BC%E3%83%89%E4%B8%80%E8%A6%A7
+    - https://py-googletrans.readthedocs.io/en/latest/
+    - https://gist.github.com/jrnk/8eb57b065ea0b098d571
+
 ## 参考サイト
 
 - Googletrans本家：https://pypi.org/project/googletrans/
