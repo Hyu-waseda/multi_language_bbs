@@ -1,18 +1,18 @@
 from googletrans import Translator
 from const import LANGUAGES
 
+text = 'good evening. This is the code using googletrans.'
+language_to_translate = "cebuano"
 
-def get_code_by_name(language_name):
-    for lang in LANGUAGES:
-        if lang["name"] == language_name:
-            return lang["code"]
-    return None
+def get_code_by_language_name(language_name):
+    for language_code, lang_name in LANGUAGES.items():
+        if lang_name == language_name:
+            return language_code
+    raise ValueError(f"No language code found for language name: {language_name}")
 
 
 translator = Translator()
-src = 'good evening. This is the code using googletrans.'
-language_to_translate = "Japanese"
-code_to_translate = get_code_by_name(language_to_translate)
-translation = translator.translate(src, dest=code_to_translate)
+language_code_to_translate = get_code_by_language_name(language_to_translate)
+translation = translator.translate(text, dest=language_code_to_translate)
 
 print(translation.text)
