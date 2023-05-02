@@ -1,8 +1,10 @@
 from googletrans import Translator
 from const import LANGUAGES
 
+# 翻訳する文章
 text = 'good evening. This is the code using googletrans.'
-language_to_translate = "cebuano"
+# 翻訳先の言語(const.pyを参照)
+language_to_translate = "japanese"
 
 def get_code_by_language_name(language_name):
     for language_code, lang_name in LANGUAGES.items():

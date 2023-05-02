@@ -1,4 +1,4 @@
-LANGUAGES = LANGUAGES = {
+LANGUAGES = {
     'af': 'afrikaans',
     'sq': 'albanian',
     'am': 'amharic',
