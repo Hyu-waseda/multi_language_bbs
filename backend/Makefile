@@ -8,7 +8,7 @@ build:
 
 # 作成したイメージを起動する
 run:
-	docker run -p $(APP_PORT):$(APP_PORT) $(IMAGE_NAME)
+	docker run -it --rm -p $(APP_PORT):$(APP_PORT) -v $(PWD):/app --name bbs_backend $(IMAGE_NAME)
 
 # イメージ作成と起動
 build-run: build run
