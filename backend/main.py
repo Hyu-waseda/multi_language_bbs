@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from routers import dummy_router
+from routers import dummy_router, translation_router
 
 app = FastAPI()
 
@@ -22,3 +22,4 @@ app.add_middleware(
 )
 
 app.include_router(dummy_router.router)
+app.include_router(translation_router.router)
