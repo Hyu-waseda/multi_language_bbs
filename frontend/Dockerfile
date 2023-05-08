@@ -1,5 +1,5 @@
 # Node.js 16をベースイメージに使用
-FROM node:16-alpine
+FROM node:18-alpine
 
 # コンテナ内の作業ディレクトリを設定
 WORKDIR /app
@@ -20,4 +20,5 @@ RUN yarn build
 EXPOSE 3000
 
 # アプリケーションを起動
+# RUN next build
 CMD ["yarn", "start"]
