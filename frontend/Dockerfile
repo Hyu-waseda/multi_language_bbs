@@ -20,5 +20,5 @@ RUN yarn build
 EXPOSE 3000
 
 # アプリケーションを起動
-# RUN next build
-CMD ["yarn", "start"]
+# CMD ["yarn", "start"]
+CMD ["yarn", "dev"]
