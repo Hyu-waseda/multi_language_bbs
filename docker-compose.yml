@@ -14,3 +14,18 @@ services:
       - "8080:8080"
     volumes:
       - ./backend:/app
+    depends_on:
+      - database
+  database:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./database:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 20s
+      timeout: 10s
+      retries: 10
