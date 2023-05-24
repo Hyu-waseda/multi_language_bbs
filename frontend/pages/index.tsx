@@ -1,7 +1,7 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import styles from "../styles/Home.module.css";
+import styles from "../styles/index.module.scss";
 import { useEffect, useState } from "react";
 
 const Home: NextPage = () => {
@@ -16,7 +16,7 @@ const Home: NextPage = () => {
 
   return (
     <div>
-      <h1>Next.js Frontend</h1>
+      <h1 className={styles.header}>Next.js Frontend</h1>
       <p>{message}</p>
     </div>
   );
