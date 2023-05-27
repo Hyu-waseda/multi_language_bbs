@@ -8,25 +8,27 @@ CREATE TABLE IF NOT EXISTS Users (
 CREATE TABLE IF NOT EXISTS Threads (
   ThreadID INT PRIMARY KEY AUTO_INCREMENT,
   Title VARCHAR(255),
-  PostDate DATETIME,
+  CreatedAt TIMESTAMP,
+  UpdatedAt TIMESTAMP,
   UserID INT,
+  Content LONGTEXT,
+  Language VARCHAR(2),
+  Views INT,
+  Likes INT,
+  Tags VARCHAR(255),
+  CategoryID INT,
+  ImageURL VARCHAR(255),
   FOREIGN KEY (UserID) REFERENCES Users(UserID)
 );
 
 CREATE TABLE IF NOT EXISTS Comments (
   CommentID INT PRIMARY KEY AUTO_INCREMENT,
-  Body VARCHAR(255),
-  PostDate DATETIME,
-  UserID INT,
   ThreadID INT,
-  FOREIGN KEY (UserID) REFERENCES Users(UserID),
-  FOREIGN KEY (ThreadID) REFERENCES Threads(ThreadID)
-);
-
-CREATE TABLE IF NOT EXISTS Likes (
-  LikeID INT PRIMARY KEY AUTO_INCREMENT,
   UserID INT,
-  CommentID INT,
-  FOREIGN KEY (UserID) REFERENCES Users(UserID),
-  FOREIGN KEY (CommentID) REFERENCES Comments(CommentID)
+  Content TEXT,
+  CreatedAt TIMESTAMP,
+  UpdatedAt TIMESTAMP,
+  Likes INT,
+  FOREIGN KEY (ThreadID) REFERENCES Threads(ThreadID),
+  FOREIGN KEY (UserID) REFERENCES Users(UserID)
 );
