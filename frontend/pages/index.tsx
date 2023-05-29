@@ -1,5 +1,4 @@
 import React from "react";
-import { mockLatestThreads } from "../mock/mockLatestThreads";
 import { ThreadData } from "../interfaces/ThreadData";
 import Link from "next/link";
 import { Header } from "../components/organisms/Header/Header";
@@ -13,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { GetServerSideProps, NextPage } from "next";
-import { fetchData } from "../utils/api";
+import { fetchData, fetchThreadData } from "../utils/api";
 import { API_ENDPOINSTS } from "../const";
 
 interface Props {
@@ -23,8 +22,7 @@ interface Props {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const message = await fetchData(API_ENDPOINSTS.DUMMY.ENDPOINT);
-
-  const LatestThreads: ThreadData[] = mockLatestThreads;
+  const LatestThreads: ThreadData[] = await fetchThreadData(API_ENDPOINSTS.THREAD.ENDPOINT, 5);
 
   return {
     props: {
@@ -45,11 +43,11 @@ const Home: NextPage<Props> = (props) => {
         <Card>
           <List>
             {props.resultLatestThreads.map((thread) => (
-              <Link key={thread.title} href={`/thread/${thread.threadId}`}>
+              <Link key={thread.title} href={`/thread/${thread.threadID}`}>
                 <ListItem>
                   <ListItemText
                     primary={thread.title}
-                    secondary={thread.postDate}
+                    secondary={`作成日：${thread.updatedAt}`}
                   />
                 </ListItem>
               </Link>

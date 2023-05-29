@@ -1,7 +1,15 @@
 export interface ThreadData {
-  threadId: number;
+  threadID: number;
   title: string;
-  postDate: string;
-  userId: number;
+  createdAt: string;
+  updatedAt: string;
+  userID: number;
+  content: string;
+  language: string;
+  views: number;
+  likes: number;
+  tags: string;
+  categoryID: number;
+  imageURL: string;
 }
 [];

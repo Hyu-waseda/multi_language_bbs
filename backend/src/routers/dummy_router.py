@@ -11,6 +11,6 @@ router = APIRouter()
 @router.get("/dummy")
 async def get_dummy():
     print("router")
-    dummy_application = dummy_application()
+    dummy_application = Dummy_application()
     dummy = dummy_application.get_dummy()
     return dummy
