@@ -41,4 +41,3 @@ source /var/lib/bin/init.sql
  ```bash
 source /var/lib/mysql/mock.sql
  ```
- 
