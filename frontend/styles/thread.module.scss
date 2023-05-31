@@ -1,0 +1,9 @@
+@import 'variables';
+
+.card {
+	background-color: $color-white-secondary;
+	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+	margin-bottom: 16px;
+	padding: 16px;
+  }
