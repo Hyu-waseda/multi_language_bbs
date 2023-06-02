@@ -21,7 +21,8 @@ class CommentApplication:
                 "content": comment_data[3],
                 "createdAt": comment_data[4],
                 "updatedAt": comment_data[5],
-                "likes": comment_data[6]
+                "likes": comment_data[6],
+                "userName": comment_data[7]
             }
             for comment_data in comments
         ]

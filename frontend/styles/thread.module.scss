@@ -1,9 +1,27 @@
-@import 'variables';
+@import "variables";
 
 .card {
-	background-color: $color-white-secondary;
-	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-	border-radius: 8px;
-	margin-bottom: 16px;
-	padding: 16px;
+  background-color: $color-white-secondary;
+  box-shadow: 2px 2px 4px $color-black-tertiary;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  padding: 16px;
+
+  .comment_header {
+    display: flex;
+    margin-bottom: 10px;
+
+    .comment_number {
+      margin-right: 8px;
+    }
+
+    .comment_username {
+      margin-right: 8px;
+      font-weight: bold;
+    }
+
+    .comment_created_at {
+      margin-right: 8px;
+    }
   }
+}
