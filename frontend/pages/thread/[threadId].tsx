@@ -59,6 +59,7 @@ const Thread: NextPage<Props> = (props) => {
 
   return (
     <Container maxWidth="md">
+      {/* タイトルなど */}
       <Box>
         <Typography variant="h3">{props.resultThreadData[0].title}</Typography>
         <Typography variant="body1">
@@ -67,46 +68,53 @@ const Thread: NextPage<Props> = (props) => {
       </Box>
       {/* コメント表示 */}
       <Box mt={3}>
-        <Grid container spacing={3}>
-          {props.comments.map((comment: CommentData, index: number) => (
-            <Grid item xs={12} key={comment.commentID}>
-              <Card className={styles.card}>
-                <CardContent>
-                  {/* コメントのヘッダー（コメント番号、ユーザー名、作成日、ユーザーID） */}
-                  <Box
-                    className={`${styles.comment_header} ${styles.commentBox}`}
-                  >
-                    <Typography variant="h6" className={styles.comment_number}>
-                      {index + 1}
-                    </Typography>
-                    <Typography
-                      variant="h6"
-                      className={styles.comment_username}
+        {props.comments.length === 0 ? (
+          <Typography variant="body1">またコメントはありません。</Typography>
+        ) : (
+          <Grid container spacing={3}>
+            {props.comments.map((comment: CommentData, index: number) => (
+              <Grid item xs={12} key={comment.commentID}>
+                <Card className={styles.card}>
+                  <CardContent>
+                    {/* コメントのヘッダー（コメント番号、ユーザー名、作成日、ユーザーID） */}
+                    <Box
+                      className={`${styles.comment_header} ${styles.commentBox}`}
                     >
-                      {comment.userName}
-                    </Typography>
-                    <Typography
-                      variant="h6"
-                      className={styles.comment_created_at}
-                    >
-                      {convertUtcToUserTimezone(
-                        comment.createdAt,
-                        userTimezone
-                      )}
-                    </Typography>
-                    <Typography variant="h6">
-                      {`ID: ${comment.userID}`}
-                    </Typography>
-                  </Box>
-                  {/* コメント本文 */}
-                  <Box>
-                    <Typography variant="body1">{comment.content}</Typography>
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+                      <Typography
+                        variant="h6"
+                        className={styles.comment_number}
+                      >
+                        {index + 1}
+                      </Typography>
+                      <Typography
+                        variant="h6"
+                        className={styles.comment_username}
+                      >
+                        {comment.userName}
+                      </Typography>
+                      <Typography
+                        variant="h6"
+                        className={styles.comment_created_at}
+                      >
+                        {convertUtcToUserTimezone(
+                          comment.createdAt,
+                          userTimezone
+                        )}
+                      </Typography>
+                      <Typography variant="h6">
+                        {`ID: ${comment.userID}`}
+                      </Typography>
+                    </Box>
+                    {/* コメント本文 */}
+                    <Box>
+                      <Typography variant="body1">{comment.content}</Typography>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        )}
       </Box>
     </Container>
   );
