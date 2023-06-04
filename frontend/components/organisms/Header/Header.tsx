@@ -1,10 +1,11 @@
 import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import React from "react";
+import styles from "./Header.module.scss"
 
 export const Header: React.FC = () => {
   return (
-    <AppBar position="sticky">
+    <AppBar position="sticky" className={styles.header}>
       <Toolbar>
         <IconButton edge="start" color="inherit" aria-label="menu">
           <MenuIcon />

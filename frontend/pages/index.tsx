@@ -35,8 +35,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
 const Home: NextPage<Props> = (props) => {
   return (
     <>
-      <Header />
-
       <Container maxWidth="md">
         <Typography variant="h4">最新スレッド一覧</Typography>
         <Divider />
