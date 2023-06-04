@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 class Params(BaseModel):
     count: Optional[int]
+    thread_id: Optional[int]
 
 
 class ThreadApplication:
@@ -49,4 +50,17 @@ class ThreadApplication:
         else:
             threads = thread_infrastructure.fetch_all_threads()
             res = self.__format_thread_data(threads=threads)
+        return res
+
+    def get_specific_thread(self):
+        """
+        特定のスレッドを取得する関数
+
+        :param thread_id: 取得するスレッドのID
+        :return: 特定のスレッドの情報
+        """
+        thread_infrastructure = ThreadInfrastructure()
+        thread_data = thread_infrastructure.fetch_thread_by_id(
+            self.params["thread_id"])
+        res = self.__format_thread_data(threads=[thread_data])
         return res
