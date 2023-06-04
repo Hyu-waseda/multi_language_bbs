@@ -37,6 +37,11 @@ export const fetchThreadData = async (endpoint: string, count?: number) => {
   }
 };
 
+export const fetchSpecificThreadData = async (endpoint: string) => {
+  const res = await fetchData(endpoint);
+  return res;
+};
+
 export const fetchCommentData = async (endpoint: string, threadId?: string) => {
   if (threadId) {
     const params = { thread_id: threadId };

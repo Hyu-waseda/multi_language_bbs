@@ -9,14 +9,16 @@ import {
 } from "@mui/material";
 import styles from "../../styles/thread.module.scss";
 import { CommentData } from "../../interfaces/CommentData";
-import { fetchCommentData } from "../../utils/api";
+import { fetchCommentData, fetchSpecificThreadData } from "../../utils/api";
 import { API_ENDPOINSTS } from "../../const";
 import moment from "moment";
 import "moment-timezone";
+import { ThreadData } from "../../interfaces/ThreadData";
 
 interface Props {
   threadId: string | undefined;
   comments: CommentData[];
+  resultThreadData: ThreadData[];
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async (
@@ -29,11 +31,15 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
     API_ENDPOINSTS.COMMENT.ENDPOINT,
     threadId
   );
+  const resultThreadData = await fetchSpecificThreadData(
+    `${API_ENDPOINSTS.THREAD.ENDPOINT}/${threadId}`
+  );
 
   return {
     props: {
       threadId,
       comments,
+      resultThreadData,
     },
   };
 };
@@ -53,6 +59,12 @@ const Thread: NextPage<Props> = (props) => {
 
   return (
     <Container maxWidth="md">
+      <Box>
+        <Typography variant="h3">{props.resultThreadData[0].title}</Typography>
+        <Typography variant="body1">
+          {props.resultThreadData[0].content}
+        </Typography>
+      </Box>
       {/* コメント表示 */}
       <Box mt={3}>
         <Grid container spacing={3}>
