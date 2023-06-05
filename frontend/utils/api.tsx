@@ -1,4 +1,4 @@
-export const fetchData = async (
+const fetchData = async (
   endpoint: string,
   params?: Record<string, string>
 ) => {

@@ -1,7 +1,6 @@
 import React from "react";
 import { ThreadData } from "../interfaces/ThreadData";
 import Link from "next/link";
-import { Header } from "../components/organisms/Header/Header";
 import {
   Card,
   Container,
@@ -12,21 +11,18 @@ import {
   Typography,
 } from "@mui/material";
 import { GetServerSideProps, NextPage } from "next";
-import { fetchData, fetchThreadData } from "../utils/api";
+import { fetchThreadData } from "../utils/api";
 import { API_ENDPOINSTS } from "../const";
 
 interface Props {
-  resultMessage: string;
   resultLatestThreads: ThreadData[];
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const message = await fetchData(API_ENDPOINSTS.DUMMY.ENDPOINT);
   const LatestThreads: ThreadData[] = await fetchThreadData(API_ENDPOINSTS.THREAD.ENDPOINT, 5);
 
   return {
     props: {
-      resultMessage: message,
       resultLatestThreads: LatestThreads,
     },
   };
@@ -53,9 +49,6 @@ const Home: NextPage<Props> = (props) => {
           </List>
         </Card>
       </Container>
-
-      {/* TODO: APIを叩く練習用 */}
-      <p>{props.resultMessage}</p>
     </>
   );
 };

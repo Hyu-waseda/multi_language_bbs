@@ -1,12 +1,9 @@
-# from application.dummy_application import Dummy_application
-# from utils.translation.translation import translate
 from src.utils.translation.translation import translate
 from fastapi import APIRouter
-import sys
-# sys.path.append('../../')
 
 
 router = APIRouter()
+
 
 @router.post("/translate")
 async def translate_text(text: str, target_language: str):

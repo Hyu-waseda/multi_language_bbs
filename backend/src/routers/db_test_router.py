@@ -1,7 +1,5 @@
 from src.application.db_test_application import Db_test_application
 from fastapi import APIRouter
-# import sys
-# sys.path.append('../../')
 
 
 router = APIRouter()
