@@ -1,15 +1,24 @@
 from typing import Optional
 from src.infrastructure.comment_infrastructure import CommentInfrastructure
 from pydantic import BaseModel
+from datetime import datetime
+import pytz
 
 
-class Params(BaseModel):
+class GetParams(BaseModel):
     thread_id: Optional[int]
 
 
+class PostParams(BaseModel):
+    thread_id: int
+    content: str
+    user_id: int
+    user_name: str
+
+
 class CommentApplication:
-    def __init__(self, params: Params):
-        self.params = params
+    def __init__(self):
+        self.comment_infrastructure = CommentInfrastructure()
 
     # データベースから取得した結果を指定の形式に整形する関数
     def __format_comment_data(self, comments):
@@ -28,21 +37,40 @@ class CommentApplication:
         ]
         return res
 
-    def get_comments(self):
+    def get_comments(self, params: GetParams):
         """
         コメントを取得する関数
 
+        :params: リクエストパラメータ
         :return: コメントのリスト
         """
-        comment_infrastructure = CommentInfrastructure()
-
-        # スレッドIDが指定されている場合、そのスレッドに関連するコメントを返す
-        if self.params["thread_id"] is not None:
-            comments = comment_infrastructure.fetch_comments_by_thread_id(
-                self.params["thread_id"])
-            res = self.__format_comment_data(comments=comments)
-        # スレッドIDが指定されていない場合、全てのコメントを返す
+        if params["thread_id"] is not None:
+            comments = self.comment_infrastructure.fetch_comments_by_thread_id(
+                params["thread_id"])
         else:
-            comments = comment_infrastructure.fetch_all_comments()
-            res = self.__format_comment_data(comments=comments)
+            comments = self.comment_infrastructure.fetch_all_comments()
+        return self.__format_comment_data(comments)
+
+    def create_comment(self, params: PostParams):
+        """
+        コメントを作成する関数
+
+        :params: リクエストパラメータ
+        :return: 作成されたコメントの情報
+        """
+        now = datetime.now(pytz.utc)
+
+        # 指定された形式にフォーマット
+        formatted_time = now.strftime("%Y-%m-%d %H:%M:%S")
+        new_comment = {
+            "threadID": params["thread_id"],
+            "userID": params["user_id"],
+            "content": params["content"],
+            "createdAt": formatted_time,
+            "updatedAt": formatted_time,
+            "likes": 0,
+            # TODO: userNameを登録できるように
+            "userName": params["user_name"]
+        }
+        res = self.comment_infrastructure.create_comment(new_comment)
         return res
