@@ -16,6 +16,7 @@ class ThreadApplication:
     def __format_thread_data(self, threads):
         res = [
             {
+                "threadID": thread_data[0],
                 "title": thread_data[1],
                 "createdAt": thread_data[2],
                 "updatedAt": thread_data[3],
