@@ -1,34 +1,27 @@
-CREATE TABLE IF NOT EXISTS Users (
-  UserID INT PRIMARY KEY AUTO_INCREMENT,
-  Username VARCHAR(255),
-  Email VARCHAR(255),
-  Password VARCHAR(255)
-);
-
 CREATE TABLE IF NOT EXISTS Threads (
   ThreadID INT PRIMARY KEY AUTO_INCREMENT,
   Title VARCHAR(255),
   CreatedAt TIMESTAMP,
   UpdatedAt TIMESTAMP,
   UserID INT,
+  UserName VARCHAR(255),
   Content LONGTEXT,
   Language VARCHAR(2),
   Views INT,
   Likes INT,
   Tags VARCHAR(255),
   CategoryID INT,
-  ImageURL VARCHAR(255),
-  FOREIGN KEY (UserID) REFERENCES Users(UserID)
+  ImageURL VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS Comments (
   CommentID INT PRIMARY KEY AUTO_INCREMENT,
   ThreadID INT,
   UserID INT,
+  UserName VARCHAR(255),
   Content TEXT,
   CreatedAt TIMESTAMP,
   UpdatedAt TIMESTAMP,
   Likes INT,
-  FOREIGN KEY (ThreadID) REFERENCES Threads(ThreadID),
-  FOREIGN KEY (UserID) REFERENCES Users(UserID)
+  FOREIGN KEY (ThreadID) REFERENCES Threads(ThreadID)
 );

@@ -11,9 +11,9 @@ class GetParams(BaseModel):
 
 class PostParams(BaseModel):
     thread_id: int
+    user_name: str
     content: str
     user_id: int
-    user_name: str
 
 
 class CommentApplication:
@@ -27,11 +27,12 @@ class CommentApplication:
                 "commentID": comment_data[0],
                 "threadID": comment_data[1],
                 "userID": comment_data[2],
-                "content": comment_data[3],
-                "createdAt": comment_data[4],
-                "updatedAt": comment_data[5],
-                "likes": comment_data[6],
-                "userName": comment_data[7]
+                "userName": comment_data[3],
+                "content": comment_data[4],
+                "createdAt": comment_data[5],
+                "updatedAt": comment_data[6],
+                "likes": comment_data[7]
+                
             }
             for comment_data in comments
         ]
@@ -65,12 +66,11 @@ class CommentApplication:
         new_comment = {
             "threadID": params["thread_id"],
             "userID": params["user_id"],
+            "userName": params["user_name"],
             "content": params["content"],
             "createdAt": formatted_time,
             "updatedAt": formatted_time,
             "likes": 0,
-            # TODO: userNameを登録できるように
-            "userName": params["user_name"]
         }
         res = self.comment_infrastructure.create_comment(new_comment)
         return res

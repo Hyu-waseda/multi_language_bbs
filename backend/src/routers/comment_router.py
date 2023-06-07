@@ -30,8 +30,8 @@ class CommentCreateRequest(BaseModel):
 async def create_comment(
     thread_id: int = Query(..., description="スレッドID"),
     user_id: int = Query(..., description="ユーザーID"),
+    user_name: str = Query(..., description="ユーザー名"),
     content: str = Query(..., description="コメントの内容"),
-    user_name: str = Query(..., description="ユーザー名")
 ):
     """
     コメントを作成するAPI
@@ -45,8 +45,8 @@ async def create_comment(
     comment = {
         "thread_id": thread_id,
         "user_id": user_id,
+        "user_name": user_name,
         "content": content,
-        "user_name": user_name
     }
     created_comment = comment_application.create_comment(comment)
     return created_comment

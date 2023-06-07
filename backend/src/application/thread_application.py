@@ -16,18 +16,18 @@ class ThreadApplication:
     def __format_thread_data(self, threads):
         res = [
             {
-                "threadID": thread_data[0],
-                "title": thread_data[1],
-                "createdAt": thread_data[2],
-                "updatedAt": thread_data[3],
-                "userID": thread_data[4],
-                "content": thread_data[5],
-                "language": thread_data[6],
-                "views": thread_data[7],
-                "likes": thread_data[8],
-                "tags": thread_data[9],
-                "categoryID": thread_data[10],
-                "imageURL": thread_data[11]
+                "Title": thread_data[1],
+                "CreatedAt": thread_data[2],
+                "UpdatedAt": thread_data[3],
+                "UserID": thread_data[4],
+                "UserName": thread_data[5],
+                "Content": thread_data[6],
+                "Language": thread_data[7],
+                "Views": thread_data[8],
+                "Likes": thread_data[9],
+                "Tags": thread_data[10],
+                "CategoryID": thread_data[11],
+                "ImageURL": thread_data[12]
             }
             for thread_data in threads
         ]
