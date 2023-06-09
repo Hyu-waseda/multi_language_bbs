@@ -5,8 +5,10 @@ from src.routers import translation_router, db_test_router, thread_router, comme
 app = FastAPI()
 
 # アクセス許可する先
+# TODO: 公開ドメインに変更する必要あり
 origins = [
     "http://localhost:3000",
+    # "http://localhost:3000/thread",
 ]
 
 app.add_middleware(

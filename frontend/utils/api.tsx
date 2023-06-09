@@ -1,18 +1,17 @@
-const fetchData = async (
-  endpoint: string,
-  params?: Record<string, string>
-) => {
-  const baseUrl = process.env.API_BASE_URL;
+// GET関連
+const fetchData = async (endpoint: string, params?: Record<string, string>) => {
+  const baseUrl = process.env.API_BASE_URL_SERVER;
   let url = `${baseUrl}${endpoint}`;
 
-  // パラメーターが指定されていれば、URLにクエリパラメーターを追加します
   if (params) {
     const queryParams = new URLSearchParams(params);
     url += `?${queryParams.toString()}`;
   }
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      method: "GET",
+    });
 
     if (!response.ok) {
       throw new Error("APIエラー: " + response.status);
@@ -51,4 +50,48 @@ export const fetchCommentData = async (endpoint: string, threadId?: string) => {
     const res = await fetchData(endpoint);
     return res;
   }
+};
+
+// POST関連
+const sendData = async (endpoint: string, params?: Record<string, string>) => {
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL_CLIENT;
+  let url = `${baseUrl}${endpoint}`;
+
+  if (params) {
+    const queryParams = new URLSearchParams(params);
+    url += `?${queryParams.toString()}`;
+  }
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+    });
+
+    if (!response.ok) {
+      throw new Error("APIエラー: " + response.status + response.body);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error: any) {
+    console.error("APIリクエストエラー:", error.message);
+    throw error;
+  }
+};
+
+export const sendCommentData = (
+  endpoint: string,
+  threadId: string,
+  userId: string,
+  userName: string,
+  content: string
+) => {
+  const params = {
+    thread_id: threadId,
+    user_id: userId,
+    user_name: userName,
+    content: content,
+  };
+  const res = sendData(endpoint, params);
+  return res;
 };

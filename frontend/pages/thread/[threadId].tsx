@@ -6,17 +6,24 @@ import {
   CardContent,
   Box,
   Grid,
+  TextField,
+  Button,
 } from "@mui/material";
 import styles from "../../styles/thread.module.scss";
 import { CommentData } from "../../interfaces/CommentData";
-import { fetchCommentData, fetchSpecificThreadData } from "../../utils/api";
+import {
+  fetchCommentData,
+  fetchSpecificThreadData,
+  sendCommentData,
+} from "../../utils/api";
 import { API_ENDPOINSTS } from "../../const";
 import moment from "moment";
 import "moment-timezone";
 import { ThreadData } from "../../interfaces/ThreadData";
+import { useState } from "react";
 
 interface Props {
-  threadId: string | undefined;
+  threadId: string;
   comments: CommentData[];
   resultThreadData: ThreadData[];
 }
@@ -25,7 +32,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   context
 ) => {
   const { query } = context;
-  const threadId = query.threadId as string | undefined;
+  const threadId = query.threadId as string;
 
   const comments: CommentData[] = await fetchCommentData(
     API_ENDPOINSTS.COMMENT.ENDPOINT,
@@ -55,6 +62,34 @@ const Thread: NextPage<Props> = (props) => {
     const utcDate = moment.utc(utcDateString);
     const userDate = utcDate.tz(userTimezone).format("YYYY-MM-DD HH:mm:ss");
     return userDate;
+  };
+
+  // コメント入力フォームの状態管理
+  const [userName, setUserName] = useState<string>("");
+  const [comment, setComment] = useState<string>("");
+
+  // UserName入力フォームの変更ハンドラ
+  const handleUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUserName(event.target.value);
+  };
+
+  // Comment入力フォームの変更ハンドラ
+  const handleCommentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setComment(event.target.value);
+  };
+
+  // コメント送信ハンドラ
+  const handleCommentSubmit = () => {
+    // TODO: UserIdを各ユーザーごとに
+    sendCommentData(
+      API_ENDPOINSTS.COMMENT.ENDPOINT,
+      props.threadId,
+      "10",
+      userName,
+      comment
+    );
+    setUserName("");
+    setComment("");
   };
 
   return (
@@ -115,6 +150,39 @@ const Thread: NextPage<Props> = (props) => {
             ))}
           </Grid>
         )}
+      </Box>
+
+      {/* コメント入力フォーム */}
+      <Box mt={3}>
+        <Box mt={2}>
+          <TextField
+            label="ユーザー名(省略可)"
+            value={userName}
+            onChange={handleUserNameChange}
+            variant="outlined"
+            fullWidth
+          />
+        </Box>
+        <Box mt={1}>
+          <TextField
+            label="コメント"
+            value={comment}
+            onChange={handleCommentChange}
+            variant="outlined"
+            fullWidth
+            multiline
+            rows={4}
+          />
+        </Box>
+        <Box textAlign="right" mt={1}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleCommentSubmit}
+          >
+            送信
+          </Button>
+        </Box>
       </Box>
     </Container>
   );
