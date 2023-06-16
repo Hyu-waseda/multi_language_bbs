@@ -16,7 +16,6 @@ import {
   fetchSpecificThreadData,
   sendCommentData,
 } from "../../utils/api";
-import { API_ENDPOINSTS } from "../../const";
 import moment from "moment";
 import "moment-timezone";
 import { ThreadData } from "../../interfaces/ThreadData";
@@ -34,13 +33,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   const { query } = context;
   const threadId = query.threadId as string;
 
-  const comments: CommentData[] = await fetchCommentData(
-    API_ENDPOINSTS.COMMENT.ENDPOINT,
-    threadId
-  );
-  const resultThreadData = await fetchSpecificThreadData(
-    `${API_ENDPOINSTS.THREAD.ENDPOINT}/${threadId}`
-  );
+  const comments: CommentData[] = await fetchCommentData(threadId);
+  const resultThreadData = await fetchSpecificThreadData(threadId);
 
   return {
     props: {
@@ -52,8 +46,9 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 };
 
 const Thread: NextPage<Props> = (props) => {
+  const [comments, setComments] = useState<CommentData[]>(props.comments);
   // TODO: ユーザのタイムゾーン予測など
-  const userTimezone = "Asia/Tokyo"; // ユーザーのタイムゾーンを指定
+  const userTimezone = "Asia/Tokyo";
 
   const convertUtcToUserTimezone = (
     utcDateString: string,
@@ -79,17 +74,16 @@ const Thread: NextPage<Props> = (props) => {
   };
 
   // コメント送信ハンドラ
-  const handleCommentSubmit = () => {
+  const handleCommentSubmit = async () => {
     // TODO: UserIdを各ユーザーごとに
-    sendCommentData(
-      API_ENDPOINSTS.COMMENT.ENDPOINT,
-      props.threadId,
-      "10",
-      userName,
-      comment
-    );
+    await sendCommentData(props.threadId, "10", userName, comment);
     setUserName("");
     setComment("");
+    const newCommentsData: CommentData[] = await fetchCommentData(
+      props.threadId,
+      true
+    );
+    setComments(newCommentsData);
   };
 
   return (
@@ -107,7 +101,7 @@ const Thread: NextPage<Props> = (props) => {
           <Typography variant="body1">またコメントはありません。</Typography>
         ) : (
           <Grid container spacing={3}>
-            {props.comments.map((comment: CommentData, index: number) => (
+            {comments.map((comment: CommentData, index: number) => (
               <Grid item xs={12} key={comment.commentID}>
                 <Card className={styles.card}>
                   <CardContent>

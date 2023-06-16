@@ -12,14 +12,13 @@ import {
 } from "@mui/material";
 import { GetServerSideProps, NextPage } from "next";
 import { fetchThreadData } from "../utils/api";
-import { API_ENDPOINSTS } from "../const";
 
 interface Props {
   resultLatestThreads: ThreadData[];
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const LatestThreads: ThreadData[] = await fetchThreadData(API_ENDPOINSTS.THREAD.ENDPOINT, 5);
+  const LatestThreads: ThreadData[] = await fetchThreadData(5);
 
   return {
     props: {
