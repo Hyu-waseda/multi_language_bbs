@@ -1,3 +1,21 @@
 .header {
 	margin-bottom: 10px;
 }
+
+.formControl {
+	margin-left: auto;
+  }
+  
+  .inputLabel {
+	top: 8px;
+	left: -8px;
+	font-size: 13px;
+  }
+  
+  .select {
+	background-color: white;
+	height: 40px;
+	padding-left: 1px;
+	padding-right: 1px;
+	min-width: 150px;
+  }

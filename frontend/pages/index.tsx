@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { GetServerSideProps, NextPage } from "next";
 import { fetchThreadData } from "../utils/api";
+import { createURL } from "../utils/createUrl";
 
 interface Props {
   resultLatestThreads: ThreadData[];
@@ -28,6 +29,16 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 const Home: NextPage<Props> = (props) => {
+  const createUrlToThread = (threadId: string): string=> {
+    // TODO: 丸め込み
+    const threadPath = "/thread";
+    const currentParams = new URLSearchParams();
+    // lang パラメーターを更新
+    currentParams.set("threadId", threadId);
+    const newUrl = createURL(threadPath, currentParams);
+    return newUrl
+  }
+
   return (
     <>
       <Container maxWidth="md">
@@ -36,7 +47,7 @@ const Home: NextPage<Props> = (props) => {
         <Card>
           <List>
             {props.resultLatestThreads.map((thread) => (
-              <Link key={thread.title} href={`/thread/${thread.threadID}`}>
+              <Link key={thread.title} href={createUrlToThread(String(thread.threadID))}>
                 <ListItem>
                   <ListItemText
                     primary={thread.title}

@@ -31,7 +31,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   context
 ) => {
   const { query } = context;
-  const threadId = query.threadId as string;
+  const {threadId} = query as {threadId: string};
 
   const comments: CommentData[] = await fetchCommentData(threadId);
   const resultThreadData = await fetchSpecificThreadData(threadId);
