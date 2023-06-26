@@ -109,7 +109,8 @@ const Thread: NextPage<Props> = (props) => {
     setComment("");
     const newCommentsData: CommentData[] = await fetchCommentData(
       props.threadId,
-      true
+      true,
+      props.langCookie
     );
     setComments(newCommentsData);
   };
