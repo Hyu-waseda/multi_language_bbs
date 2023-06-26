@@ -7,15 +7,16 @@ router = APIRouter()
 
 
 @router.get("/comment")
-async def get_comment(thread_id: Optional[str] = Query(None, description="コメントを取得するスレッドID")):
+async def get_comment(thread_id: Optional[str] = Query(None, description="コメントを取得するスレッドID"),
+                      lang: Optional[str] = Query("original", description="翻訳先言語")):
     """
     コメントを取得するAPI
 
     thread_id: コメントを取得するスレッドID（指定しない場合は全てのコメント）
     """
     comment_application = CommentApplication()
-    params = {"thread_id": thread_id}
-    res = comment_application.get_comments(params=params)
+    params = {"thread_id": thread_id, "lang": lang}
+    res = await comment_application.get_comments(params=params)
     return res
 
 

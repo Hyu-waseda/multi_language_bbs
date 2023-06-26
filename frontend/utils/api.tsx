@@ -40,13 +40,15 @@ export const fetchSpecificThreadData = async (threadId: string) => {
 
 export const fetchCommentData = async (
   threadId?: string,
-  isClient?: boolean
+  isClient?: boolean,
+  lang?: string
 ) => {
   const base = isClient ? baseURLClient : baseURLServer;
-  const url = createUrlWithParams(
-    `${base}${API.ENDPOINT.COMMENT}`,
-    threadId ? { thread_id: threadId } : undefined
-  );
+  const params = {
+    ...(threadId && { thread_id: threadId }),
+    ...(lang && { lang: lang }),
+  };
+  const url = createUrlWithParams(`${base}${API.ENDPOINT.COMMENT}`, params);
   return await fetchData(url);
 };
 

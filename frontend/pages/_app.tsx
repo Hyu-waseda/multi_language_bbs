@@ -1,7 +1,6 @@
 import "../styles/globals.css";
 import "normalize.css";
 import type { AppProps } from "next/app";
-import { Header } from "../components/organisms/Header/Header";
 import {
   UserLanguageContext,
   LanguageContextData,
@@ -19,7 +18,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <UserLanguageContext.Provider value={languageContextValue}>
-      <Header />
       <Component {...pageProps} />
     </UserLanguageContext.Provider>
   );

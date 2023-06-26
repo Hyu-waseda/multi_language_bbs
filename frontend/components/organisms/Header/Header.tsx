@@ -9,31 +9,26 @@ import {
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import styles from "./Header.module.scss";
 import { LANGUAGES } from "../../../const";
-import { UserLanguageContext } from "../../../contexts/UserLanguageContext";
-import { useRouter } from "next/router";
 import { createURL } from "../../../utils/createUrl";
+import Cookies from "js-cookie";
 
-export const Header: React.FC = () => {
-  const { userLanguage, setUserLanguage } = useContext(UserLanguageContext);
-  const [userLanguageHeader, setUserLanguageHeader] =
-    useState<string>(userLanguage);
-  const router = useRouter();
+interface HeaderProps {
+  lang: string;
+}
 
+export const Header: React.FC<HeaderProps> = (props) => {
   const handleLanguageChange = (value: string) => {
-    localStorage.setItem("selectedLanguage", value);
-    setUserLanguageHeader(value);
-    setUserLanguage(value);
+    Cookies.set("selectedLanguage", value);
 
     const currentPath = window.location.pathname;
     const currentParams = new URLSearchParams(window.location.search);
-    // lang パラメーターを更新
     currentParams.set("lang", value);
 
     const newUrl = createURL(currentPath, currentParams);
-    router.push(newUrl, undefined, { shallow: true });
+    window.location.href = newUrl;
   };
 
   return (
@@ -51,7 +46,7 @@ export const Header: React.FC = () => {
           <Select
             labelId="language-select-label"
             id="language-select"
-            value={userLanguageHeader}
+            value={props.lang}
             onChange={(event) => handleLanguageChange(event.target.value)}
             className={styles.select}
           >
