@@ -14,6 +14,7 @@ import { GetServerSideProps, NextPage } from "next";
 import { fetchThreadData } from "../utils/api";
 import { createURL } from "../utils/createUrl";
 import { Header } from "../components/organisms/Header/Header";
+import Footer from "../components/organisms/Footer/Footer";
 
 interface Props {
   resultLatestThreads: ThreadData[];
@@ -68,6 +69,7 @@ const Home: NextPage<Props> = (props) => {
           </List>
         </Card>
       </Container>
+      <Footer/>
     </>
   );
 };
