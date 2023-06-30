@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ThreadData } from "../interfaces/ThreadData";
 import Link from "next/link";
 import {
@@ -11,29 +11,37 @@ import {
   Typography,
 } from "@mui/material";
 import { GetServerSideProps, NextPage } from "next";
-import { fetchThreadData } from "../utils/api";
+import { fetchLatestThreadData, fetchThreadCount } from "../utils/api";
 import { createURL } from "../utils/createUrl";
 import { Header } from "../components/organisms/Header/Header";
+import Pager from "../components/organisms/Pager/Pager";
 
 interface Props {
   resultLatestThreads: ThreadData[];
+  threadCount: number;
   langCookie: string;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const LatestThreads: ThreadData[] = await fetchThreadData(5);
+  const latestThreads: ThreadData[] = await fetchLatestThreadData(1, 5, false);
+  const threadCount = await fetchThreadCount();
   const { req } = context;
   const langCookie = req.cookies.selectedLanguage || "original";
 
   return {
     props: {
-      resultLatestThreads: LatestThreads,
+      resultLatestThreads: latestThreads,
+      threadCount: threadCount,
       langCookie,
     },
   };
 };
 
 const Home: NextPage<Props> = (props) => {
+  const latestThreadsInfo = { perPage: 5 };
+  const [latestThreads, setLatestThreads] = useState<ThreadData[]>(
+    props.resultLatestThreads
+  );
   const createUrlToThread = (threadId: string): string => {
     // TODO: 丸め込み
     const threadPath = "/thread";
@@ -44,6 +52,23 @@ const Home: NextPage<Props> = (props) => {
     return newUrl;
   };
 
+  const [page, setPage] = useState<number>(1);
+  const handlePager = (selsectedPage: number) => {
+    setPage(selsectedPage);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const newLatestThreads: ThreadData[] = await fetchLatestThreadData(
+        page,
+        latestThreadsInfo.perPage,
+        true
+      );
+      setLatestThreads(newLatestThreads);
+    };
+
+    fetchData();
+  }, [page, latestThreadsInfo.perPage]);
   return (
     <>
       <Header lang={props.langCookie} />
@@ -52,7 +77,7 @@ const Home: NextPage<Props> = (props) => {
         <Divider />
         <Card>
           <List>
-            {props.resultLatestThreads.map((thread) => (
+            {latestThreads.map((thread) => (
               <Link
                 key={thread.title}
                 href={createUrlToThread(String(thread.threadID))}
@@ -67,6 +92,12 @@ const Home: NextPage<Props> = (props) => {
             ))}
           </List>
         </Card>
+        <Pager
+          totalCount={props.threadCount}
+          perPage={latestThreadsInfo.perPage}
+          page={page}
+          handlePager={handlePager}
+        />
       </Container>
     </>
   );

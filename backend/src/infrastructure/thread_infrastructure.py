@@ -16,18 +16,19 @@ class ThreadInfrastructure:
                 status_code=500, detail="データベースからスレッドを取得できませんでした。fetch_all_threads: " + str(e))
         return res
 
-    # 指定されたスレッド数のスレッドを最新順に返す関数
-    def fetch_threads_by_count(self, count: int):
-        query = "SELECT * FROM Threads ORDER BY CreatedAt DESC LIMIT %s;"
-        params = (count,)
+    # 指定されたオフセットのスレッドをスレッド数、最新順に返す関数
+    def fetch_threads_by_offset(self, offset: int, count: int):
+        query = "SELECT * FROM Threads ORDER BY CreatedAt DESC LIMIT %s OFFSET %s;"
+        params = (count, offset)
         try:
             res = self.database_manager.execute_query(query, params)
         except Exception as e:
             raise HTTPException(
-                status_code=500, detail="データベースからスレッドを取得できませんでした。fetch_threads_by_count: " + str(e))
+                status_code=500, detail="データベースからスレッドを取得できませんでした。fetch_threads_by_offset: " + str(e))
         return res
 
     # 特定のスレッドをIDで取得する関数
+
     def fetch_thread_by_id(self, thread_id: str):
         query = "SELECT * FROM Threads WHERE ThreadID = %s;"
         params = (thread_id,)
@@ -40,3 +41,13 @@ class ThreadInfrastructure:
         except Exception as e:
             raise HTTPException(
                 status_code=500, detail="データベースからスレッドを取得できませんでした。fetch_thread_by_id: " + str(e))
+
+    # スレッドの総数を取得する関数
+    def fetch_thread_count(self):
+        query = "SELECT COUNT(*) FROM Threads;"
+        try:
+            res = self.database_manager.execute_query(query)
+            return res[0][0]
+        except Exception as e:
+            raise HTTPException(
+                status_code=500, detail="スレッドの総数を取得できませんでした。fetch_thread_count: " + str(e))

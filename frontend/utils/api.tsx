@@ -25,16 +25,27 @@ const createUrlWithParams = (url: string, params?: Record<string, string>) => {
   return `${url}?${queryParams.toString()}`;
 };
 
-export const fetchThreadData = async (count?: number) => {
-  const url = createUrlWithParams(
-    baseURLServer + API.ENDPOINT.THREAD,
-    count ? { count: String(count) } : undefined
-  );
+export const fetchLatestThreadData = async (
+  page: number,
+  perPage: number,
+  isClient: boolean
+) => {
+  const offset: number = (page - 1) * perPage;
+  const base = isClient ? baseURLClient : baseURLServer;
+  const url: string = createUrlWithParams(base + API.ENDPOINT.THREAD, {
+    offset: String(offset),
+    count: String(perPage),
+  });
   return await fetchData(url);
 };
 
 export const fetchSpecificThreadData = async (threadId: string) => {
   const url = `${baseURLServer}${API.ENDPOINT.THREAD}/${threadId}`;
+  return await fetchData(url);
+};
+
+export const fetchThreadCount = async () => {
+  const url = `${baseURLServer}${API.ENDPOINT.THREAD}/count`;
   return await fetchData(url);
 };
 
