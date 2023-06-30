@@ -1,21 +1,24 @@
+@import "../../../styles/variables";
+
 .header {
-	margin-bottom: 10px;
+  margin-bottom: 10px;
+  background: $color-blue-primary;
 }
 
 .formControl {
-	margin-left: auto;
-  }
-  
-  .inputLabel {
-	top: 8px;
-	left: -8px;
-	font-size: 13px;
-  }
-  
-  .select {
-	background-color: white;
-	height: 40px;
-	padding-left: 1px;
-	padding-right: 1px;
-	min-width: 150px;
-  }
+  margin-left: auto;
+}
+
+.inputLabel {
+  top: 8px;
+  left: -8px;
+  font-size: 13px;
+}
+
+.select {
+  background-color: $color-white-primary;
+  height: 40px;
+  padding-left: 1px;
+  padding-right: 1px;
+  min-width: 150px;
+}

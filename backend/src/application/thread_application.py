@@ -4,6 +4,7 @@ from pydantic import BaseModel
 
 
 class Params(BaseModel):
+    offset: Optional[int]
     count: Optional[int]
     thread_id: Optional[int]
 
@@ -42,15 +43,15 @@ class ThreadApplication:
         """
         thread_infrastructure = ThreadInfrastructure()
 
-        # スレッド数が指定されている場合、指定数のスレッドを返す
-        if self.params["count"] is not None:
-            threads = thread_infrastructure.fetch_threads_by_count(
-                self.params["count"])
-            res = self.__format_thread_data(threads=threads)
-        # スレッド数が指定されていない場合、全てのスレッドを返す
+        # オフセットが指定されている場合、指定されたオフセットから指定された数のスレッドを取得します
+        if self.params["offset"] is not None:
+            threads = thread_infrastructure.fetch_threads_by_offset(
+                self.params["offset"], self.params["count"])
+        # オフセットが指定されていない場合、全てのスレッドを取得します
         else:
             threads = thread_infrastructure.fetch_all_threads()
-            res = self.__format_thread_data(threads=threads)
+
+        res = self.__format_thread_data(threads=threads)
         return res
 
     def get_specific_thread(self):
@@ -65,3 +66,11 @@ class ThreadApplication:
             self.params["thread_id"])
         res = self.__format_thread_data(threads=[thread_data])
         return res
+
+    def get_thread_count(self):
+        """
+        スレッドの総数を取得する関数
+        """
+        thread_infrastructure = ThreadInfrastructure()
+        thread_count = thread_infrastructure.fetch_thread_count()
+        return thread_count
