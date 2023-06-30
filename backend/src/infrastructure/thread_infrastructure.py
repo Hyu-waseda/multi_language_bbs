@@ -51,3 +51,15 @@ class ThreadInfrastructure:
         except Exception as e:
             raise HTTPException(
                 status_code=500, detail="スレッドの総数を取得できませんでした。fetch_thread_count: " + str(e))
+        
+    # スレッドの更新日時を更新する関数
+    def update_thread_updated_at(self, thread_id: int, updated_at: str):
+        query = """
+            UPDATE Threads SET UpdatedAt = %s WHERE ThreadID = %s;
+        """
+        params = (updated_at, thread_id)
+        try:
+            self.database_manager.execute_query(query, params)
+        except Exception as e:
+            raise HTTPException(
+                status_code=500, detail="スレッドの更新日時の更新に失敗しました。update_thread_updated_at: " + str(e))

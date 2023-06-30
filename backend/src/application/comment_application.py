@@ -1,4 +1,5 @@
 from typing import Optional
+from src.infrastructure.thread_infrastructure import ThreadInfrastructure
 from src.infrastructure.comment_infrastructure import CommentInfrastructure
 from src.utils.translation.translation import translate
 from pydantic import BaseModel
@@ -108,5 +109,11 @@ class CommentApplication:
             "updatedAt": formatted_time,
             "likes": 0,
         }
-        res = self.comment_infrastructure.create_comment(new_comment)
+        res = self.comment_infrastructure.create_comment(
+            comment_data=new_comment)
+
+        # スレッドの更新日時を更新
+        thread_infrastructure = ThreadInfrastructure()
+        thread_infrastructure.update_thread_updated_at(
+            thread_id=params["thread_id"], updated_at=formatted_time)
         return res
