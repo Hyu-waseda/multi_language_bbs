@@ -25,7 +25,7 @@ const createUrlWithParams = (url: string, params?: Record<string, string>) => {
   return `${url}?${queryParams.toString()}`;
 };
 
-export const fetchLatestThreadData = async (
+export const fetchNewThreadData = async (
   page: number,
   perPage: number,
   isClient: boolean
@@ -35,6 +35,24 @@ export const fetchLatestThreadData = async (
   const url: string = createUrlWithParams(base + API.ENDPOINT.THREAD, {
     offset: String(offset),
     count: String(perPage),
+    // TODO: 丸め込み
+    sort: "new",
+  });
+  return await fetchData(url);
+};
+
+export const fetchUpdatedThreadData = async (
+  page: number,
+  perPage: number,
+  isClient: boolean
+) => {
+  const offset: number = (page - 1) * perPage;
+  const base = isClient ? baseURLClient : baseURLServer;
+  const url: string = createUrlWithParams(base + API.ENDPOINT.THREAD, {
+    offset: String(offset),
+    count: String(perPage),
+    // TODO: 丸め込み
+    sort: "update",
   });
   return await fetchData(url);
 };
