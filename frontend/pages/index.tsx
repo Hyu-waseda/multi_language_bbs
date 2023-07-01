@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { ThreadData } from "../interfaces/ThreadData";
-import Link from "next/link";
-import {
-  Card,
-  Container,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-} from "@mui/material";
+import { Container } from "@mui/material";
 import { GetServerSideProps, NextPage } from "next";
-import { fetchNewThreadData, fetchThreadCount, fetchUpdatedThreadData } from "../utils/api";
-import { createURL } from "../utils/createUrl";
+import {
+  fetchNewThreadData,
+  fetchThreadCount,
+  fetchUpdatedThreadData,
+} from "../utils/api";
 import { Header } from "../components/organisms/Header/Header";
-import Pager from "../components/organisms/Pager/Pager";
+import ThreadList from "../components/organisms/ThreadList/ThreadList";
 
 interface Props {
   resultNewThreads: ThreadData[];
@@ -26,7 +20,11 @@ interface Props {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // TODO: 丸め込み
   const newThreads: ThreadData[] = await fetchNewThreadData(1, 5, false);
-  const updatedThreads: ThreadData[] = await fetchUpdatedThreadData(1, 5, false);
+  const updatedThreads: ThreadData[] = await fetchUpdatedThreadData(
+    1,
+    5,
+    false
+  );
   const threadCount = await fetchThreadCount();
   const { req } = context;
   const langCookie = req.cookies.selectedLanguage || "original";
@@ -51,19 +49,6 @@ const Home: NextPage<Props> = (props) => {
     props.resultUpdatedThreads
   );
   const [updatedThreadsPage, setUpdatedThreadsPage] = useState<number>(1);
-  const createUrlToThread = (threadId: string): string => {
-    // TODO: 丸め込み
-    const threadPath = "/thread";
-    const currentParams = new URLSearchParams();
-    // TODO: 丸め込み
-    currentParams.set("threadId", threadId);
-    const newUrl = createURL(threadPath, currentParams);
-    return newUrl;
-  };
-
-  const handlePager = (selectedPage: number, setFunction: React.Dispatch<React.SetStateAction<number>>) => {
-    setFunction(selectedPage)
-  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -95,55 +80,23 @@ const Home: NextPage<Props> = (props) => {
     <>
       <Header lang={props.langCookie} />
       <Container maxWidth="md">
-        <Typography variant="h4">最新更新スレッド</Typography>
-        <Divider />
-        <Card>
-          <List>
-            {updatedThreads.map((thread) => (
-              <Link
-                key={thread.title}
-                href={createUrlToThread(String(thread.threadID))}
-              >
-                <ListItem>
-                  <ListItemText
-                    primary={thread.title}
-                    secondary={`作成日：${thread.updatedAt}`}
-                  />
-                </ListItem>
-              </Link>
-            ))}
-          </List>
-        </Card>
-        <Pager
-          totalCount={props.threadCount}
-          perPage={threadListInfo.perPage}
+        <ThreadList
+          threads={updatedThreads}
+          title="最新更新スレッド"
           page={updatedThreadsPage}
-          handlePager={(selectedPage) => handlePager(selectedPage, setUpdatedThreadsPage)}
-        />
-        <Typography variant="h4">新着スレッド</Typography>
-        <Divider />
-        <Card>
-          <List>
-            {newThreads.map((thread) => (
-              <Link
-                key={thread.title}
-                href={createUrlToThread(String(thread.threadID))}
-              >
-                <ListItem>
-                  <ListItemText
-                    primary={thread.title}
-                    secondary={`作成日：${thread.createdAt}`}
-                  />
-                </ListItem>
-              </Link>
-            ))}
-          </List>
-        </Card>
-        <Pager
           totalCount={props.threadCount}
           perPage={threadListInfo.perPage}
+          secondaryKey="updatedAt"
+          handlePager={(selectedPage) => setUpdatedThreadsPage(selectedPage)}
+        />
+        <ThreadList
+          threads={newThreads}
+          title="新着スレッド"
           page={newThreadsPage}
-          handlePager={(selectedPage) => handlePager(selectedPage, setNewThreadsPage)}
+          totalCount={props.threadCount}
+          perPage={threadListInfo.perPage}
+          secondaryKey="createdAt"
+          handlePager={(selectedPage) => setNewThreadsPage(selectedPage)}
         />
       </Container>
     </>
