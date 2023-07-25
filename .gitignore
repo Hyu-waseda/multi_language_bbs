@@ -3,6 +3,9 @@
 memo
 latex
 
+**.DS_store
+
+tmp**
 
 # database
 
@@ -16,6 +19,13 @@ auto.cnf
 ib_buffer_pool
 ibdata1
 ibtmp1
+
+# Ignore modified database files
+database/\#ib_16384_0.dblwr
+database/\#innodb_redo/\#ib_redo11
+database/\#innodb_temp/temp_*.ibt
+database/undo_*
+
 
 # Ignore SQL dump files
 init.sql

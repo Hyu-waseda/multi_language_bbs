@@ -1,11 +1,14 @@
 from typing import Optional
+from src.enums.sort_option import SortOption
 from src.infrastructure.thread_infrastructure import ThreadInfrastructure
 from pydantic import BaseModel
 
 
 class Params(BaseModel):
+    offset: Optional[int]
     count: Optional[int]
     thread_id: Optional[int]
+    sort: SortOption
 
 
 class ThreadApplication:
@@ -42,15 +45,20 @@ class ThreadApplication:
         """
         thread_infrastructure = ThreadInfrastructure()
 
-        # スレッド数が指定されている場合、指定数のスレッドを返す
-        if self.params["count"] is not None:
-            threads = thread_infrastructure.fetch_threads_by_count(
-                self.params["count"])
-            res = self.__format_thread_data(threads=threads)
-        # スレッド数が指定されていない場合、全てのスレッドを返す
-        else:
-            threads = thread_infrastructure.fetch_all_threads()
-            res = self.__format_thread_data(threads=threads)
+        if self.params["sort"] == SortOption.new:
+            if self.params["count"] == 0:
+                threads = thread_infrastructure.fetch_all_threads_sorted_by_created_at()
+            else:
+                threads = thread_infrastructure.fetch_threads_by_offset_sorted_by_created_at(
+                    offset=self.params["offset"], count=self.params["count"])
+        elif self.params["sort"] == SortOption.update:
+            if self.params["count"] == 0:
+                threads = thread_infrastructure.fetch_all_threads_sorted_by_updated_at()
+            else:
+                threads = thread_infrastructure.fetch_threads_by_offset_sorted_by_updated_at(
+                    offset=self.params["offset"], count=self.params["count"])
+
+        res = self.__format_thread_data(threads=threads)
         return res
 
     def get_specific_thread(self):
@@ -65,3 +73,11 @@ class ThreadApplication:
             self.params["thread_id"])
         res = self.__format_thread_data(threads=[thread_data])
         return res
+
+    def get_thread_count(self):
+        """
+        スレッドの総数を取得する関数
+        """
+        thread_infrastructure = ThreadInfrastructure()
+        thread_count = thread_infrastructure.fetch_thread_count()
+        return thread_count
