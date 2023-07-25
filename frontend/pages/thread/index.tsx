@@ -21,6 +21,7 @@ import "moment-timezone";
 import { ThreadData } from "../../interfaces/ThreadData";
 import { useState } from "react";
 import { Header } from "../../components/organisms/Header/Header";
+import Footer from "../../components/organisms/Footer/Footer";
 
 interface Props {
   threadId: string;
@@ -40,7 +41,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   // fetchCommentData 開始時間
   const fetchCommentDataStartTime = Date.now();
   // const comments: CommentData[] = await fetchCommentData(threadId, false, lang);
-  const comments: CommentData[] = await fetchCommentData(threadId, false, langCookie);
+  const comments: CommentData[] = await fetchCommentData(
+    threadId,
+    false,
+    langCookie
+  );
   // fetchCommentData 終了時間
   const fetchCommentDataEndTime = Date.now();
   // fetchCommentData の経過時間（ミリ秒）
@@ -214,6 +219,7 @@ const Thread: NextPage<Props> = (props) => {
           </Box>
         </Box>
       </Container>
+      <Footer />
     </>
   );
 };
