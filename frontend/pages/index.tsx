@@ -8,6 +8,7 @@ import {
   fetchUpdatedThreadData,
 } from "../utils/api";
 import { Header } from "../components/organisms/Header/Header";
+import Footer from "../components/organisms/Footer/Footer";
 import ThreadList from "../components/organisms/ThreadList/ThreadList";
 
 interface Props {
@@ -99,6 +100,7 @@ const Home: NextPage<Props> = (props) => {
           handlePager={(selectedPage) => setNewThreadsPage(selectedPage)}
         />
       </Container>
+      <Footer/>
     </>
   );
 };
