@@ -3,6 +3,9 @@
 memo
 latex
 
+**.DS_store
+
+tmp**
 
 # database
 
