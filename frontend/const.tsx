@@ -1,3 +1,9 @@
+// 各ページのURL
+export const PAGE_URL = {
+  HOME: "/",
+  THREAD: "/thread",
+};
+
 // 各APIのエンドポイント
 export const API = {
   ENDPOINT: {

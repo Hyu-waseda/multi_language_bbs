@@ -11,9 +11,10 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import React from "react";
 import styles from "./Header.module.scss";
-import { LANGUAGES } from "../../../const";
+import { LANGUAGES, PAGE_URL } from "../../../const";
 import { createURL } from "../../../utils/createUrl";
 import Cookies from "js-cookie";
+import Link from "next/link";
 
 interface HeaderProps {
   lang: string;
@@ -37,7 +38,9 @@ export const Header: React.FC<HeaderProps> = (props) => {
         <IconButton edge="start" color="inherit" aria-label="menu">
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6">ヘッダータイトル</Typography>
+        <Link href={PAGE_URL.HOME}>
+          <Typography variant="h6">The Channel</Typography>
+        </Link>
 
         <FormControl className={styles.formControl}>
           <InputLabel id="language-select-label" className={styles.inputLabel}>

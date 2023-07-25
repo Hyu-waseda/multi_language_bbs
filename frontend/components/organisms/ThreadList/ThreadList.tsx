@@ -10,6 +10,7 @@ import { ThreadData } from "../../../interfaces/ThreadData";
 import { createURL } from "../../../utils/createUrl";
 import Link from "next/link";
 import Pager from "../Pager/Pager";
+import { PAGE_URL } from "../../../const";
 
 interface Props {
   threads: ThreadData[];
@@ -23,12 +24,10 @@ interface Props {
 
 const ThreadList: React.FC<Props> = (props) => {
   const createUrlToThread = (threadId: string): string => {
-    // TODO: 丸め込み
-    const threadPath = "/thread";
     const currentParams = new URLSearchParams();
     // TODO: 丸め込み
     currentParams.set("threadId", threadId);
-    const newUrl = createURL(threadPath, currentParams);
+    const newUrl = createURL(PAGE_URL.THREAD, currentParams);
     return newUrl;
   };
   return (
