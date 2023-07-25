@@ -1,36 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { ThreadData } from "../interfaces/ThreadData";
-import Link from "next/link";
-import {
-  Card,
-  Container,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-} from "@mui/material";
+import { Container } from "@mui/material";
 import { GetServerSideProps, NextPage } from "next";
-import { fetchLatestThreadData, fetchThreadCount } from "../utils/api";
-import { createURL } from "../utils/createUrl";
+import {
+  fetchNewThreadData,
+  fetchThreadCount,
+  fetchUpdatedThreadData,
+} from "../utils/api";
 import { Header } from "../components/organisms/Header/Header";
-import Pager from "../components/organisms/Pager/Pager";
+import ThreadList from "../components/organisms/ThreadList/ThreadList";
 
 interface Props {
-  resultLatestThreads: ThreadData[];
+  resultNewThreads: ThreadData[];
+  resultUpdatedThreads: ThreadData[];
   threadCount: number;
   langCookie: string;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const latestThreads: ThreadData[] = await fetchLatestThreadData(1, 5, false);
+  // TODO: 丸め込み
+  const newThreads: ThreadData[] = await fetchNewThreadData(1, 5, false);
+  const updatedThreads: ThreadData[] = await fetchUpdatedThreadData(
+    1,
+    5,
+    false
+  );
   const threadCount = await fetchThreadCount();
   const { req } = context;
   const langCookie = req.cookies.selectedLanguage || "original";
 
   return {
     props: {
-      resultLatestThreads: latestThreads,
+      resultNewThreads: newThreads,
+      resultUpdatedThreads: updatedThreads,
       threadCount: threadCount,
       langCookie,
     },
@@ -38,65 +40,63 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const Home: NextPage<Props> = (props) => {
-  const latestThreadsInfo = { perPage: 5 };
-  const [latestThreads, setLatestThreads] = useState<ThreadData[]>(
-    props.resultLatestThreads
+  const threadListInfo = { perPage: 5 };
+  const [newThreads, setNewThreads] = useState<ThreadData[]>(
+    props.resultNewThreads
   );
-  const createUrlToThread = (threadId: string): string => {
-    // TODO: 丸め込み
-    const threadPath = "/thread";
-    const currentParams = new URLSearchParams();
-    // lang パラメーターを更新
-    currentParams.set("threadId", threadId);
-    const newUrl = createURL(threadPath, currentParams);
-    return newUrl;
-  };
-
-  const [page, setPage] = useState<number>(1);
-  const handlePager = (selsectedPage: number) => {
-    setPage(selsectedPage);
-  };
+  const [newThreadsPage, setNewThreadsPage] = useState<number>(1);
+  const [updatedThreads, setUpdatedThreads] = useState<ThreadData[]>(
+    props.resultUpdatedThreads
+  );
+  const [updatedThreadsPage, setUpdatedThreadsPage] = useState<number>(1);
 
   useEffect(() => {
     const fetchData = async () => {
-      const newLatestThreads: ThreadData[] = await fetchLatestThreadData(
-        page,
-        latestThreadsInfo.perPage,
+      const resultNewThreads: ThreadData[] = await fetchNewThreadData(
+        newThreadsPage,
+        threadListInfo.perPage,
         true
       );
-      setLatestThreads(newLatestThreads);
+      setNewThreads(resultNewThreads);
     };
 
     fetchData();
-  }, [page, latestThreadsInfo.perPage]);
+  }, [newThreadsPage, threadListInfo.perPage]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const resultUpdatedThreads: ThreadData[] = await fetchUpdatedThreadData(
+        updatedThreadsPage,
+        threadListInfo.perPage,
+        true
+      );
+      setUpdatedThreads(resultUpdatedThreads);
+    };
+
+    fetchData();
+  }, [updatedThreadsPage, threadListInfo.perPage]);
+
   return (
     <>
       <Header lang={props.langCookie} />
       <Container maxWidth="md">
-        <Typography variant="h4">最新スレッド一覧</Typography>
-        <Divider />
-        <Card>
-          <List>
-            {latestThreads.map((thread) => (
-              <Link
-                key={thread.title}
-                href={createUrlToThread(String(thread.threadID))}
-              >
-                <ListItem>
-                  <ListItemText
-                    primary={thread.title}
-                    secondary={`作成日：${thread.updatedAt}`}
-                  />
-                </ListItem>
-              </Link>
-            ))}
-          </List>
-        </Card>
-        <Pager
+        <ThreadList
+          threads={updatedThreads}
+          title="最新更新スレッド"
+          page={updatedThreadsPage}
           totalCount={props.threadCount}
-          perPage={latestThreadsInfo.perPage}
-          page={page}
-          handlePager={handlePager}
+          perPage={threadListInfo.perPage}
+          secondaryKey="updatedAt"
+          handlePager={(selectedPage) => setUpdatedThreadsPage(selectedPage)}
+        />
+        <ThreadList
+          threads={newThreads}
+          title="新着スレッド"
+          page={newThreadsPage}
+          totalCount={props.threadCount}
+          perPage={threadListInfo.perPage}
+          secondaryKey="createdAt"
+          handlePager={(selectedPage) => setNewThreadsPage(selectedPage)}
         />
       </Container>
     </>

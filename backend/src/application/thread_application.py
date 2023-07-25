@@ -1,4 +1,5 @@
 from typing import Optional
+from src.enums.sort_option import SortOption
 from src.infrastructure.thread_infrastructure import ThreadInfrastructure
 from pydantic import BaseModel
 
@@ -7,6 +8,7 @@ class Params(BaseModel):
     offset: Optional[int]
     count: Optional[int]
     thread_id: Optional[int]
+    sort: SortOption
 
 
 class ThreadApplication:
@@ -43,13 +45,18 @@ class ThreadApplication:
         """
         thread_infrastructure = ThreadInfrastructure()
 
-        # オフセットが指定されている場合、指定されたオフセットから指定された数のスレッドを取得します
-        if self.params["offset"] is not None:
-            threads = thread_infrastructure.fetch_threads_by_offset(
-                self.params["offset"], self.params["count"])
-        # オフセットが指定されていない場合、全てのスレッドを取得します
-        else:
-            threads = thread_infrastructure.fetch_all_threads()
+        if self.params["sort"] == SortOption.new:
+            if self.params["count"] == 0:
+                threads = thread_infrastructure.fetch_all_threads_sorted_by_created_at()
+            else:
+                threads = thread_infrastructure.fetch_threads_by_offset_sorted_by_created_at(
+                    offset=self.params["offset"], count=self.params["count"])
+        elif self.params["sort"] == SortOption.update:
+            if self.params["count"] == 0:
+                threads = thread_infrastructure.fetch_all_threads_sorted_by_updated_at()
+            else:
+                threads = thread_infrastructure.fetch_threads_by_offset_sorted_by_updated_at(
+                    offset=self.params["offset"], count=self.params["count"])
 
         res = self.__format_thread_data(threads=threads)
         return res
