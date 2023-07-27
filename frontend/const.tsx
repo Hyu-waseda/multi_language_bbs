@@ -2,6 +2,8 @@
 export const PAGE_URL = {
   HOME: "/",
   THREAD: "/thread",
+  THREAD_CREATE: "/thread/create",
+  HELP: "/help"
 };
 
 // 各APIのエンドポイント
