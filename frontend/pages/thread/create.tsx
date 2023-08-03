@@ -5,6 +5,7 @@ import { Container, Typography, TextField, Button, Box } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useCookie } from "../../utils/useCookie";
 import { ThreadFormValues } from "../../interfaces/ThreadFormValues";
+import { sendThreadData } from "../../utils/api";
 
 const ThreadCreate: NextPage = () => {
   // Cookieから現在の言語設定を取得
@@ -27,8 +28,14 @@ const ThreadCreate: NextPage = () => {
   };
 
   // フォーム送信時の処理
-  const onSubmit = (data: ThreadFormValues) => {
-    console.log(data);
+  const onSubmit = async (data: ThreadFormValues) => {
+    await sendThreadData(
+      data.title,
+      "10",
+      data.author,
+      data.description,
+      langCookie
+    );
     reset();
   };
 
