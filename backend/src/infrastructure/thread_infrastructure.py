@@ -114,3 +114,33 @@ class ThreadInfrastructure:
         except Exception as e:
             raise HTTPException(
                 status_code=500, detail="スレッドの更新日時の更新に失敗しました。update_thread_updated_at: " + str(e))
+        
+    def create_thread(self, thread_data):
+        query = """
+            INSERT INTO threads (Title, CreatedAt, UpdatedAt, UserID, UserName, Content, Language, Views, Likes, Tags, CategoryID, ImageURL)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+        """
+
+
+        params = (
+            thread_data["Title"],
+            thread_data["CreatedAt"],
+            thread_data["UpdatedAt"],
+            int(thread_data["UserID"]),
+            thread_data["UserName"],
+            thread_data["Content"],
+            thread_data["Language"],
+            int(thread_data["Views"]),
+            int(thread_data["Likes"]),
+            thread_data["Tags"],
+            thread_data["CategoryID"],
+            thread_data["ImageURL"],
+        )
+
+        try:
+            self.database_manager.execute_query(query, params)
+            res = thread_data
+        except Exception as e:
+            raise HTTPException(
+                status_code=500, detail="スレッドの作成に失敗しました。create_thread: " + str(e))
+        return res
