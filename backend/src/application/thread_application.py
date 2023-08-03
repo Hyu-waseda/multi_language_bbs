@@ -1,4 +1,7 @@
+from datetime import datetime
 from typing import Optional
+
+import pytz
 from src.enums.sort_option import SortOption
 from src.infrastructure.thread_infrastructure import ThreadInfrastructure
 from pydantic import BaseModel
@@ -8,7 +11,20 @@ class Params(BaseModel):
     offset: Optional[int]
     count: Optional[int]
     thread_id: Optional[int]
-    sort: SortOption
+    sort: Optional[SortOption]
+    title: Optional[str]
+    user_id: Optional[str]
+    user_name: Optional[str]
+    content: Optional[str]
+    language: Optional[str]
+
+
+class PostParams(BaseModel):
+    title: str
+    user_id: int
+    user_name: str
+    content: str
+    language: str
 
 
 class ThreadApplication:
@@ -81,3 +97,34 @@ class ThreadApplication:
         thread_infrastructure = ThreadInfrastructure()
         thread_count = thread_infrastructure.fetch_thread_count()
         return thread_count
+
+    def create_thread(self, params: PostParams):
+        """
+        スレッドを作成する関数
+
+        :params: リクエストパラメータ
+        :return: 作成されたスレッドの情報
+        """
+        now = datetime.now(pytz.utc)
+
+        # 指定された形式にフォーマット
+        formatted_time = now.strftime("%Y-%m-%d %H:%M:%S")
+        new_thread = {
+            "Title": params["title"],
+            "CreatedAt": formatted_time,
+            "UpdatedAt": formatted_time,
+            "UserID": params["user_id"],
+            "UserName": params["user_name"],
+            "Content": params["content"],
+            "Language": params["language"],
+            "Views": 0,
+            "Likes": 0,
+            "Tags": "",
+            "CategoryID": 0,
+            "ImageURL": "",
+        }
+        thread_infrastructure = ThreadInfrastructure()
+        res = thread_infrastructure.create_thread(
+            thread_data=new_thread)
+
+        return res

@@ -119,3 +119,24 @@ export const sendCommentData = async (
   );
   return await sendData(url);
 };
+
+export const sendThreadData = async (
+  title: string,
+  userId: string,
+  userName: string,
+  content: string,
+  language: string
+) => {
+  const params = {
+    title: title,
+    user_id: userId,
+    user_name: userName,
+    content: content,
+    language: language,
+  };
+  const url = createUrlWithParams(
+    `${baseURLClient}${API.ENDPOINT.THREAD}`,
+    params
+  );
+  return await sendData(url);
+};

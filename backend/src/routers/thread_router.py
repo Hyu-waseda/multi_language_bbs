@@ -41,3 +41,31 @@ async def get_specific_thread(thread_id: str = Path(..., description="取得す�
     thread_application = ThreadApplication(params=params)
     res = thread_application.get_specific_thread()
     return res
+
+@router.post("/thread")
+async def create_thread(
+    title: str = Query(..., description="スレッドのタイトル"),
+    user_id: int = Query(..., description="ユーザーID"),
+    user_name: str = Query(..., description="ユーザー名"),
+    content: str = Query(..., description="スレッドの内容"),
+    language: str = Query(..., description="言語"),
+):
+    """
+    スレッドを作成するAPI
+
+    title: スレッドのタイトル
+    user_id: ユーザーID
+    user_name: ユーザー名
+    content: スレッドの内容
+    language: 言語
+    """
+    thread = {
+        "title": title,
+        "user_id": user_id,
+        "user_name": user_name,
+        "content": content,
+        "language": language,
+    }
+    thread_application = ThreadApplication(thread)
+    created_thread = thread_application.create_thread(thread)
+    return created_thread
