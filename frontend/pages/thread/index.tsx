@@ -21,7 +21,6 @@ import "moment-timezone";
 import { ThreadData } from "../../interfaces/ThreadData";
 import { useState } from "react";
 import { Header } from "../../components/organisms/Header/Header";
-import Footer from "../../components/organisms/Footer/Footer";
 
 interface Props {
   threadId: string;
@@ -219,7 +218,6 @@ const Thread: NextPage<Props> = (props) => {
           </Box>
         </Box>
       </Container>
-      <Footer />
     </>
   );
 };

@@ -8,8 +8,8 @@ import {
   fetchUpdatedThreadData,
 } from "../utils/api";
 import { Header } from "../components/organisms/Header/Header";
-import Footer from "../components/organisms/Footer/Footer";
 import ThreadList from "../components/organisms/ThreadList/ThreadList";
+import styles from "../styles/index.module.scss";
 
 interface Props {
   resultNewThreads: ThreadData[];
@@ -80,7 +80,7 @@ const Home: NextPage<Props> = (props) => {
   return (
     <>
       <Header lang={props.langCookie} />
-      <Container maxWidth="md">
+      <Container maxWidth="md" className={styles.container}>
         <ThreadList
           threads={updatedThreads}
           title="最新更新スレッド"
@@ -100,7 +100,6 @@ const Home: NextPage<Props> = (props) => {
           handlePager={(selectedPage) => setNewThreadsPage(selectedPage)}
         />
       </Container>
-      <Footer/>
     </>
   );
 };

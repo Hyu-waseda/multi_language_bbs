@@ -1,6 +1,5 @@
 import { NextPage } from "next";
 import { Header } from "../../components/organisms/Header/Header";
-import Footer from "../../components/organisms/Footer/Footer";
 import { Container, Typography, TextField, Button, Box } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useCookie } from "../../utils/useCookie";
@@ -91,7 +90,6 @@ const ThreadCreate: NextPage = () => {
           </Box>
         </form>
       </Container>
-      <Footer />
     </>
   );
 };

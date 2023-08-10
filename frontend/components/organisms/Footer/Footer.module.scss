@@ -1,17 +1,19 @@
 @import "../../../styles/variables";
 
 .footerContainer {
-  background-color: $color-white-primary;
-  margin-top: 20px;
-  padding: 30px 0 10px 0;
+  flex-grow: 0; 
+  flex-shrink: 0; 
+  margin-top: auto;
+  padding: 30px 0 30px 0;
   text-align: center;
   border-top: solid 1px $color-black-tertiary;
+  background-color: $color-white-primary;
 }
 
 .footerLink {
-  color: $color-black-primary;
   margin: 5px;
   border-bottom: none;
+  color: $color-black-primary;
   text-decoration: none;
   &:hover {
     color: $color-blue-primary;
@@ -19,6 +21,6 @@
 }
 
 .footerCopyright {
-  color: $color-black-primary;
   margin: 20px 0 0 0;
+  color: $color-black-primary;
 }
