@@ -25,6 +25,8 @@ class DatabaseManager:
             self.db.commit()
             return result
         except mysql.connector.Error as e:
-            error_msg = f"データベースエラー: {str(e)}"
-            raise HTTPException(status_code=500, detail=error_msg)
+            error_msg = f"データベースエラー: errno={e.errno}, msg={e.msg}"
+            print(error_msg)
+            # データベースエラーが発生した場合は、例外を再度投げる
+            raise e
 
