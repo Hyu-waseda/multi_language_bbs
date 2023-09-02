@@ -40,3 +40,4 @@ services:
       - "80:80"
     depends_on:
       - frontend
+      - backend
