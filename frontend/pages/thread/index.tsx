@@ -21,6 +21,8 @@ import "moment-timezone";
 import { ThreadData } from "../../interfaces/ThreadData";
 import { useState } from "react";
 import { Header } from "../../components/organisms/Header/Header";
+import Footer from "../../components/organisms/Footer/Footer";
+import TextWithNewLines from "../../components/Atoms/TextWithNewLines/TextWithNewLines";
 
 interface Props {
   threadId: string;
@@ -174,7 +176,7 @@ const Thread: NextPage<Props> = (props) => {
                       {/* コメント本文 */}
                       <Box>
                         <Typography variant="body1">
-                          {comment.content}
+                          <TextWithNewLines text={comment.content} />
                         </Typography>
                       </Box>
                     </CardContent>
