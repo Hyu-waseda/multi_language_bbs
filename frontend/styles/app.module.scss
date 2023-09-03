@@ -1,0 +1,12 @@
+@import "../styles/variables";
+
+.appContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.contentWrapper {
+  margin-bottom: 20px;
+}

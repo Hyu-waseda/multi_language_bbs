@@ -220,7 +220,6 @@ const Thread: NextPage<Props> = (props) => {
           </Box>
         </Box>
       </Container>
-      <Footer />
     </>
   );
 };

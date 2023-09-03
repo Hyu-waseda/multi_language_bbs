@@ -117,7 +117,7 @@ class ThreadInfrastructure:
         
     def create_thread(self, thread_data):
         query = """
-            INSERT INTO threads (Title, CreatedAt, UpdatedAt, UserID, UserName, Content, Language, Views, Likes, Tags, CategoryID, ImageURL)
+            INSERT INTO Threads (Title, CreatedAt, UpdatedAt, UserID, UserName, Content, Language, Views, Likes, Tags, CategoryID, ImageURL)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
         """
 

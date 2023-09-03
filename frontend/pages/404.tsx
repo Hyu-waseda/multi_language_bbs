@@ -3,7 +3,6 @@ import { Box, Typography, Button } from "@mui/material";
 import Link from "next/link";
 import { Header } from "../components/organisms/Header/Header";
 import { PAGE_URL } from "../const";
-import Footer from "../components/organisms/Footer/Footer";
 import styles from "../styles/404.module.scss";
 import { useCookie } from "../utils/useCookie";
 
@@ -27,7 +26,6 @@ const NotFoundPage: React.FC = () => {
           </Button>
         </Link>
       </Box>
-      <Footer />
     </>
   );
 };

@@ -6,7 +6,9 @@ import {
   LanguageContextData,
 } from "../contexts/UserLanguageContext";
 import { useState } from "react";
-
+import styles from "../styles/app.module.scss";
+import { Box } from "@mui/material";
+import Footer from "../components/organisms/Footer/Footer";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [userLanguage, setUserLanguage] = useState<string>("original");
@@ -17,9 +19,14 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
 
   return (
-    <UserLanguageContext.Provider value={languageContextValue}>
-      <Component {...pageProps} />
-    </UserLanguageContext.Provider>
+    <div className={styles.appContainer}>
+      <UserLanguageContext.Provider value={languageContextValue}>
+        <Box className={styles.contentWrapper}>
+          <Component {...pageProps} />
+        </Box>
+        <Footer />
+      </UserLanguageContext.Provider>
+    </div>
   );
 }
 
