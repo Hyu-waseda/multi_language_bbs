@@ -10,4 +10,4 @@ RUN pip install --upgrade -r requirements.txt
 
 EXPOSE 8080
 
-CMD ["uvicorn", "src.main:app", "--reload", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["uvicorn", "src.main:app", "--reload", "--host", "0.0.0.0", "--port", "8080", "--ws", "websockets"]

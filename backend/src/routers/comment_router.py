@@ -6,7 +6,7 @@ from pydantic import BaseModel
 router = APIRouter()
 
 
-@router.get("/comment")
+@router.get("/api/comment")
 async def get_comment(thread_id: Optional[str] = Query(None, description="コメントを取得するスレッドID"),
                       lang: Optional[str] = Query("original", description="翻訳先言語")):
     """
@@ -27,7 +27,7 @@ class CommentCreateRequest(BaseModel):
     user_name: str
 
 
-@router.post("/comment")
+@router.post("/api/comment")
 async def create_comment(
     thread_id: int = Query(..., description="スレッドID"),
     user_id: int = Query(..., description="ユーザーID"),

@@ -6,14 +6,18 @@ app = FastAPI()
 
 # アクセス許可する先
 # TODO: 公開ドメインに変更する必要あり
-origins = [
-    "http://localhost:3000",
-    # "http://localhost:3000/thread",
-]
+# origins = [
+#     "http://localhost:3000",
+#     "http://www.waseda-nishimura.org/api",
+#     "http://www.waseda-nishimura.org",
+#     "http://backend:8080",
+#     # "http://localhost:3000/thread",
+# ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    # allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
