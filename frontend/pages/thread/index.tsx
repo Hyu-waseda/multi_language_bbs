@@ -136,7 +136,7 @@ const Thread: NextPage<Props> = (props) => {
         </Box>
         {/* コメント表示 */}
         <Box mt={3}>
-          {props.comments?.length === 0 ? (
+          {comments?.length === 0 ? (
             <Typography variant="body1">またコメントはありません。</Typography>
           ) : (
             <Grid container spacing={3}>
