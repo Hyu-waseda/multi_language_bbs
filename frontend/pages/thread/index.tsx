@@ -24,6 +24,7 @@ import TextWithNewLines from "../../components/Atoms/TextWithNewLines/TextWithNe
 import CustomTextField from "../../components/Atoms/CustomTextField/CustomTextField";
 import { useForm } from "react-hook-form";
 import { CommentFormValues } from "../../interfaces/CommentFormValues";
+import { FormField } from "../../interfaces/FormField";
 
 interface Props {
   threadId: string;
@@ -106,13 +107,18 @@ const Thread: NextPage<Props> = (props) => {
     setComments(newCommentsData);
   };
 
-  // コメントフォーム用
+  // コメント投稿フォーム用
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm<CommentFormValues>();
+
+  const commentFormFields: FormField[] = [
+    { name: "author", label: "作成者名", rows: 1 },
+    { name: "comment", label: "コメント", rows: 4 },
+  ];
 
   return (
     <>
@@ -182,29 +188,21 @@ const Thread: NextPage<Props> = (props) => {
 
         {/* コメント入力フォーム */}
         <form onSubmit={handleSubmit(handleCommentSubmit)}>
-          <Box mt={3}>
-            <Box mt={2}>
+          {commentFormFields.map((field) => (
+            <Box key={field.name} mt={1.5}>
               <CustomTextField
-                name="author"
-                label="作成者名"
+                name={field.name}
+                label={field.label}
                 register={register}
                 errors={errors}
+                rows={field.rows}
               />
             </Box>
-            <Box mt={1.5}>
-              <CustomTextField
-                name="comment"
-                label="コメント"
-                register={register}
-                errors={errors}
-                rows={4}
-              />
-            </Box>
-            <Box textAlign="right" mt={1}>
-              <Button variant="contained" color="primary" type="submit">
-                送信
-              </Button>
-            </Box>
+          ))}
+          <Box textAlign="right" mt={1}>
+            <Button variant="contained" color="primary" type="submit">
+              送信
+            </Button>
           </Box>
         </form>
       </Container>

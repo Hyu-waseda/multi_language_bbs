@@ -1,22 +1,16 @@
 import React from "react";
 import { TextField } from "@mui/material";
-import { DeepPartial, UseFormRegister } from "react-hook-form";
-import { CommentFormValues } from "../../../interfaces/CommentFormValues";
-import { ThreadFormValues } from "../../../interfaces/ThreadFormValues";
 
-type FormData = DeepPartial<CommentFormValues & ThreadFormValues>;
-type FormFields = keyof FormData;
-
-interface TextFieldProps {
-  name: FormFields;
+interface props {
+  name: string;
   label: string;
   // registerとerrorsは複雑になりすぎるためany
   register: any;
   errors: any;
-  rows?: number;
+  rows: number;
 }
 
-const CustomTextField: React.FC<TextFieldProps> = (props) => {
+const CustomTextField: React.FC<props> = (props) => {
   // Enterキーでの送信を防止するための関数
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
@@ -38,7 +32,7 @@ const CustomTextField: React.FC<TextFieldProps> = (props) => {
       error={Boolean(props.errors[props.name])}
       helperText={props.errors[props.name]?.message}
       onKeyDown={handleKeyPress}
-      rows={props.rows || 1}
+      rows={props.rows}
       multiline
     />
   );
