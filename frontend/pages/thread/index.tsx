@@ -157,7 +157,7 @@ const Thread: NextPage<Props> = (props) => {
                           variant="h6"
                           className={styles.comment_username}
                         >
-                          {comment.userName}
+                          {comment.userName || "NO NAME"}
                         </Typography>
                         <Typography
                           variant="h6"
@@ -196,6 +196,7 @@ const Thread: NextPage<Props> = (props) => {
                 register={register}
                 errors={errors}
                 rows={field.rows}
+                isInputRequired={field.name === "author" ? false : true}
               />
             </Box>
           ))}
