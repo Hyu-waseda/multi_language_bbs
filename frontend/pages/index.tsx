@@ -87,7 +87,7 @@ const Home: NextPage<Props> = (props) => {
           page={updatedThreadsPage}
           totalCount={props.threadCount}
           perPage={threadListInfo.perPage}
-          secondaryKey="updatedAt"
+          sortOption="updatedAt"
           handlePager={(selectedPage) => setUpdatedThreadsPage(selectedPage)}
         />
         <ThreadList
@@ -96,7 +96,7 @@ const Home: NextPage<Props> = (props) => {
           page={newThreadsPage}
           totalCount={props.threadCount}
           perPage={threadListInfo.perPage}
-          secondaryKey="createdAt"
+          sortOption="createdAt"
           handlePager={(selectedPage) => setNewThreadsPage(selectedPage)}
         />
       </Container>

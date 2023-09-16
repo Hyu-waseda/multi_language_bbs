@@ -11,6 +11,7 @@ import { createURL } from "../../../utils/createUrl";
 import Link from "next/link";
 import Pager from "../Pager/Pager";
 import { PAGE_URL } from "../../../const";
+import { convertUtcToUserTimezone } from "../../../utils/convertUtcUserTimezone";
 
 interface Props {
   threads: ThreadData[];
@@ -19,7 +20,7 @@ interface Props {
   totalCount: number;
   perPage: number;
   handlePager: (selectedPage: number) => void;
-  secondaryKey: "createdAt" | "updatedAt";
+  sortOption: "createdAt" | "updatedAt";
 }
 
 const ThreadList: React.FC<Props> = (props) => {
@@ -44,9 +45,10 @@ const ThreadList: React.FC<Props> = (props) => {
               <ListItem>
                 <ListItemText
                   primary={thread.title}
+                  // TODO: ユーザのタイムゾーン予測など
                   secondary={`${
-                    props.secondaryKey === "createdAt" ? "作成日：" : "更新日："
-                  }${thread[props.secondaryKey]}`}
+                    props.sortOption === "createdAt" ? "作成日：" : "更新日："
+                  }${convertUtcToUserTimezone(thread[props.sortOption])}`}
                 />
               </ListItem>
             </Link>
