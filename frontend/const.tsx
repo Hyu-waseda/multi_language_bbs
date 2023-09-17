@@ -3,7 +3,7 @@ export const PAGE_URL = {
   HOME: "/",
   THREAD: "/thread",
   THREAD_CREATE: "/thread/create",
-  HELP: "/help"
+  HELP: "/help",
 };
 
 // 各APIのエンドポイント
@@ -150,3 +150,8 @@ export const LANGUAGES = [
   { code: "yo", language: "yoruba", languageCapitalized: "Yoruba" },
   { code: "zu", language: "zulu", languageCapitalized: "Zulu" },
 ];
+
+export enum SORT_OPTIONS {
+  UPDATED = "updatedAt",
+  CREATED = "createdAt",
+}

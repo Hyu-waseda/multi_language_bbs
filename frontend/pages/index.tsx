@@ -10,6 +10,7 @@ import {
 import { Header } from "../components/organisms/Header/Header";
 import ThreadList from "../components/organisms/ThreadList/ThreadList";
 import styles from "../styles/index.module.scss";
+import { SORT_OPTIONS } from "../const";
 
 interface Props {
   resultNewThreads: ThreadData[];
@@ -87,7 +88,7 @@ const Home: NextPage<Props> = (props) => {
           page={updatedThreadsPage}
           totalCount={props.threadCount}
           perPage={threadListInfo.perPage}
-          secondaryKey="updatedAt"
+          sortOption={SORT_OPTIONS.UPDATED}
           handlePager={(selectedPage) => setUpdatedThreadsPage(selectedPage)}
         />
         <ThreadList
@@ -96,7 +97,7 @@ const Home: NextPage<Props> = (props) => {
           page={newThreadsPage}
           totalCount={props.threadCount}
           perPage={threadListInfo.perPage}
-          secondaryKey="createdAt"
+          sortOption={SORT_OPTIONS.CREATED}
           handlePager={(selectedPage) => setNewThreadsPage(selectedPage)}
         />
       </Container>

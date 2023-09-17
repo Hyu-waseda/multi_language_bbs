@@ -15,7 +15,6 @@ import {
   fetchSpecificThreadData,
   sendCommentData,
 } from "../../utils/api";
-import moment from "moment";
 import "moment-timezone";
 import { ThreadData } from "../../interfaces/ThreadData";
 import { useState } from "react";
@@ -25,6 +24,7 @@ import CustomTextField from "../../components/Atoms/CustomTextField/CustomTextFi
 import { useForm } from "react-hook-form";
 import { CommentFormValues } from "../../interfaces/CommentFormValues";
 import { FormField } from "../../interfaces/FormField";
+import { convertUtcToUserTimezone } from "../../utils/convertUtcUserTimezone";
 
 interface Props {
   threadId: string;
@@ -82,17 +82,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 
 const Thread: NextPage<Props> = (props) => {
   const [comments, setComments] = useState<CommentData[]>(props.comments);
-  // TODO: ユーザのタイムゾーン予測など
-  const userTimezone = "Asia/Tokyo";
-
-  const convertUtcToUserTimezone = (
-    utcDateString: string,
-    userTimezone: string
-  ): string => {
-    const utcDate = moment.utc(utcDateString);
-    const userDate = utcDate.tz(userTimezone).format("YYYY-MM-DD HH:mm:ss");
-    return userDate;
-  };
 
   // コメント送信ハンドラ
   const handleCommentSubmit = async (data: CommentFormValues) => {
@@ -163,10 +152,7 @@ const Thread: NextPage<Props> = (props) => {
                           variant="h6"
                           className={styles.comment_created_at}
                         >
-                          {convertUtcToUserTimezone(
-                            comment.createdAt,
-                            userTimezone
-                          )}
+                          {convertUtcToUserTimezone(comment.createdAt)}
                         </Typography>
                         <Typography variant="h6">
                           {`ID: ${comment.userID}`}
