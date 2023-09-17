@@ -10,7 +10,7 @@ import { ThreadData } from "../../../interfaces/ThreadData";
 import { createURL } from "../../../utils/createUrl";
 import Link from "next/link";
 import Pager from "../Pager/Pager";
-import { PAGE_URL } from "../../../const";
+import { PAGE_URL, SORT_OPTIONS } from "../../../const";
 import { convertUtcToUserTimezone } from "../../../utils/convertUtcUserTimezone";
 
 interface Props {
@@ -20,7 +20,7 @@ interface Props {
   totalCount: number;
   perPage: number;
   handlePager: (selectedPage: number) => void;
-  sortOption: "createdAt" | "updatedAt";
+  sortOption: SORT_OPTIONS;
 }
 
 const ThreadList: React.FC<Props> = (props) => {
@@ -47,7 +47,9 @@ const ThreadList: React.FC<Props> = (props) => {
                   primary={thread.title}
                   // TODO: ユーザのタイムゾーン予測など
                   secondary={`${
-                    props.sortOption === "createdAt" ? "作成日：" : "更新日："
+                    props.sortOption === SORT_OPTIONS.CREATED
+                      ? "作成日："
+                      : "更新日："
                   }${convertUtcToUserTimezone(thread[props.sortOption])}`}
                 />
               </ListItem>

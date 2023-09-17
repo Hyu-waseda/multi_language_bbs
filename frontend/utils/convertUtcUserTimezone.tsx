@@ -1,4 +1,5 @@
 import moment from "moment";
+import "moment-timezone";
 
 // TODO: ユーザのタイムゾーン予測など
 const userTimezone = "Asia/Tokyo";
