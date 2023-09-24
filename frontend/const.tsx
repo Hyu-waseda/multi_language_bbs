@@ -4,6 +4,10 @@ export const PAGE_URL = {
   THREAD: "/thread",
   THREAD_CREATE: "/thread/create",
   HELP: "/help",
+  PRIVACY_POLICY: "/privacy-policy",
+  TERMS_OF_SERVICE: "/terms-of-service",
+  DISCLAIMER: "/disclaimer",
+  CONTACT_US: "/contact-us",
 };
 
 // 各APIのエンドポイント

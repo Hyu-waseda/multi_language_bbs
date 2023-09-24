@@ -1,0 +1,10 @@
+@import "../../../styles/variables";
+
+.privacy_policy_link {
+  color: $color-blue-primary;
+  text-decoration: underline;
+
+  &:hover {
+    color: $color-blue-secondary;
+  }
+}
