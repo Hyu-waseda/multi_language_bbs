@@ -6,7 +6,6 @@ import {
   CardContent,
   Box,
   Grid,
-  TextField,
   Button,
 } from "@mui/material";
 import styles from "../../styles/thread.module.scss";
@@ -16,13 +15,16 @@ import {
   fetchSpecificThreadData,
   sendCommentData,
 } from "../../utils/api";
-import moment from "moment";
 import "moment-timezone";
 import { ThreadData } from "../../interfaces/ThreadData";
 import { useState } from "react";
 import { Header } from "../../components/organisms/Header/Header";
-import Footer from "../../components/organisms/Footer/Footer";
 import TextWithNewLines from "../../components/Atoms/TextWithNewLines/TextWithNewLines";
+import CustomTextField from "../../components/Atoms/CustomTextField/CustomTextField";
+import { useForm } from "react-hook-form";
+import { CommentFormValues } from "../../interfaces/CommentFormValues";
+import { FormField } from "../../interfaces/FormField";
+import { convertUtcToUserTimezone } from "../../utils/convertUtcUserTimezone";
 
 interface Props {
   threadId: string;
@@ -41,7 +43,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 
   // fetchCommentData 開始時間
   const fetchCommentDataStartTime = Date.now();
-  // const comments: CommentData[] = await fetchCommentData(threadId, false, lang);
   const comments: CommentData[] = await fetchCommentData(
     threadId,
     false,
@@ -81,38 +82,12 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 
 const Thread: NextPage<Props> = (props) => {
   const [comments, setComments] = useState<CommentData[]>(props.comments);
-  // TODO: ユーザのタイムゾーン予測など
-  const userTimezone = "Asia/Tokyo";
-
-  const convertUtcToUserTimezone = (
-    utcDateString: string,
-    userTimezone: string
-  ): string => {
-    const utcDate = moment.utc(utcDateString);
-    const userDate = utcDate.tz(userTimezone).format("YYYY-MM-DD HH:mm:ss");
-    return userDate;
-  };
-
-  // コメント入力フォームの状態管理
-  const [userName, setUserName] = useState<string>("");
-  const [comment, setComment] = useState<string>("");
-
-  // UserName入力フォームの変更ハンドラ
-  const handleUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUserName(event.target.value);
-  };
-
-  // Comment入力フォームの変更ハンドラ
-  const handleCommentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setComment(event.target.value);
-  };
 
   // コメント送信ハンドラ
-  const handleCommentSubmit = async () => {
+  const handleCommentSubmit = async (data: CommentFormValues) => {
     // TODO: UserIdを各ユーザーごとに
-    await sendCommentData(props.threadId, "10", userName, comment);
-    setUserName("");
-    setComment("");
+    await sendCommentData(props.threadId, "10", data.author, data.comment);
+    reset();
     const newCommentsData: CommentData[] = await fetchCommentData(
       props.threadId,
       true,
@@ -120,6 +95,19 @@ const Thread: NextPage<Props> = (props) => {
     );
     setComments(newCommentsData);
   };
+
+  // コメント投稿フォーム用
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<CommentFormValues>();
+
+  const commentFormFields: FormField[] = [
+    { name: "author", label: "作成者名", rows: 1 },
+    { name: "comment", label: "コメント", rows: 4 },
+  ];
 
   return (
     <>
@@ -136,7 +124,7 @@ const Thread: NextPage<Props> = (props) => {
         </Box>
         {/* コメント表示 */}
         <Box mt={3}>
-          {props.comments?.length === 0 ? (
+          {comments?.length === 0 ? (
             <Typography variant="body1">またコメントはありません。</Typography>
           ) : (
             <Grid container spacing={3}>
@@ -158,16 +146,13 @@ const Thread: NextPage<Props> = (props) => {
                           variant="h6"
                           className={styles.comment_username}
                         >
-                          {comment.userName}
+                          {comment.userName || "NO NAME"}
                         </Typography>
                         <Typography
                           variant="h6"
                           className={styles.comment_created_at}
                         >
-                          {convertUtcToUserTimezone(
-                            comment.createdAt,
-                            userTimezone
-                          )}
+                          {convertUtcToUserTimezone(comment.createdAt)}
                         </Typography>
                         <Typography variant="h6">
                           {`ID: ${comment.userID}`}
@@ -188,37 +173,25 @@ const Thread: NextPage<Props> = (props) => {
         </Box>
 
         {/* コメント入力フォーム */}
-        <Box mt={3}>
-          <Box mt={2}>
-            <TextField
-              label="ユーザー名(省略可)"
-              value={userName}
-              onChange={handleUserNameChange}
-              variant="outlined"
-              fullWidth
-            />
-          </Box>
-          <Box mt={1}>
-            <TextField
-              label="コメント"
-              value={comment}
-              onChange={handleCommentChange}
-              variant="outlined"
-              fullWidth
-              multiline
-              rows={4}
-            />
-          </Box>
+        <form onSubmit={handleSubmit(handleCommentSubmit)}>
+          {commentFormFields.map((field) => (
+            <Box key={field.name} mt={1.5}>
+              <CustomTextField
+                name={field.name}
+                label={field.label}
+                register={register}
+                errors={errors}
+                rows={field.rows}
+                isInputRequired={field.name === "author" ? false : true}
+              />
+            </Box>
+          ))}
           <Box textAlign="right" mt={1}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleCommentSubmit}
-            >
+            <Button variant="contained" color="primary" type="submit">
               送信
             </Button>
           </Box>
-        </Box>
+        </form>
       </Container>
     </>
   );

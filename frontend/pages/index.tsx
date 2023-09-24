@@ -9,7 +9,8 @@ import {
 } from "../utils/api";
 import { Header } from "../components/organisms/Header/Header";
 import ThreadList from "../components/organisms/ThreadList/ThreadList";
-import styles from "../styles/index.module.scss";
+import { SORT_OPTIONS } from "../const";
+import CookieBanner from "../components/organisms/CookieBanner/CookieBanner";
 
 interface Props {
   resultNewThreads: ThreadData[];
@@ -80,14 +81,14 @@ const Home: NextPage<Props> = (props) => {
   return (
     <>
       <Header lang={props.langCookie} />
-      <Container maxWidth="md" className={styles.container}>
+      <Container maxWidth="md">
         <ThreadList
           threads={updatedThreads}
           title="最新更新スレッド"
           page={updatedThreadsPage}
           totalCount={props.threadCount}
           perPage={threadListInfo.perPage}
-          secondaryKey="updatedAt"
+          sortOption={SORT_OPTIONS.UPDATED}
           handlePager={(selectedPage) => setUpdatedThreadsPage(selectedPage)}
         />
         <ThreadList
@@ -96,10 +97,11 @@ const Home: NextPage<Props> = (props) => {
           page={newThreadsPage}
           totalCount={props.threadCount}
           perPage={threadListInfo.perPage}
-          secondaryKey="createdAt"
+          sortOption={SORT_OPTIONS.CREATED}
           handlePager={(selectedPage) => setNewThreadsPage(selectedPage)}
         />
       </Container>
+      <CookieBanner />
     </>
   );
 };
