@@ -9,8 +9,9 @@ import {
 } from "../utils/api";
 import { Header } from "../components/organisms/Header/Header";
 import ThreadList from "../components/organisms/ThreadList/ThreadList";
-import { SORT_OPTIONS } from "../const";
+import { PAGE_META, SORT_OPTIONS } from "../const";
 import CookieBanner from "../components/organisms/CookieBanner/CookieBanner";
+import Meta from "../components/organisms/Meta/Meta";
 
 interface Props {
   resultNewThreads: ThreadData[];
@@ -80,6 +81,11 @@ const Home: NextPage<Props> = (props) => {
 
   return (
     <>
+      <Meta
+        title={PAGE_META.HOME.title}
+        description={PAGE_META.HOME.description}
+      />
+
       <Header lang={props.langCookie} />
       <Container maxWidth="md">
         <ThreadList
