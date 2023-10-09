@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: http://www.waseda-nishimura.org
+
+# Sitemaps
+Sitemap: http://www.waseda-nishimura.org/sitemap.xml
