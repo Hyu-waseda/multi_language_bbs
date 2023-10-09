@@ -25,6 +25,8 @@ import { useForm } from "react-hook-form";
 import { CommentFormValues } from "../../interfaces/CommentFormValues";
 import { FormField } from "../../interfaces/FormField";
 import { convertUtcToUserTimezone } from "../../utils/convertUtcUserTimezone";
+import Meta from "../../components/organisms/Meta/Meta";
+import { PAGE_META } from "../../const";
 
 interface Props {
   threadId: string;
@@ -111,6 +113,11 @@ const Thread: NextPage<Props> = (props) => {
 
   return (
     <>
+      <Meta
+        title={props.resultThreadData[0].title}
+        description={props.resultThreadData[0].content}
+      />
+
       <Header lang={props.langCookie} />
       <Container maxWidth="md">
         {/* タイトルなど */}

@@ -10,6 +10,52 @@ export const PAGE_URL = {
   CONTACT_US: "/contact-us",
 };
 
+// 各ページのヘッダのメタ情報
+// TODO: descriptionの改善
+export const PAGE_META = {
+  HOME: {
+    title: "The Channel",
+    description:
+      "The Channelは多言語自動翻訳掲示板です。世界中の人々と簡単にコミュニケーションを取ることができます。",
+  },
+  THREAD: {
+    title: "スレッド",
+    description:
+      "様々なトピックのスレッドを探索し、多言語での対話を楽しんでください。",
+  },
+  THREAD_CREATE: {
+    title: "スレッド作成",
+    description:
+      "新しいスレッドを作成し、グローバルなコミュニケーションを開始しましょう。",
+  },
+  HELP: {
+    title: "ヘルプ",
+    description:
+      "The Channelの使用方法についての詳細情報とサポートをご覧ください。",
+  },
+  PRIVACY_POLICY: {
+    title: "プライバシーポリシー",
+    description: "当社のプライバシーポリシーについて詳細を確認してください。",
+  },
+  TERMS_OF_SERVICE: {
+    title: "利用規約",
+    description: "The Channelの利用規約をご確認ください。",
+  },
+  DISCLAIMER: {
+    title: "免責事項",
+    description: "The Channelの免責事項についてこちらで読むことができます。",
+  },
+  CONTACT_US: {
+    title: "お問い合わせ",
+    description: "ご質問やフィードバックはこちらからお送りください。",
+  },
+  NOT_FOUND: {
+    title: "404: ページが見つかりません",
+    description:
+      "お探しのページは見つかりませんでした。ホームページに戻るか、サイトを検索してください。",
+  },
+};
+
 // 各APIのエンドポイント
 export const API = {
   ENDPOINT: {

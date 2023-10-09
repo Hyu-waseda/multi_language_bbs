@@ -7,6 +7,8 @@ import { ThreadFormValues } from "../../interfaces/ThreadFormValues";
 import { sendThreadData } from "../../utils/api";
 import CustomTextField from "../../components/Atoms/CustomTextField/CustomTextField";
 import { FormField } from "../../interfaces/FormField";
+import Meta from "../../components/organisms/Meta/Meta";
+import { PAGE_META } from "../../const";
 
 const ThreadCreate: NextPage = () => {
   // Cookieから現在の言語設定を取得
@@ -41,6 +43,11 @@ const ThreadCreate: NextPage = () => {
 
   return (
     <>
+      <Meta
+        title={PAGE_META.THREAD_CREATE.title}
+        description={PAGE_META.THREAD_CREATE.description}
+      />
+
       <Header lang={langCookie} />
       <Container maxWidth="sm">
         <Typography variant="h4" gutterBottom>

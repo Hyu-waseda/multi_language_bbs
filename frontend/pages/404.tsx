@@ -2,9 +2,10 @@ import React from "react";
 import { Box, Typography, Button } from "@mui/material";
 import Link from "next/link";
 import { Header } from "../components/organisms/Header/Header";
-import { PAGE_URL } from "../const";
+import { PAGE_META, PAGE_URL } from "../const";
 import styles from "../styles/404.module.scss";
 import { useCookie } from "../utils/useCookie";
+import Meta from "../components/organisms/Meta/Meta";
 
 const NotFoundPage: React.FC = () => {
   // TODO: 丸め込み
@@ -12,6 +13,11 @@ const NotFoundPage: React.FC = () => {
 
   return (
     <>
+      <Meta
+        title={PAGE_META.NOT_FOUND.title}
+        description={PAGE_META.NOT_FOUND.description}
+      />
+
       <Header lang={langCookie} />
       <Box className={styles.container}>
         <Typography variant="h1" gutterBottom>
