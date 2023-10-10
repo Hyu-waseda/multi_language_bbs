@@ -75,7 +75,7 @@ export const LANGUAGES = [
     languageCapitalized: "Chinese (Simplified)",
   },
   { code: "es", language: "spanish", languageCapitalized: "Spanish" },
-  { code: "sq", language: "albanian", languageCapitalized: "Albanian" },
+  { code: "ar", language: "arabic", languageCapitalized: "Arabic" },
   { code: "fr", language: "french", languageCapitalized: "French" },
   { code: "ja", language: "japanese", languageCapitalized: "Japanese" },
 ];
