@@ -1,9 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Link, Typography } from "@mui/material";
 import styles from "./Footer.module.scss";
-import { PAGE_URL } from "../../../const";
+import { COOKIE, PAGE_URL } from "../../../const";
+import Footer_EN from "../../../translate/en/components/organisms/Footer_en";
+import { useCookie } from "../../../utils/useCookie";
+
+interface Translation {
+  privacy_policy: string;
+  terms_of_service: string;
+  disclaimer: string;
+}
 
 const Footer: React.FC = () => {
+  const [translation, setTranslation] = useState<Translation>(Footer_EN);
+
+  // TODO: 丸め込み
+  const langCookie: string = useCookie(COOKIE.SELECTED_LANGUAGE);
+
+  useEffect(() => {
+    const fetchTranslation = async () => {
+      let loadedTranslation: Translation;
+      try {
+        const translationModule = await import(
+          `../../../translate/${langCookie}/components/organisms/Footer_${langCookie}.tsx`
+        );
+        loadedTranslation = translationModule.default;
+      } catch (error) {
+        console.error("Failed to load translation:", error);
+        loadedTranslation = Footer_EN;
+      }
+      setTranslation(loadedTranslation);
+    };
+
+    fetchTranslation();
+  }, [langCookie]);
+
   return (
     <Box className={styles.footerContainer}>
       <Box className={styles.footer}>
@@ -12,29 +43,29 @@ const Footer: React.FC = () => {
           variant="body2"
           className={styles.footerLink}
         >
-          プライバシーポリシー
+          {translation.privacy_policy}
         </Link>
         <Link
           href={PAGE_URL.TERMS_OF_SERVICE}
           variant="body2"
           className={styles.footerLink}
         >
-          利用規約
+          {translation.terms_of_service}
         </Link>
         <Link
           href={PAGE_URL.DISCLAIMER}
           variant="body2"
           className={styles.footerLink}
         >
-          免責事項
+          {translation.disclaimer}
         </Link>
-        <Link
+        {/* <Link
           href={PAGE_URL.CONTACT_US}
           variant="body2"
           className={styles.footerLink}
         >
           お問い合わせ
-        </Link>
+        </Link> */}
         <Typography variant="body2" className={styles.footerCopyright}>
           Copyright © 2023 早稲田大学 西村研究室
         </Typography>

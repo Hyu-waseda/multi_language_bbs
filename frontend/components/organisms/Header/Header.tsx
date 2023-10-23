@@ -11,19 +11,25 @@ import {
   Typography,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import HelpIcon from "@mui/icons-material/Help";
 import HomeIcon from "@mui/icons-material/Home";
 import MenuIcon from "@mui/icons-material/Menu";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Header.module.scss";
-import { LANGUAGES, PAGE_URL } from "../../../const";
+import { COOKIE, LANGUAGES, PAGE_URL } from "../../../const";
 import { createURL } from "../../../utils/createUrl";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import MenuListItem from "../../Atoms/MenuListItem/MenuListItem";
+import Header_EN from "../../../translate/en/components/organisms/Header_en";
 
 interface HeaderProps {
   lang: string;
+}
+
+interface Translation {
+  language: string;
+  homepage: string;
+  new_thread_creation: string;
 }
 
 export const Header: React.FC<HeaderProps> = (props) => {
@@ -34,7 +40,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
   };
 
   const handleLanguageChange = (value: string) => {
-    Cookies.set("selectedLanguage", value);
+    Cookies.set(COOKIE.SELECTED_LANGUAGE, value);
 
     const currentPath = window.location.pathname;
     const currentParams = new URLSearchParams(window.location.search);
@@ -43,6 +49,26 @@ export const Header: React.FC<HeaderProps> = (props) => {
     const newUrl = createURL(currentPath, currentParams);
     window.location.href = newUrl;
   };
+
+  const [translation, setTranslation] = useState<Translation>(Header_EN);
+
+  useEffect(() => {
+    const fetchTranslation = async () => {
+      let loadedTranslation: Translation;
+      try {
+        const translationModule = await import(
+          `../../../translate/${props.lang}/components/organisms/Header_${props.lang}.tsx`
+        );
+        loadedTranslation = translationModule.default;
+      } catch (error) {
+        console.error("Failed to load translation:", error);
+        loadedTranslation = Header_EN;
+      }
+      setTranslation(loadedTranslation);
+    };
+
+    fetchTranslation();
+  }, [props.lang]);
 
   return (
     <>
@@ -65,7 +91,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
               id="language-select-label"
               className={styles.inputLabel}
             >
-              言語
+              {translation.language}
             </InputLabel>
             <Select
               labelId="language-select-label"
@@ -97,20 +123,20 @@ export const Header: React.FC<HeaderProps> = (props) => {
         >
           <List>
             <MenuListItem
-              name={"ホームページ"}
+              name={translation.homepage}
               icon={<HomeIcon />}
               link={PAGE_URL.HOME}
             />
             <MenuListItem
-              name={"新規スレッド投稿"}
+              name={translation.new_thread_creation}
               icon={<AddIcon />}
               link={PAGE_URL.THREAD_CREATE}
             />
-            <MenuListItem
+            {/* <MenuListItem
               name={"ヘルプ"}
               icon={<HelpIcon />}
               link={PAGE_URL.HELP}
-            />
+            /> */}
           </List>
         </div>
       </Drawer>
