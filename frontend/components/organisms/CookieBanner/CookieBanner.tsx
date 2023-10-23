@@ -2,8 +2,18 @@ import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { Button, Snackbar } from "@mui/material";
 import Link from "next/link";
-import { PAGE_URL } from "../../../const";
+import { COOKIE, PAGE_URL } from "../../../const";
 import styles from "./CookieBanner.module.scss";
+import { useCookie } from "../../../utils/useCookie";
+import CookieBanner_EN from "../../../translate/en/components/organisms/CookieBanner_en";
+
+interface Translation {
+  message_first: string;
+  link: string;
+  message_second: string;
+  detail: string;
+  close: string;
+}
 
 const CookieBanner: React.FC = () => {
   const COOKIE_ACCEPTED_KEY = "cookieAccepted";
@@ -20,29 +30,51 @@ const CookieBanner: React.FC = () => {
     setIsOpen(false);
   };
 
+  const [translation, setTranslation] = useState<Translation>(CookieBanner_EN);
+
+  const langCookie: string = useCookie(COOKIE.SELECTED_LANGUAGE);
+
+  useEffect(() => {
+    const fetchTranslation = async () => {
+      let loadedTranslation: Translation;
+      try {
+        const translationModule = await import(
+          `../../../translate/${langCookie}/components/organisms/CookieBanner_${langCookie}.tsx`
+        );
+        loadedTranslation = translationModule.default;
+      } catch (error) {
+        console.error("Failed to load translation:", error);
+        loadedTranslation = CookieBanner_EN;
+      }
+      setTranslation(loadedTranslation);
+    };
+
+    fetchTranslation();
+  }, [langCookie]);
+
   return (
     <Snackbar
       anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       open={isOpen}
       message={
         <>
-          本サービスではユーザーエクスペリエンス向上ために、Cookieを使用しています。使用目的の詳細については
+          {translation.message_first}
           <Link
             href={PAGE_URL.PRIVACY_POLICY}
             className={styles.privacy_policy_link}
           >
-            プライバシーポリシー
+            {translation.link}
           </Link>
-          または右側の詳細ボタン で確認できます。
+          {translation.message_second}
         </>
       }
       action={
         <>
           <Button color="primary" size="small" onClick={handleAccept}>
-            詳細
+            {translation.detail}
           </Button>
           <Button color="primary" size="small" onClick={handleAccept}>
-            閉じる
+            {translation.close}
           </Button>
         </>
       }

@@ -2,14 +2,13 @@ import React from "react";
 import { Box, Typography, Button } from "@mui/material";
 import Link from "next/link";
 import { Header } from "../components/organisms/Header/Header";
-import { PAGE_META, PAGE_URL } from "../const";
+import { COOKIE, PAGE_META, PAGE_URL } from "../const";
 import styles from "../styles/404.module.scss";
 import { useCookie } from "../utils/useCookie";
 import Meta from "../components/organisms/Meta/Meta";
 
 const NotFoundPage: React.FC = () => {
-  // TODO: 丸め込み
-  const langCookie = useCookie("selectedLanguage");
+  const langCookie = useCookie(COOKIE.SELECTED_LANGUAGE);
 
   return (
     <>
