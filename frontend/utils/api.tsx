@@ -28,7 +28,8 @@ const createUrlWithParams = (url: string, params?: Record<string, string>) => {
 export const fetchNewThreadData = async (
   page: number,
   perPage: number,
-  isClient: boolean
+  isClient: boolean,
+  lang: string
 ) => {
   const offset: number = (page - 1) * perPage;
   const base = isClient ? baseURLClient : baseURLServer;
@@ -37,6 +38,7 @@ export const fetchNewThreadData = async (
     count: String(perPage),
     // TODO: 丸め込み
     sort: "new",
+    lang: lang,
   });
   return await fetchData(url);
 };
@@ -44,7 +46,8 @@ export const fetchNewThreadData = async (
 export const fetchUpdatedThreadData = async (
   page: number,
   perPage: number,
-  isClient: boolean
+  isClient: boolean,
+  lang: string
 ) => {
   const offset: number = (page - 1) * perPage;
   const base = isClient ? baseURLClient : baseURLServer;
@@ -53,12 +56,19 @@ export const fetchUpdatedThreadData = async (
     count: String(perPage),
     // TODO: 丸め込み
     sort: "update",
+    lang: lang,
   });
   return await fetchData(url);
 };
 
-export const fetchSpecificThreadData = async (threadId: string) => {
-  const url = `${baseURLServer}${API.ENDPOINT.THREAD}/${threadId}`;
+export const fetchSpecificThreadData = async (
+  threadId: string,
+  lang: string
+) => {
+  const url: string = createUrlWithParams(baseURLServer + API.ENDPOINT.THREAD, {
+    threadId: String(threadId),
+    lang: lang,
+  });
   return await fetchData(url);
 };
 
