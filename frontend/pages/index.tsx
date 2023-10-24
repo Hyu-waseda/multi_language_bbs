@@ -23,31 +23,39 @@ interface Props {
 }
 
 interface Translation {
-    latest_update_thread: string;
-    new_thread: string;
+  latest_update_thread: string;
+  new_thread: string;
 }
 
-
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  // TODO: 丸め込み
-  const newThreads: ThreadData[] = await fetchNewThreadData(1, 5, false);
-  const updatedThreads: ThreadData[] = await fetchUpdatedThreadData(
-    1,
-    5,
-    false
-  );
-  const threadCount = await fetchThreadCount();
   const { req } = context;
   const langCookie = req.cookies.selectedLanguage || "original";
 
+  // TODO: 丸め込み
+  const newThreads: ThreadData[] = await fetchNewThreadData(
+    1,
+    5,
+    false,
+    langCookie
+  );
+  const updatedThreads: ThreadData[] = await fetchUpdatedThreadData(
+    1,
+    5,
+    false,
+    langCookie
+  );
+  const threadCount = await fetchThreadCount();
+
   let translation;
-    try {
-        const translationModule = await import(`../translate/${langCookie}/pages/Index_${langCookie}.tsx`);
-        translation = translationModule.default;
-    } catch (error) {
-        console.error("Failed to load translation:", error);
-        translation = Index_EN;
-    }
+  try {
+    const translationModule = await import(
+      `../translate/${langCookie}/pages/Index_${langCookie}.tsx`
+    );
+    translation = translationModule.default;
+  } catch (error) {
+    console.error("Failed to load translation:", error);
+    translation = Index_EN;
+  }
 
   return {
     props: {
@@ -55,7 +63,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       resultUpdatedThreads: updatedThreads,
       threadCount: threadCount,
       langCookie,
-      translation: translation
+      translation: translation,
     },
   };
 };
@@ -76,7 +84,8 @@ const Home: NextPage<Props> = (props) => {
       const resultNewThreads: ThreadData[] = await fetchNewThreadData(
         newThreadsPage,
         threadListInfo.perPage,
-        true
+        true,
+        props.langCookie
       );
       setNewThreads(resultNewThreads);
     };
@@ -89,7 +98,8 @@ const Home: NextPage<Props> = (props) => {
       const resultUpdatedThreads: ThreadData[] = await fetchUpdatedThreadData(
         updatedThreadsPage,
         threadListInfo.perPage,
-        true
+        true,
+        props.langCookie
       );
       setUpdatedThreads(resultUpdatedThreads);
     };

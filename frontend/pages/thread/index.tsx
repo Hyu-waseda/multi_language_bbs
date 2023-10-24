@@ -66,7 +66,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 
   // fetchSpecificThreadData 開始時間
   const fetchSpecificThreadDataStartTime = Date.now();
-  const resultThreadData = await fetchSpecificThreadData(threadId);
+  const resultThreadData = await fetchSpecificThreadData(threadId, langCookie);
   // fetchSpecificThreadData 終了時間
   const fetchSpecificThreadDataEndTime = Date.now();
   // fetchSpecificThreadData の経過時間（ミリ秒）
