@@ -26,13 +26,21 @@ import { CommentFormValues } from "../../interfaces/CommentFormValues";
 import { FormField } from "../../interfaces/FormField";
 import { convertUtcToUserTimezone } from "../../utils/convertUtcUserTimezone";
 import Meta from "../../components/organisms/Meta/Meta";
-import { PAGE_META } from "../../const";
+import Index_EN from "../../translate/en/pages/thread/Index_en";
 
 interface Props {
   threadId: string;
   comments: CommentData[];
   resultThreadData: ThreadData[];
   langCookie: string;
+  translation: Translation;
+}
+
+interface Translation {
+  author: string;
+  comment: string;
+  no_comment: string;
+  submit: string;
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async (
@@ -72,12 +80,25 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
     "ms"
   );
 
+  let loadedTranslation: Translation;
+
+  try {
+    const translationModule = await import(
+      `../../translate/${langCookie}/pages/thread/Index_${langCookie}.tsx`
+    );
+    loadedTranslation = translationModule.default;
+  } catch (error) {
+    console.error("Failed to load translation:", error);
+    loadedTranslation = Index_EN;
+  }
+
   return {
     props: {
       threadId,
       comments,
       resultThreadData,
       langCookie,
+      translation: loadedTranslation,
     },
   };
 };
@@ -107,8 +128,8 @@ const Thread: NextPage<Props> = (props) => {
   } = useForm<CommentFormValues>();
 
   const commentFormFields: FormField[] = [
-    { name: "author", label: "作成者名", rows: 1 },
-    { name: "comment", label: "コメント", rows: 4 },
+    { name: "author", label: props.translation.author, rows: 1 },
+    { name: "comment", label: props.translation.comment, rows: 4 },
   ];
 
   return (
@@ -132,7 +153,9 @@ const Thread: NextPage<Props> = (props) => {
         {/* コメント表示 */}
         <Box mt={3}>
           {comments?.length === 0 ? (
-            <Typography variant="body1">またコメントはありません。</Typography>
+            <Typography variant="body1">
+              {props.translation.no_comment}
+            </Typography>
           ) : (
             <Grid container spacing={3}>
               {comments?.map((comment: CommentData, index: number) => (
@@ -195,7 +218,7 @@ const Thread: NextPage<Props> = (props) => {
           ))}
           <Box textAlign="right" mt={1}>
             <Button variant="contained" color="primary" type="submit">
-              送信
+              {props.translation.submit}
             </Button>
           </Box>
         </form>
