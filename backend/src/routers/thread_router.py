@@ -8,15 +8,15 @@ router = APIRouter()
 
 
 @router.get("/api/thread")
-async def get_thread(sort: SortOption = SortOption["new"], offset: Optional[int] = Query(0, description="取得するスレッドのオフセット数"), count: Optional[int] = Query(0, description="取得するスレッド数")):
+async def get_thread(sort: SortOption = SortOption["new"], offset: Optional[int] = Query(0, description="取得するスレッドのオフセット数"), count: Optional[int] = Query(0, description="取得するスレッド数"), lang: Optional[str] = Query("original", description="翻訳先言語")):
     """
     スレッドを取得するAPI
 
     offset: 取得するスレッドのオフセット数（指定しない場合は最初から）
     """
-    params = {"offset": offset, "count": count, "sort": sort}
+    params = {"offset": offset, "count": count, "sort": sort, "lang": lang}
     thread_application = ThreadApplication(params=params)
-    res = thread_application.get_threads()
+    res = await thread_application.get_threads()
     return res
 
 
@@ -31,16 +31,17 @@ async def get_thread_count():
 
 
 @router.get("/api/thread/{thread_id}")
-async def get_specific_thread(thread_id: str = Path(..., description="取得するスレッドのID")):
+async def get_specific_thread(thread_id: str = Path(..., description="取得するスレッドのID"), lang: Optional[str] = Query("original", description="翻訳先言語")):
     """
     特定のスレッドを取得するAPI
 
     thread_id: 取得するスレッドのID
     """
-    params = {"thread_id": thread_id}
+    params = {"thread_id": thread_id, "lang": lang}
     thread_application = ThreadApplication(params=params)
-    res = thread_application.get_specific_thread()
+    res = await thread_application.get_specific_thread()
     return res
+
 
 @router.post("/api/thread")
 async def create_thread(
