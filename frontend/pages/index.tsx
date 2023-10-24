@@ -12,13 +12,21 @@ import ThreadList from "../components/organisms/ThreadList/ThreadList";
 import { PAGE_META, SORT_OPTIONS } from "../const";
 import CookieBanner from "../components/organisms/CookieBanner/CookieBanner";
 import Meta from "../components/organisms/Meta/Meta";
+import Index_EN from "../translate/en/pages/Index_en";
 
 interface Props {
   resultNewThreads: ThreadData[];
   resultUpdatedThreads: ThreadData[];
   threadCount: number;
   langCookie: string;
+  translation: Translation;
 }
+
+interface Translation {
+    latest_update_thread: string;
+    new_thread: string;
+}
+
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // TODO: 丸め込み
@@ -32,12 +40,22 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { req } = context;
   const langCookie = req.cookies.selectedLanguage || "original";
 
+  let translation;
+    try {
+        const translationModule = await import(`../translate/${langCookie}/pages/Index_${langCookie}.tsx`);
+        translation = translationModule.default;
+    } catch (error) {
+        console.error("Failed to load translation:", error);
+        translation = Index_EN;
+    }
+
   return {
     props: {
       resultNewThreads: newThreads,
       resultUpdatedThreads: updatedThreads,
       threadCount: threadCount,
       langCookie,
+      translation: translation
     },
   };
 };
@@ -90,7 +108,7 @@ const Home: NextPage<Props> = (props) => {
       <Container maxWidth="md">
         <ThreadList
           threads={updatedThreads}
-          title="最新更新スレッド"
+          title={props.translation.latest_update_thread}
           page={updatedThreadsPage}
           totalCount={props.threadCount}
           perPage={threadListInfo.perPage}
@@ -99,7 +117,7 @@ const Home: NextPage<Props> = (props) => {
         />
         <ThreadList
           threads={newThreads}
-          title="新着スレッド"
+          title={props.translation.new_thread}
           page={newThreadsPage}
           totalCount={props.threadCount}
           perPage={threadListInfo.perPage}

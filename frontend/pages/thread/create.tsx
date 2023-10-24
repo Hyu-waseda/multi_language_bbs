@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import { Header } from "../../components/organisms/Header/Header";
 import { Container, Typography, Button, Box } from "@mui/material";
 import { useForm } from "react-hook-form";
@@ -8,12 +8,45 @@ import { sendThreadData } from "../../utils/api";
 import CustomTextField from "../../components/Atoms/CustomTextField/CustomTextField";
 import { FormField } from "../../interfaces/FormField";
 import Meta from "../../components/organisms/Meta/Meta";
-import { PAGE_META } from "../../const";
+import { COOKIE, PAGE_META } from "../../const";
+import Create_EN from "../../translate/en/pages/thread/Create_en";
 
-const ThreadCreate: NextPage = () => {
-  // Cookieから現在の言語設定を取得
-  // TODO: 丸め込み
-  const langCookie = useCookie("selectedLanguage");
+interface Props {
+  translation: Translation;
+}
+
+interface Translation {
+  new_thread_creation: string;
+  create_thread: string;
+  title: string;
+  author: string;
+  description: string;
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const langCookie = context.req.cookies.selectedLanguage || "original";
+
+  let loadedTranslation: Translation;
+
+  try {
+    const translationModule = await import(
+      `../../translate/${langCookie}/pages/thread/Create_${langCookie}.tsx`
+    );
+    loadedTranslation = translationModule.default;
+  } catch (error) {
+    console.error("Failed to load translation:", error);
+    loadedTranslation = Create_EN;
+  }
+
+  return {
+    props: {
+      translation: loadedTranslation,
+    },
+  };
+};
+
+const ThreadCreate: NextPage<Props> = (props) => {
+  const langCookie = useCookie(COOKIE.SELECTED_LANGUAGE) || "original";
 
   // スレッド投稿フォーム用
   const {
@@ -24,9 +57,13 @@ const ThreadCreate: NextPage = () => {
   } = useForm<ThreadFormValues>();
 
   const threadFormFields: FormField[] = [
-    { name: "title", label: "タイトル", rows: 1 },
-    { name: "author", label: "作成者名", rows: 1 },
-    { name: "description", label: "概要", rows: 4 },
+    { name: "title", label: props.translation.title, rows: 1 },
+    { name: "author", label: props.translation.author, rows: 1 },
+    {
+      name: "description",
+      label: props.translation.description,
+      rows: 4,
+    },
   ];
 
   // フォーム送信時の処理
@@ -51,7 +88,7 @@ const ThreadCreate: NextPage = () => {
       <Header lang={langCookie} />
       <Container maxWidth="sm">
         <Typography variant="h4" gutterBottom>
-          新規スレッド作成
+          {props.translation.new_thread_creation}
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
           {threadFormFields.map((field) => (
@@ -67,7 +104,7 @@ const ThreadCreate: NextPage = () => {
           ))}
           <Box sx={{ mt: 2, textAlign: "right" }}>
             <Button type="submit" variant="contained">
-              スレッド作成
+              {props.translation.create_thread}
             </Button>
           </Box>
         </form>
