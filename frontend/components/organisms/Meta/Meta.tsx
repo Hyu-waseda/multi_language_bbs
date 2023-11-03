@@ -16,6 +16,7 @@ const Meta: React.FC<Props> = (props) => {
     window.gtag("config", GA_ID, {
       page_path: url,
     });
+    console.log("\n\n\npageview\n\n\n");
   };
 
   const router = useRouter();
@@ -40,7 +41,8 @@ const Meta: React.FC<Props> = (props) => {
           name="google-site-verification"
           content="unSXB7r8lGx_zsadSbX2OYASTSNHQDrhQ0MA7KUdsGA"
         />
-        <Script
+      </Head>
+      <Script
           strategy="afterInteractive"
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
         />
@@ -57,7 +59,6 @@ const Meta: React.FC<Props> = (props) => {
            `,
           }}
         />
-      </Head>
     </>
   );
 };
