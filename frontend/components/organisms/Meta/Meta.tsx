@@ -10,9 +10,13 @@ interface Props {
 
 const Meta: React.FC<Props> = (props) => {
   const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "";
-
+  console.log(GA_ID)
   const pageview = (url: string) => {
-    if (!GA_ID) return;
+    if (!GA_ID) {
+      console.log("\n\n\nfalse to get GA_ID\n\n\n")
+      return;
+    }
+    console.log("\n\n\nSuccess to get GA_ID\n\n\n")
     window.gtag("config", GA_ID, {
       page_path: url,
     });
