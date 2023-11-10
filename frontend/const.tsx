@@ -4,8 +4,8 @@ export const PAGE_URL = {
   THREAD: "/thread",
   THREAD_CREATE: "/thread/create",
   HELP: "/help",
-  PRIVACY_POLICY: "/privacy-policy",
-  TERMS_OF_SERVICE: "/terms-of-service",
+  PRIVACY_POLICY: "/policy",
+  TERMS_OF_SERVICE: "/terms",
   DISCLAIMER: "/disclaimer",
 };
 
