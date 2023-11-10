@@ -14,11 +14,12 @@ interface Translation {
 const Footer: React.FC = () => {
   const [translation, setTranslation] = useState<Translation>(Footer_EN);
 
-  // TODO: 丸め込み
   const langCookie: string = useCookie(COOKIE.SELECTED_LANGUAGE);
 
   useEffect(() => {
     const fetchTranslation = async () => {
+      if (!langCookie) return;
+
       let loadedTranslation: Translation;
       try {
         const translationModule = await import(
