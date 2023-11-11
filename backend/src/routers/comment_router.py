@@ -52,6 +52,5 @@ async def create_comment(
         "content": content,
         "language": language
     }
-    print(comment)
     created_comment = comment_application.create_comment(comment)
     return created_comment
