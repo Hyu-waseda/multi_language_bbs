@@ -36,6 +36,8 @@ const CookieBanner: React.FC = () => {
 
   useEffect(() => {
     const fetchTranslation = async () => {
+      if (!langCookie) return;
+      
       let loadedTranslation: Translation;
       try {
         const translationModule = await import(
