@@ -117,13 +117,15 @@ export const sendCommentData = async (
   threadId: string,
   userId: string,
   userName: string,
-  content: string
+  content: string,
+  lang: string
 ) => {
   const params = {
     thread_id: threadId,
     user_id: userId,
     user_name: userName,
     content: content,
+    language: lang,
   };
   const url = createUrlWithParams(
     `${baseURLClient}${API.ENDPOINT.COMMENT}`,

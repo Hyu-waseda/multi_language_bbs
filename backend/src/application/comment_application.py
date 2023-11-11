@@ -47,6 +47,7 @@ class PostParams(BaseModel):
     user_name: str
     content: str
     user_id: int
+    language: str
 
 
 class CommentApplication:
@@ -107,7 +108,7 @@ class CommentApplication:
             "content": params["content"],
             "createdAt": formatted_time,
             "updatedAt": formatted_time,
-            "likes": 0,
+            "language": params["language"]
         }
         res = self.comment_infrastructure.create_comment(
             comment_data=new_comment)
