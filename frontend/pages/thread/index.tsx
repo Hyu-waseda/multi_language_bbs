@@ -190,9 +190,6 @@ const Thread: NextPage<Props> = (props) => {
                         >
                           {convertUtcToUserTimezone(comment.createdAt)}
                         </Typography>
-                        <Typography variant="h6">
-                          {`ID: ${comment.userID}`}
-                        </Typography>
                       </Box>
                       {/* コメント本文 */}
                       <Box>
