@@ -54,8 +54,11 @@ export const Header: React.FC<HeaderProps> = (props) => {
 
   useEffect(() => {
     const fetchTranslation = async () => {
+      if (!props.lang) return;
+
       let loadedTranslation: Translation;
       try {
+        
         const translationModule = await import(
           `../../../translate/${props.lang}/components/organisms/Header_${props.lang}.tsx`
         );

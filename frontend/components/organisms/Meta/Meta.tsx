@@ -10,7 +10,7 @@ interface Props {
 
 const Meta: React.FC<Props> = (props) => {
   const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "";
-  console.log(GA_ID);
+
   const pageview = (url: string) => {
     if (!GA_ID) {
       return;
