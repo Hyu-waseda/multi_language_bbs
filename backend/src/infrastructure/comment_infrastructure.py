@@ -38,7 +38,7 @@ class CommentInfrastructure:
     def create_comment(self, comment_data):
         # TODO: UserNameの登録, UserIdの削除
         query = """
-            INSERT INTO Comments (ThreadID, UserID, UserName, Content, CreatedAt, UpdatedAt, Likes)
+            INSERT INTO Comments (ThreadID, UserID, UserName, Content, CreatedAt, UpdatedAt, Language)
             VALUES (%s, %s, %s, %s, %s, %s, %s);
         """
 
@@ -49,7 +49,7 @@ class CommentInfrastructure:
             comment_data["content"],
             comment_data["createdAt"],
             comment_data["updatedAt"],
-            int(comment_data["likes"])
+            comment_data["language"]
         )
         try:
             self.database_manager.execute_query(query, params)

@@ -109,7 +109,13 @@ const Thread: NextPage<Props> = (props) => {
   // コメント送信ハンドラ
   const handleCommentSubmit = async (data: CommentFormValues) => {
     // TODO: UserIdを各ユーザーごとに
-    await sendCommentData(props.threadId, "10", data.author, data.comment);
+    await sendCommentData(
+      props.threadId,
+      "10",
+      data.author,
+      data.comment,
+      props.langCookie
+    );
     reset();
     const newCommentsData: CommentData[] = await fetchCommentData(
       props.threadId,
