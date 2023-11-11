@@ -149,7 +149,7 @@ const Thread: NextPage<Props> = (props) => {
       <Container maxWidth="md">
         {/* タイトルなど */}
         <Box>
-          <Typography variant="h3">
+          <Typography variant="h4">
             {props.resultThreadData[0].title}
           </Typography>
           <Typography variant="body1">
@@ -173,19 +173,19 @@ const Thread: NextPage<Props> = (props) => {
                         className={`${styles.comment_header} ${styles.commentBox}`}
                       >
                         <Typography
-                          variant="h6"
+                          variant="body1"
                           className={styles.comment_number}
                         >
                           {index + 1}
                         </Typography>
                         <Typography
-                          variant="h6"
+                          variant="body1"
                           className={styles.comment_username}
                         >
                           {comment.userName || "NO NAME"}
                         </Typography>
                         <Typography
-                          variant="h6"
+                          variant="body1"
                           className={styles.comment_created_at}
                         >
                           {convertUtcToUserTimezone(comment.createdAt)}
