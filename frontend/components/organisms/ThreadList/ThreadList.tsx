@@ -21,6 +21,7 @@ interface Props {
   perPage: number;
   handlePager: (selectedPage: number) => void;
   sortOption: SORT_OPTIONS;
+  labelForDate: string;
 }
 
 const ThreadList: React.FC<Props> = (props) => {
@@ -46,11 +47,9 @@ const ThreadList: React.FC<Props> = (props) => {
                 <ListItemText
                   primary={thread.title}
                   // TODO: ユーザのタイムゾーン予測など
-                  secondary={`${
-                    props.sortOption === SORT_OPTIONS.CREATED
-                      ? "作成日："
-                      : "更新日："
-                  }${convertUtcToUserTimezone(thread[props.sortOption])}`}
+                  secondary={`${props.labelForDate}: ${convertUtcToUserTimezone(
+                    thread[props.sortOption]
+                  )}`}
                 />
               </ListItem>
             </Link>
