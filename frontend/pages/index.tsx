@@ -25,6 +25,8 @@ interface Props {
 interface Translation {
   latest_update_thread: string;
   new_thread: string;
+  update_date: string;
+  created_date: string;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -124,6 +126,7 @@ const Home: NextPage<Props> = (props) => {
           perPage={threadListInfo.perPage}
           sortOption={SORT_OPTIONS.UPDATED}
           handlePager={(selectedPage) => setUpdatedThreadsPage(selectedPage)}
+          labelForDate={props.translation.update_date}
         />
         <ThreadList
           threads={newThreads}
@@ -133,6 +136,7 @@ const Home: NextPage<Props> = (props) => {
           perPage={threadListInfo.perPage}
           sortOption={SORT_OPTIONS.CREATED}
           handlePager={(selectedPage) => setNewThreadsPage(selectedPage)}
+          labelForDate={props.translation.created_date}
         />
       </Container>
       <CookieBanner />
