@@ -7,6 +7,7 @@ import { TWITTER_CARD_IMG_URL } from "../../../const";
 interface Props {
   title: string;
   description: string;
+  url?: string;
 }
 
 const Meta: React.FC<Props> = (props) => {
@@ -48,6 +49,11 @@ const Meta: React.FC<Props> = (props) => {
         <meta name="twitter:title" content={props.title} />
         <meta name="twitter:description" content={props.description} />
         <meta name="twitter:image" content={TWITTER_CARD_IMG_URL} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={props.title} />
+        <meta property="og:description" content={props.description} />
+        <meta property="og:image" content={TWITTER_CARD_IMG_URL} />
+        <meta property="og:url" content={props.url} />
       </Head>
       <Script
         strategy="afterInteractive"
