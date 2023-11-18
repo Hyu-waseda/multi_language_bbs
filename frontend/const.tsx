@@ -87,3 +87,5 @@ export enum SORT_OPTIONS {
 export const COOKIE = {
   SELECTED_LANGUAGE: "selectedLanguage",
 };
+
+export const TWITTER_CARD_IMG_URL = "/public/the_channel_twitter_card.png";

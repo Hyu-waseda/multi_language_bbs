@@ -23,6 +23,10 @@ interface Props {
 }
 
 interface Translation {
+  meta: {
+    title: string;
+    description: string;
+  };
   latest_update_thread: string;
   new_thread: string;
   update_date: string;
@@ -112,8 +116,8 @@ const Home: NextPage<Props> = (props) => {
   return (
     <>
       <Meta
-        title={PAGE_META.HOME.title}
-        description={PAGE_META.HOME.description}
+        title={props.translation.meta.title}
+        description={props.translation.meta.description}
       />
 
       <Header lang={props.langCookie} />
