@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import Script from "next/script";
 import { useEffect } from "react";
+import { TWITTER_CARD_IMG_URL } from "../../../const";
 
 interface Props {
   title: string;
@@ -42,6 +43,11 @@ const Meta: React.FC<Props> = (props) => {
           name="google-site-verification"
           content="unSXB7r8lGx_zsadSbX2OYASTSNHQDrhQ0MA7KUdsGA"
         />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={props.title} />
+        <meta name="twitter:description" content={props.description} />
+        <meta name="twitter:image" content={TWITTER_CARD_IMG_URL} />
       </Head>
       <Script
         strategy="afterInteractive"
