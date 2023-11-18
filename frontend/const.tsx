@@ -1,3 +1,6 @@
+// ドメイン
+export const DOMAIN = "http://www.waseda-nishimura.org";
+
 // 各ページのURL
 export const PAGE_URL = {
   HOME: "/",
@@ -88,4 +91,5 @@ export const COOKIE = {
   SELECTED_LANGUAGE: "selectedLanguage",
 };
 
-export const TWITTER_CARD_IMG_URL = "/the_channel_twitter_card.png";
+export const TWITTER_CARD_IMG_URL =
+  "http://www.waseda-nishimura.org/the_channel_twitter_card.png";

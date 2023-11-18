@@ -9,7 +9,7 @@ import {
 } from "../utils/api";
 import { Header } from "../components/organisms/Header/Header";
 import ThreadList from "../components/organisms/ThreadList/ThreadList";
-import { PAGE_META, SORT_OPTIONS } from "../const";
+import { DOMAIN, PAGE_URL, SORT_OPTIONS } from "../const";
 import CookieBanner from "../components/organisms/CookieBanner/CookieBanner";
 import Meta from "../components/organisms/Meta/Meta";
 import Index_EN from "../translate/en/pages/Index_en";
@@ -118,6 +118,7 @@ const Home: NextPage<Props> = (props) => {
       <Meta
         title={props.translation.meta.title}
         description={props.translation.meta.description}
+        url={`${DOMAIN}${PAGE_URL.HOME}`}
       />
 
       <Header lang={props.langCookie} />
