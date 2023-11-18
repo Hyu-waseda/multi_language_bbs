@@ -92,4 +92,4 @@ export const COOKIE = {
 };
 
 export const TWITTER_CARD_IMG_URL =
-  "http://www.waseda-nishimura.org/the_channel_twitter_card.png";
+  "http://www.waseda-nishimura.org/home.png";
