@@ -88,4 +88,4 @@ export const COOKIE = {
   SELECTED_LANGUAGE: "selectedLanguage",
 };
 
-export const TWITTER_CARD_IMG_URL = "/public/the_channel_twitter_card.png";
+export const TWITTER_CARD_IMG_URL = "/the_channel_twitter_card.png";
