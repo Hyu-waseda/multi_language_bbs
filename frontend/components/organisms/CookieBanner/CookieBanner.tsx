@@ -60,7 +60,10 @@ const CookieBanner: React.FC<Props> = (props) => {
         <>
           {translation.message_first}
           <Link
-            href={PAGE_URL.PRIVACY_POLICY}
+            href={{
+              pathname: PAGE_URL.PRIVACY_POLICY,
+              query: { lang: props.lang },
+            }}
             className={styles.privacy_policy_link}
           >
             {translation.link}
@@ -70,9 +73,17 @@ const CookieBanner: React.FC<Props> = (props) => {
       }
       action={
         <>
-          <Button color="primary" size="small" onClick={handleAccept}>
-            {translation.detail}
-          </Button>
+          <Link
+            href={{
+              pathname: PAGE_URL.PRIVACY_POLICY,
+              query: { lang: props.lang },
+            }}
+            className={styles.privacy_policy_link}
+          >
+            <Button color="primary" size="small" onClick={handleAccept}>
+              {translation.detail}
+            </Button>
+          </Link>
           <Button color="primary" size="small" onClick={handleAccept}>
             {translation.close}
           </Button>
