@@ -11,19 +11,19 @@ interface Translation {
   disclaimer: string;
 }
 
-const Footer: React.FC = () => {
-  const [translation, setTranslation] = useState<Translation>(Footer_EN);
+interface Props {
+  lang: string;
+}
 
-  const langCookie: string = useCookie(COOKIE.SELECTED_LANGUAGE);
+const Footer: React.FC<Props> = (props) => {
+  const [translation, setTranslation] = useState<Translation>(Footer_EN);
 
   useEffect(() => {
     const fetchTranslation = async () => {
-      if (!langCookie) return;
-
       let loadedTranslation: Translation;
       try {
         const translationModule = await import(
-          `../../../translate/${langCookie}/components/organisms/Footer_${langCookie}.tsx`
+          `../../../translate/${props.lang}/components/organisms/Footer_${props.lang}.tsx`
         );
         loadedTranslation = translationModule.default;
       } catch (error) {
@@ -34,7 +34,7 @@ const Footer: React.FC = () => {
     };
 
     fetchTranslation();
-  }, [langCookie]);
+  }, [props.lang]);
 
   return (
     <Box className={styles.footerContainer}>
@@ -60,13 +60,6 @@ const Footer: React.FC = () => {
         >
           {translation.disclaimer}
         </Link>
-        {/* <Link
-          href={PAGE_URL.CONTACT_US}
-          variant="body2"
-          className={styles.footerLink}
-        >
-          お問い合わせ
-        </Link> */}
         <Typography variant="body2" className={styles.footerCopyright}>
           Copyright © 2023 早稲田大学 西村研究室
         </Typography>

@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { Button, Snackbar } from "@mui/material";
 import Link from "next/link";
-import { COOKIE, PAGE_URL } from "../../../const";
+import { PAGE_URL } from "../../../const";
 import styles from "./CookieBanner.module.scss";
-import { useCookie } from "../../../utils/useCookie";
 import CookieBanner_EN from "../../../translate/en/components/organisms/CookieBanner_en";
 
+interface Props {
+  lang: string;
+}
 interface Translation {
   message_first: string;
   link: string;
@@ -15,7 +17,7 @@ interface Translation {
   close: string;
 }
 
-const CookieBanner: React.FC = () => {
+const CookieBanner: React.FC<Props> = (props) => {
   const COOKIE_ACCEPTED_KEY = "cookieAccepted";
 
   const isCookieAccepted = () => !!Cookies.get(COOKIE_ACCEPTED_KEY);
@@ -32,16 +34,12 @@ const CookieBanner: React.FC = () => {
 
   const [translation, setTranslation] = useState<Translation>(CookieBanner_EN);
 
-  const langCookie: string = useCookie(COOKIE.SELECTED_LANGUAGE);
-
   useEffect(() => {
     const fetchTranslation = async () => {
-      if (!langCookie) return;
-
       let loadedTranslation: Translation;
       try {
         const translationModule = await import(
-          `../../../translate/${langCookie}/components/organisms/CookieBanner_${langCookie}.tsx`
+          `../../../translate/${props.lang}/components/organisms/CookieBanner_${props.lang}.tsx`
         );
         loadedTranslation = translationModule.default;
       } catch (error) {
@@ -52,7 +50,7 @@ const CookieBanner: React.FC = () => {
     };
 
     fetchTranslation();
-  }, [langCookie]);
+  }, [props.lang]);
 
   return (
     <Snackbar

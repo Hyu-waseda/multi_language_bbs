@@ -21,6 +21,7 @@ import Cookies from "js-cookie";
 import Link from "next/link";
 import MenuListItem from "../../Atoms/MenuListItem/MenuListItem";
 import Header_EN from "../../../translate/en/components/organisms/Header_en";
+import { useRouter } from "next/router";
 
 interface HeaderProps {
   lang: string;
@@ -39,6 +40,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
     setDrawerOpen(!isDrawerOpen);
   };
 
+  const router = useRouter();
   const handleLanguageChange = (value: string) => {
     Cookies.set(COOKIE.SELECTED_LANGUAGE, value);
 
@@ -47,7 +49,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
     currentParams.set("lang", value);
 
     const newUrl = createURL(currentPath, currentParams);
-    window.location.href = newUrl;
+    router.push(newUrl);
   };
 
   const [translation, setTranslation] = useState<Translation>(Header_EN);
@@ -134,11 +136,6 @@ export const Header: React.FC<HeaderProps> = (props) => {
               icon={<AddIcon />}
               link={PAGE_URL.THREAD_CREATE}
             />
-            {/* <MenuListItem
-              name={"ヘルプ"}
-              icon={<HelpIcon />}
-              link={PAGE_URL.HELP}
-            /> */}
           </List>
         </div>
       </Drawer>
