@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Box, Link, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import styles from "./Footer.module.scss";
-import { COOKIE, PAGE_URL } from "../../../const";
+import { PAGE_URL } from "../../../const";
 import Footer_EN from "../../../translate/en/components/organisms/Footer_en";
-import { useCookie } from "../../../utils/useCookie";
-
+import Link from "next/link";
 interface Translation {
   privacy_policy: string;
   terms_of_service: string;
@@ -40,30 +39,35 @@ const Footer: React.FC<Props> = (props) => {
     <Box className={styles.footerContainer}>
       <Box className={styles.footer}>
         <Link
-          href={PAGE_URL.PRIVACY_POLICY}
-          variant="body2"
+          href={{
+            pathname: PAGE_URL.PRIVACY_POLICY,
+            query: { lang: props.lang },
+          }}
           className={styles.footerLink}
         >
-          {translation.privacy_policy}
+          <Typography variant="body2">{translation.privacy_policy}</Typography>
         </Link>
         <Link
-          href={PAGE_URL.TERMS_OF_SERVICE}
-          variant="body2"
+          href={{
+            pathname: PAGE_URL.TERMS_OF_SERVICE,
+            query: { lang: props.lang },
+          }}
           className={styles.footerLink}
         >
-          {translation.terms_of_service}
+          <Typography variant="body2">
+            {translation.terms_of_service}
+          </Typography>
         </Link>
         <Link
-          href={PAGE_URL.DISCLAIMER}
-          variant="body2"
+          href={{ pathname: PAGE_URL.DISCLAIMER, query: { lang: props.lang } }}
           className={styles.footerLink}
         >
-          {translation.disclaimer}
+          <Typography variant="body2">{translation.disclaimer}</Typography>
         </Link>
-        <Typography variant="body2" className={styles.footerCopyright}>
-          Copyright © 2023 早稲田大学 西村研究室
-        </Typography>
       </Box>
+      <Typography variant="body2" className={styles.footerCopyright}>
+        Copyright © 2023 早稲田大学 西村研究室
+      </Typography>
     </Box>
   );
 };

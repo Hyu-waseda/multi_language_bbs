@@ -2,10 +2,17 @@ import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import Link from "next/link";
 import { ReactElement } from "react";
 
+interface LinkHref {
+  pathname: string;
+  query: {
+    lang: string;
+  };
+}
+
 interface Props {
   name: string;
   icon: ReactElement;
-  link: string;
+  link: string | LinkHref;
 }
 
 const MenuListItem: React.FC<Props> = (props) => {

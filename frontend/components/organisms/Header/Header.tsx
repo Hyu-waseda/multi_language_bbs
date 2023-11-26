@@ -86,7 +86,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Link href={PAGE_URL.HOME}>
+          <Link href={{ pathname: PAGE_URL.HOME, query: { lang: props.lang } }}>
             <Typography variant="h6">The Channel</Typography>
           </Link>
 
@@ -129,12 +129,15 @@ export const Header: React.FC<HeaderProps> = (props) => {
             <MenuListItem
               name={translation.homepage}
               icon={<HomeIcon />}
-              link={PAGE_URL.HOME}
+              link={{ pathname: PAGE_URL.HOME, query: { lang: props.lang } }}
             />
             <MenuListItem
               name={translation.new_thread_creation}
               icon={<AddIcon />}
-              link={PAGE_URL.THREAD_CREATE}
+              link={{
+                pathname: PAGE_URL.THREAD_CREATE,
+                query: { lang: props.lang },
+              }}
             />
           </List>
         </div>

@@ -112,6 +112,7 @@ const Home: NextPage<Props> = (props) => {
           sortOption={SORT_OPTIONS.UPDATED}
           handlePager={(selectedPage) => setUpdatedThreadsPage(selectedPage)}
           labelForDate={props.translation.update_date}
+          lang={props.userLang}
         />
         <ThreadList
           threads={newThreads}
@@ -122,6 +123,7 @@ const Home: NextPage<Props> = (props) => {
           sortOption={SORT_OPTIONS.CREATED}
           handlePager={(selectedPage) => setNewThreadsPage(selectedPage)}
           labelForDate={props.translation.created_date}
+          lang={props.userLang}
         />
       </Container>
       <Footer lang={props.userLang} />
