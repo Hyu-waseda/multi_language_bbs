@@ -14,6 +14,7 @@ import CookieBanner from "../components/organisms/CookieBanner/CookieBanner";
 import Meta from "../components/organisms/Meta/Meta";
 import Index_EN from "../translate/en/pages/Index_en";
 import Footer from "../components/organisms/Footer/Footer";
+import { getUserLang } from "../utils/getUserLang";
 
 interface Props {
   threadCount: number;
@@ -35,8 +36,7 @@ interface Translation {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const threadCount = await fetchThreadCount();
 
-  const { req, query } = context;
-  const userLang = req.cookies.selectedLanguage || query.lang || "original";
+  const userLang: string = getUserLang(context);
 
   let translation;
   try {

@@ -28,6 +28,7 @@ import { convertUtcToUserTimezone } from "../../utils/convertUtcUserTimezone";
 import Meta from "../../components/organisms/Meta/Meta";
 import Index_EN from "../../translate/en/pages/thread/Index_en";
 import Footer from "../../components/organisms/Footer/Footer";
+import { getUserLang } from "../../utils/getUserLang";
 
 interface Props {
   threadId: string;
@@ -49,8 +50,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 ) => {
   const { req, query } = context;
 
-  const userLang: string =
-    req.cookies.selectedLanguage || (query.lang as string) || "original";
+  const userLang: string = getUserLang(context);
   const threadId: string = query.threadId as string;
 
   // fetchCommentData 開始時間

@@ -58,12 +58,6 @@ const Footer: React.FC<Props> = (props) => {
             {translation.terms_of_service}
           </Typography>
         </Link>
-        <Link
-          href={{ pathname: PAGE_URL.DISCLAIMER, query: { lang: props.lang } }}
-          className={styles.footerLink}
-        >
-          <Typography variant="body2">{translation.disclaimer}</Typography>
-        </Link>
       </Box>
       <Typography variant="body2" className={styles.footerCopyright}>
         Copyright © 2023 早稲田大学 西村研究室
