@@ -10,7 +10,7 @@ import { ThreadData } from "../../../interfaces/ThreadData";
 import { createURL } from "../../../utils/createUrl";
 import Link from "next/link";
 import Pager from "../Pager/Pager";
-import { PAGE_URL, SORT_OPTIONS } from "../../../const";
+import { PAGE_PATH, SORT_OPTIONS } from "../../../const";
 import { convertUtcToUserTimezone } from "../../../utils/convertUtcUserTimezone";
 
 interface Props {
@@ -31,7 +31,7 @@ const ThreadList: React.FC<Props> = (props) => {
     // TODO: 丸め込み
     currentParams.set("threadId", threadId);
     currentParams.set("lang", props.lang);
-    const newUrl = createURL(PAGE_URL.THREAD, currentParams);
+    const newUrl = createURL(PAGE_PATH.THREAD, currentParams);
     return newUrl;
   };
   return (
