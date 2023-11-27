@@ -22,6 +22,7 @@ interface Props {
   handlePager: (selectedPage: number) => void;
   sortOption: SORT_OPTIONS;
   labelForDate: string;
+  lang: string;
 }
 
 const ThreadList: React.FC<Props> = (props) => {
@@ -29,6 +30,7 @@ const ThreadList: React.FC<Props> = (props) => {
     const currentParams = new URLSearchParams();
     // TODO: 丸め込み
     currentParams.set("threadId", threadId);
+    currentParams.set("lang", props.lang);
     const newUrl = createURL(PAGE_URL.THREAD, currentParams);
     return newUrl;
   };

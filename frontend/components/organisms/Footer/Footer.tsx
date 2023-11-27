@@ -1,29 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { Box, Link, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import styles from "./Footer.module.scss";
-import { COOKIE, PAGE_URL } from "../../../const";
+import { PAGE_URL } from "../../../const";
 import Footer_EN from "../../../translate/en/components/organisms/Footer_en";
-import { useCookie } from "../../../utils/useCookie";
-
+import Link from "next/link";
 interface Translation {
   privacy_policy: string;
   terms_of_service: string;
   disclaimer: string;
 }
 
-const Footer: React.FC = () => {
-  const [translation, setTranslation] = useState<Translation>(Footer_EN);
+interface Props {
+  lang: string;
+}
 
-  const langCookie: string = useCookie(COOKIE.SELECTED_LANGUAGE);
+const Footer: React.FC<Props> = (props) => {
+  const [translation, setTranslation] = useState<Translation>(Footer_EN);
 
   useEffect(() => {
     const fetchTranslation = async () => {
-      if (!langCookie) return;
-
       let loadedTranslation: Translation;
       try {
         const translationModule = await import(
-          `../../../translate/${langCookie}/components/organisms/Footer_${langCookie}.tsx`
+          `../../../translate/${props.lang}/components/organisms/Footer_${props.lang}.tsx`
         );
         loadedTranslation = translationModule.default;
       } catch (error) {
@@ -34,43 +33,35 @@ const Footer: React.FC = () => {
     };
 
     fetchTranslation();
-  }, [langCookie]);
+  }, [props.lang]);
 
   return (
     <Box className={styles.footerContainer}>
       <Box className={styles.footer}>
         <Link
-          href={PAGE_URL.PRIVACY_POLICY}
-          variant="body2"
+          href={{
+            pathname: PAGE_URL.PRIVACY_POLICY,
+            query: { lang: props.lang },
+          }}
           className={styles.footerLink}
         >
-          {translation.privacy_policy}
+          <Typography variant="body2">{translation.privacy_policy}</Typography>
         </Link>
         <Link
-          href={PAGE_URL.TERMS_OF_SERVICE}
-          variant="body2"
+          href={{
+            pathname: PAGE_URL.TERMS_OF_SERVICE,
+            query: { lang: props.lang },
+          }}
           className={styles.footerLink}
         >
-          {translation.terms_of_service}
+          <Typography variant="body2">
+            {translation.terms_of_service}
+          </Typography>
         </Link>
-        <Link
-          href={PAGE_URL.DISCLAIMER}
-          variant="body2"
-          className={styles.footerLink}
-        >
-          {translation.disclaimer}
-        </Link>
-        {/* <Link
-          href={PAGE_URL.CONTACT_US}
-          variant="body2"
-          className={styles.footerLink}
-        >
-          お問い合わせ
-        </Link> */}
-        <Typography variant="body2" className={styles.footerCopyright}>
-          Copyright © 2023 早稲田大学 西村研究室
-        </Typography>
       </Box>
+      <Typography variant="body2" className={styles.footerCopyright}>
+        Copyright © 2023 早稲田大学 西村研究室
+      </Typography>
     </Box>
   );
 };

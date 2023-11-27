@@ -91,5 +91,4 @@ export const COOKIE = {
   SELECTED_LANGUAGE: "selectedLanguage",
 };
 
-export const TWITTER_CARD_IMG_URL =
-  "http://www.waseda-nishimura.org/home.png";
+export const TWITTER_CARD_IMG_URL = "http://www.waseda-nishimura.org/home.png";

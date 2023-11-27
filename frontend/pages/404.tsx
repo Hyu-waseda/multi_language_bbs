@@ -6,9 +6,15 @@ import { COOKIE, PAGE_META, PAGE_URL } from "../const";
 import styles from "../styles/404.module.scss";
 import { useCookie } from "../utils/useCookie";
 import Meta from "../components/organisms/Meta/Meta";
+import { useRouter } from "next/router";
+import Footer from "../components/organisms/Footer/Footer";
 
 const NotFoundPage: React.FC = () => {
-  const langCookie = useCookie(COOKIE.SELECTED_LANGUAGE);
+  const router = useRouter();
+  // 404が発生する前のページでのクエリパラメータを取得
+  const previousPageQueryLang: string = router.query.lang as string;
+  const userLang: string =
+    useCookie(COOKIE.SELECTED_LANGUAGE) || previousPageQueryLang || "original";
 
   return (
     <>
@@ -17,7 +23,7 @@ const NotFoundPage: React.FC = () => {
         description={PAGE_META.NOT_FOUND.description}
       />
 
-      <Header lang={langCookie} />
+      <Header lang={userLang} />
       <Box className={styles.container}>
         <Typography variant="h1" gutterBottom>
           404 - Page Not Found
@@ -31,6 +37,7 @@ const NotFoundPage: React.FC = () => {
           </Button>
         </Link>
       </Box>
+      <Footer lang={userLang} />
     </>
   );
 };

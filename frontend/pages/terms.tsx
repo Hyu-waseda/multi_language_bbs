@@ -2,10 +2,11 @@ import { GetServerSideProps, NextPage } from "next";
 import { Container, Typography, Box } from "@mui/material";
 import { Header } from "../components/organisms/Header/Header";
 import terms_EN from "../translate/en/pages/terms_en";
-import Terms_AR from "../translate/ar/pages/terms_ar";
+import { getUserLang } from "../utils/getUserLang";
+import Footer from "../components/organisms/Footer/Footer";
 
 interface Props {
-  langCookie: string;
+  userLang: string;
   translation: Translation;
 }
 
@@ -27,13 +28,12 @@ export interface Translation {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { req } = context;
-  const langCookie = req.cookies.selectedLanguage || "original";
+  const userLang = getUserLang(context);
 
   let translation;
   try {
     const translationModule = await import(
-      `../translate/${langCookie}/pages/terms_${langCookie}.tsx`
+      `../translate/${userLang}/pages/terms_${userLang}.tsx`
     );
     translation = translationModule.default;
   } catch (error) {
@@ -43,7 +43,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      langCookie,
+      userLang,
       translation,
     },
   };
@@ -52,7 +52,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const Terms: NextPage<Props> = (props) => {
   return (
     <>
-      <Header lang={props.langCookie} />
+      <Header lang={props.userLang} />
       <Container maxWidth="md">
         <Box mt={4} mb={3}>
           <Typography variant="h4" align="center">
@@ -84,6 +84,7 @@ const Terms: NextPage<Props> = (props) => {
           <Typography>{props.translation.footer.content}</Typography>
         </Box>
       </Container>
+      <Footer lang={props.userLang} />
     </>
   );
 };
