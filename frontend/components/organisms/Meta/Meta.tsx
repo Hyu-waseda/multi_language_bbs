@@ -2,12 +2,16 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import Script from "next/script";
 import { useEffect } from "react";
-import { TWITTER_CARD_IMG_URL } from "../../../const";
+import { DOMAIN } from "../../../const";
 
 interface Props {
   title: string;
   description: string;
-  url?: string;
+  pagePath: string;
+}
+
+interface PagePathToImageMap {
+  [url: string]: string;
 }
 
 const Meta: React.FC<Props> = (props) => {
@@ -33,6 +37,17 @@ const Meta: React.FC<Props> = (props) => {
     };
   }, [router.events]);
 
+  const pagePathToImageMap: PagePathToImageMap = {
+    "/": "http://www.waseda-nishimura.org/top_main.png",
+    "/?lang=original": "http://www.waseda-nishimura.org/top_original.png",
+    "/?lang=ar": "http://www.waseda-nishimura.org/top_ar.png",
+    "/?lang=zh-cn": "http://www.waseda-nishimura.org/top_zh-cn.png",
+    "/?lang=en": "http://www.waseda-nishimura.org/top_en.png",
+    "/?lang=fr": "http://www.waseda-nishimura.org/top_fr.png",
+    "/?lang=ja": "http://www.waseda-nishimura.org/top_ja.png",
+    "/?lang=es": "http://www.waseda-nishimura.org/top_es.png",
+  };
+
   return (
     <>
       <Head>
@@ -48,12 +63,18 @@ const Meta: React.FC<Props> = (props) => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={props.title} />
         <meta name="twitter:description" content={props.description} />
-        <meta name="twitter:image" content={TWITTER_CARD_IMG_URL} />
+        <meta
+          name="twitter:image"
+          content={pagePathToImageMap[props.pagePath]}
+        />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={props.title} />
         <meta property="og:description" content={props.description} />
-        <meta property="og:image" content={TWITTER_CARD_IMG_URL} />
-        <meta property="og:url" content={props.url} />
+        <meta
+          property="og:image"
+          content={pagePathToImageMap[props.pagePath]}
+        />
+        <meta property="og:url" content={`${DOMAIN}${props.pagePath}`} />
       </Head>
       <Script
         strategy="afterInteractive"
