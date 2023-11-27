@@ -15,6 +15,7 @@ import Meta from "../components/organisms/Meta/Meta";
 import Index_EN from "../translate/en/pages/Index_en";
 import Footer from "../components/organisms/Footer/Footer";
 import { getUserLang } from "../utils/getUserLang";
+import { useRouter } from "next/router";
 
 interface Props {
   threadCount: number;
@@ -93,12 +94,15 @@ const Home: NextPage<Props> = (props) => {
     fetchData();
   }, [updatedThreadsPage, threadListInfo.perPage, props.userLang]);
 
+  const router = useRouter();
+  const currentPath = router.asPath;
+
   return (
     <>
       <Meta
         title={props.translation.meta.title}
         description={props.translation.meta.description}
-        url={`${DOMAIN}${PAGE_PATH.HOME}`}
+        pagePath={currentPath}
       />
 
       <Header lang={props.userLang} />

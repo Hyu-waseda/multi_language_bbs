@@ -10,6 +10,8 @@ export const PAGE_PATH = {
   PRIVACY_POLICY: "/policy",
   TERMS_OF_SERVICE: "/terms",
   DISCLAIMER: "/disclaimer",
+  // TODO: 404ページのパス
+  NOT_FOUND: "/",
 };
 
 // 各ページのヘッダのメタ情報

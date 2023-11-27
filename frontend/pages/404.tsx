@@ -18,11 +18,6 @@ const NotFoundPage: React.FC = () => {
 
   return (
     <>
-      <Meta
-        title={PAGE_META.NOT_FOUND.title}
-        description={PAGE_META.NOT_FOUND.description}
-      />
-
       <Header lang={userLang} />
       <Box className={styles.container}>
         <Typography variant="h1" gutterBottom>
