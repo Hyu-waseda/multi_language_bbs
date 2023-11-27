@@ -2,16 +2,15 @@ import { GetServerSideProps, NextPage } from "next";
 import { Header } from "../../components/organisms/Header/Header";
 import { Container, Typography, Button, Box } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { useCookie } from "../../utils/useCookie";
 import { ThreadFormValues } from "../../interfaces/ThreadFormValues";
 import { sendThreadData } from "../../utils/api";
 import CustomTextField from "../../components/Atoms/CustomTextField/CustomTextField";
 import { FormField } from "../../interfaces/FormField";
 import Meta from "../../components/organisms/Meta/Meta";
-import { COOKIE } from "../../const";
 import Create_EN from "../../translate/en/pages/thread/Create_en";
 import { getUserLang } from "../../utils/getUserLang";
 import Footer from "../../components/organisms/Footer/Footer";
+import { useRouter } from "next/router";
 
 interface Props {
   translation: Translation;
@@ -79,11 +78,15 @@ const ThreadCreate: NextPage<Props> = (props) => {
     reset();
   };
 
+  const router = useRouter();
+  const currentPath = router.asPath;
+
   return (
     <>
       <Meta
         title={props.translation.new_thread_creation}
         description={props.translation.create_thread}
+        pagePath={currentPath}
       />
 
       <Header lang={props.userLang} />

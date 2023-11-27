@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { Button, Snackbar } from "@mui/material";
 import Link from "next/link";
-import { PAGE_URL } from "../../../const";
+import { PAGE_PATH } from "../../../const";
 import styles from "./CookieBanner.module.scss";
 import CookieBanner_EN from "../../../translate/en/components/organisms/CookieBanner_en";
 
@@ -61,7 +61,7 @@ const CookieBanner: React.FC<Props> = (props) => {
           {translation.message_first}
           <Link
             href={{
-              pathname: PAGE_URL.PRIVACY_POLICY,
+              pathname: PAGE_PATH.PRIVACY_POLICY,
               query: { lang: props.lang },
             }}
             className={styles.privacy_policy_link}
@@ -75,7 +75,7 @@ const CookieBanner: React.FC<Props> = (props) => {
         <>
           <Link
             href={{
-              pathname: PAGE_URL.PRIVACY_POLICY,
+              pathname: PAGE_PATH.PRIVACY_POLICY,
               query: { lang: props.lang },
             }}
             className={styles.privacy_policy_link}

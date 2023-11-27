@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import styles from "./Footer.module.scss";
-import { PAGE_URL } from "../../../const";
+import { PAGE_PATH } from "../../../const";
 import Footer_EN from "../../../translate/en/components/organisms/Footer_en";
 import Link from "next/link";
 interface Translation {
@@ -40,7 +40,7 @@ const Footer: React.FC<Props> = (props) => {
       <Box className={styles.footer}>
         <Link
           href={{
-            pathname: PAGE_URL.PRIVACY_POLICY,
+            pathname: PAGE_PATH.PRIVACY_POLICY,
             query: { lang: props.lang },
           }}
           className={styles.footerLink}
@@ -49,7 +49,7 @@ const Footer: React.FC<Props> = (props) => {
         </Link>
         <Link
           href={{
-            pathname: PAGE_URL.TERMS_OF_SERVICE,
+            pathname: PAGE_PATH.TERMS_OF_SERVICE,
             query: { lang: props.lang },
           }}
           className={styles.footerLink}
