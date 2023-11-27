@@ -42,7 +42,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
 
   const router = useRouter();
   const handleLanguageChange = (value: string) => {
-    Cookies.set(COOKIE.SELECTED_LANGUAGE, value);
+    Cookies.set(COOKIE.SELECTED_LANGUAGE, value, { expires: 365 });
 
     const currentPath = window.location.pathname;
     const currentParams = new URLSearchParams(window.location.search);
