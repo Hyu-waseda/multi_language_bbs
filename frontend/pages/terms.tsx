@@ -3,6 +3,7 @@ import { Container, Typography, Box } from "@mui/material";
 import { Header } from "../components/organisms/Header/Header";
 import terms_EN from "../translate/en/pages/terms_en";
 import { getUserLang } from "../utils/getUserLang";
+import Footer from "../components/organisms/Footer/Footer";
 
 interface Props {
   userLang: string;
@@ -83,6 +84,7 @@ const Terms: NextPage<Props> = (props) => {
           <Typography>{props.translation.footer.content}</Typography>
         </Box>
       </Container>
+      <Footer lang={props.userLang} />
     </>
   );
 };

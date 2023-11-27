@@ -7,6 +7,7 @@ import styles from "../styles/404.module.scss";
 import { useCookie } from "../utils/useCookie";
 import Meta from "../components/organisms/Meta/Meta";
 import { useRouter } from "next/router";
+import Footer from "../components/organisms/Footer/Footer";
 
 const NotFoundPage: React.FC = () => {
   const router = useRouter();
@@ -36,6 +37,7 @@ const NotFoundPage: React.FC = () => {
           </Button>
         </Link>
       </Box>
+      <Footer lang={userLang} />
     </>
   );
 };

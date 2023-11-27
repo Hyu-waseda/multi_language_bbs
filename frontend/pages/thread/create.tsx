@@ -11,9 +11,11 @@ import Meta from "../../components/organisms/Meta/Meta";
 import { COOKIE } from "../../const";
 import Create_EN from "../../translate/en/pages/thread/Create_en";
 import { getUserLang } from "../../utils/getUserLang";
+import Footer from "../../components/organisms/Footer/Footer";
 
 interface Props {
   translation: Translation;
+  userLang: string;
 }
 
 interface Translation {
@@ -41,13 +43,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       translation: loadedTranslation,
+      userLang: userLang,
     },
   };
 };
 
 const ThreadCreate: NextPage<Props> = (props) => {
-  const userLang = useCookie(COOKIE.SELECTED_LANGUAGE) || "original";
-
   // スレッド投稿フォーム用
   const {
     register,
@@ -73,7 +74,7 @@ const ThreadCreate: NextPage<Props> = (props) => {
       "10",
       data.author,
       data.description,
-      userLang
+      props.userLang
     );
     reset();
   };
@@ -85,7 +86,7 @@ const ThreadCreate: NextPage<Props> = (props) => {
         description={props.translation.create_thread}
       />
 
-      <Header lang={userLang} />
+      <Header lang={props.userLang} />
       <Container maxWidth="sm">
         <Typography variant="h4" gutterBottom>
           {props.translation.new_thread_creation}
@@ -109,6 +110,7 @@ const ThreadCreate: NextPage<Props> = (props) => {
           </Box>
         </form>
       </Container>
+      <Footer lang={props.userLang} />
     </>
   );
 };
