@@ -1,4 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url><loc>http://www.waseda-nishimura.org</loc></url>
+  <url><loc>http://www.waseda-nishimura.org</loc></url>
+  <url><loc>http://www.waseda-nishimura.org?lang=original</loc></url>
+  <url><loc>http://www.waseda-nishimura.org?lang=ar</loc></url>
+  <url><loc>http://www.waseda-nishimura.org?lang=zh-cn</loc></url>
+  <url><loc>http://www.waseda-nishimura.org?lang=en</loc></url>
+  <url><loc>http://www.waseda-nishimura.org?lang=fr</loc></url>
+  <url><loc>http://www.waseda-nishimura.org?lang=ja</loc></url>
+  <url><loc>http://www.waseda-nishimura.org?lang=es</loc></url>
+
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=1</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=1&amp;lang=original</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=1&amp;lang=ar</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=1&amp;lang=zh-cn</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=1&amp;lang=en</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=1&amp;lang=fr</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=1&amp;lang=ja</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=1&amp;lang=es</loc></url>
+
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=2</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=2&amp;lang=original</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=2&amp;lang=ar</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=2&amp;lang=zh-cn</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=2&amp;lang=en</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=2&amp;lang=fr</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=2&amp;lang=ja</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=2&amp;lang=es</loc></url>
+
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=3</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=3&amp;lang=original</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=3&amp;lang=ar</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=3&amp;lang=zh-cn</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=3&amp;lang=en</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=3&amp;lang=fr</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=3&amp;lang=ja</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=3&amp;lang=es</loc></url>
+
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=4</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=4&amp;lang=original</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=4&amp;lang=ar</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=4&amp;lang=zh-cn</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=4&amp;lang=en</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=4&amp;lang=fr</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=4&amp;lang=ja</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=4&amp;lang=es</loc></url>
+
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=5</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=5&amp;lang=original</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=5&amp;lang=ar</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=5&amp;lang=zh-cn</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=5&amp;lang=en</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=5&amp;lang=fr</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=5&amp;lang=ja</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread?threadId=5&amp;lang=es</loc></url>
+
+  <url><loc>http://www.waseda-nishimura.org/thread/create</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread/create?lang=original</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread/create?lang=ar</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread/create?lang=zh-cn</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread/create?lang=en</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread/create?lang=fr</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread/create?lang=ja</loc></url>
+  <url><loc>http://www.waseda-nishimura.org/thread/create?lang=es</loc></url>
 </urlset>
