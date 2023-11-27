@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography, Button } from "@mui/material";
 import Link from "next/link";
 import { Header } from "../components/organisms/Header/Header";
-import { COOKIE, PAGE_META, PAGE_URL } from "../const";
+import { COOKIE, PAGE_META, PAGE_PATH } from "../const";
 import styles from "../styles/404.module.scss";
 import { useCookie } from "../utils/useCookie";
 import Meta from "../components/organisms/Meta/Meta";
@@ -18,11 +18,6 @@ const NotFoundPage: React.FC = () => {
 
   return (
     <>
-      <Meta
-        title={PAGE_META.NOT_FOUND.title}
-        description={PAGE_META.NOT_FOUND.description}
-      />
-
       <Header lang={userLang} />
       <Box className={styles.container}>
         <Typography variant="h1" gutterBottom>
@@ -31,7 +26,7 @@ const NotFoundPage: React.FC = () => {
         <Typography variant="body1" gutterBottom>
           Oops! The page you are looking for does not exist.
         </Typography>
-        <Link href={PAGE_URL.HOME} passHref>
+        <Link href={PAGE_PATH.HOME} passHref>
           <Button variant="contained" className={styles.link}>
             Go Back to Home
           </Button>

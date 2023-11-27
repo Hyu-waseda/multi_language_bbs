@@ -2,7 +2,7 @@
 export const DOMAIN = "http://www.waseda-nishimura.org";
 
 // 各ページのURL
-export const PAGE_URL = {
+export const PAGE_PATH = {
   HOME: "/",
   THREAD: "/thread",
   THREAD_CREATE: "/thread/create",
@@ -10,6 +10,8 @@ export const PAGE_URL = {
   PRIVACY_POLICY: "/policy",
   TERMS_OF_SERVICE: "/terms",
   DISCLAIMER: "/disclaimer",
+  // TODO: 404ページのパス
+  NOT_FOUND: "/",
 };
 
 // 各ページのヘッダのメタ情報

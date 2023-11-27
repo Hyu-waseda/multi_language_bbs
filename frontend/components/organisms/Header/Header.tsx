@@ -15,7 +15,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import MenuIcon from "@mui/icons-material/Menu";
 import React, { useEffect, useState } from "react";
 import styles from "./Header.module.scss";
-import { COOKIE, LANGUAGES, PAGE_URL } from "../../../const";
+import { COOKIE, LANGUAGES, PAGE_PATH } from "../../../const";
 import { createURL } from "../../../utils/createUrl";
 import Cookies from "js-cookie";
 import Link from "next/link";
@@ -86,7 +86,9 @@ export const Header: React.FC<HeaderProps> = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Link href={{ pathname: PAGE_URL.HOME, query: { lang: props.lang } }}>
+          <Link
+            href={{ pathname: PAGE_PATH.HOME, query: { lang: props.lang } }}
+          >
             <Typography variant="h6">The Channel</Typography>
           </Link>
 
@@ -129,13 +131,13 @@ export const Header: React.FC<HeaderProps> = (props) => {
             <MenuListItem
               name={translation.homepage}
               icon={<HomeIcon />}
-              link={{ pathname: PAGE_URL.HOME, query: { lang: props.lang } }}
+              link={{ pathname: PAGE_PATH.HOME, query: { lang: props.lang } }}
             />
             <MenuListItem
               name={translation.new_thread_creation}
               icon={<AddIcon />}
               link={{
-                pathname: PAGE_URL.THREAD_CREATE,
+                pathname: PAGE_PATH.THREAD_CREATE,
                 query: { lang: props.lang },
               }}
             />
