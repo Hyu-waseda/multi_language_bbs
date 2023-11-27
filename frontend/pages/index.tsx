@@ -13,13 +13,13 @@ import { DOMAIN, PAGE_URL, SORT_OPTIONS } from "../const";
 import CookieBanner from "../components/organisms/CookieBanner/CookieBanner";
 import Meta from "../components/organisms/Meta/Meta";
 import Index_EN from "../translate/en/pages/Index_en";
+import Footer from "../components/organisms/Footer/Footer";
+import { getUserLang } from "../utils/getUserLang";
 
 interface Props {
-  resultNewThreads: ThreadData[];
-  resultUpdatedThreads: ThreadData[];
   threadCount: number;
-  langCookie: string;
   translation: Translation;
+  userLang: string;
 }
 
 interface Translation {
@@ -34,28 +34,14 @@ interface Translation {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { req } = context;
-  const langCookie = req.cookies.selectedLanguage || "original";
-
-  // TODO: 丸め込み
-  const newThreads: ThreadData[] = await fetchNewThreadData(
-    1,
-    5,
-    false,
-    langCookie
-  );
-  const updatedThreads: ThreadData[] = await fetchUpdatedThreadData(
-    1,
-    5,
-    false,
-    langCookie
-  );
   const threadCount = await fetchThreadCount();
+
+  const userLang: string = getUserLang(context);
 
   let translation;
   try {
     const translationModule = await import(
-      `../translate/${langCookie}/pages/Index_${langCookie}.tsx`
+      `../translate/${userLang}/pages/Index_${userLang}.tsx`
     );
     translation = translationModule.default;
   } catch (error) {
@@ -65,24 +51,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      resultNewThreads: newThreads,
-      resultUpdatedThreads: updatedThreads,
       threadCount: threadCount,
-      langCookie,
       translation: translation,
+      userLang: userLang,
     },
   };
 };
 
 const Home: NextPage<Props> = (props) => {
   const threadListInfo = { perPage: 5 };
-  const [newThreads, setNewThreads] = useState<ThreadData[]>(
-    props.resultNewThreads
-  );
+  const [newThreads, setNewThreads] = useState<ThreadData[]>([]);
   const [newThreadsPage, setNewThreadsPage] = useState<number>(1);
-  const [updatedThreads, setUpdatedThreads] = useState<ThreadData[]>(
-    props.resultUpdatedThreads
-  );
+  const [updatedThreads, setUpdatedThreads] = useState<ThreadData[]>([]);
   const [updatedThreadsPage, setUpdatedThreadsPage] = useState<number>(1);
 
   useEffect(() => {
@@ -91,13 +71,13 @@ const Home: NextPage<Props> = (props) => {
         newThreadsPage,
         threadListInfo.perPage,
         true,
-        props.langCookie
+        props.userLang
       );
       setNewThreads(resultNewThreads);
     };
 
     fetchData();
-  }, [newThreadsPage, threadListInfo.perPage]);
+  }, [newThreadsPage, threadListInfo.perPage, props.userLang]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -105,13 +85,13 @@ const Home: NextPage<Props> = (props) => {
         updatedThreadsPage,
         threadListInfo.perPage,
         true,
-        props.langCookie
+        props.userLang
       );
       setUpdatedThreads(resultUpdatedThreads);
     };
 
     fetchData();
-  }, [updatedThreadsPage, threadListInfo.perPage]);
+  }, [updatedThreadsPage, threadListInfo.perPage, props.userLang]);
 
   return (
     <>
@@ -121,7 +101,7 @@ const Home: NextPage<Props> = (props) => {
         url={`${DOMAIN}${PAGE_URL.HOME}`}
       />
 
-      <Header lang={props.langCookie} />
+      <Header lang={props.userLang} />
       <Container maxWidth="md">
         <ThreadList
           threads={updatedThreads}
@@ -132,6 +112,7 @@ const Home: NextPage<Props> = (props) => {
           sortOption={SORT_OPTIONS.UPDATED}
           handlePager={(selectedPage) => setUpdatedThreadsPage(selectedPage)}
           labelForDate={props.translation.update_date}
+          lang={props.userLang}
         />
         <ThreadList
           threads={newThreads}
@@ -142,9 +123,11 @@ const Home: NextPage<Props> = (props) => {
           sortOption={SORT_OPTIONS.CREATED}
           handlePager={(selectedPage) => setNewThreadsPage(selectedPage)}
           labelForDate={props.translation.created_date}
+          lang={props.userLang}
         />
       </Container>
-      <CookieBanner />
+      <Footer lang={props.userLang} />
+      <CookieBanner lang={props.userLang} />
     </>
   );
 };
