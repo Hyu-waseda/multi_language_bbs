@@ -8,8 +8,9 @@ import { sendThreadData } from "../../utils/api";
 import CustomTextField from "../../components/Atoms/CustomTextField/CustomTextField";
 import { FormField } from "../../interfaces/FormField";
 import Meta from "../../components/organisms/Meta/Meta";
-import { COOKIE, PAGE_META } from "../../const";
+import { COOKIE } from "../../const";
 import Create_EN from "../../translate/en/pages/thread/Create_en";
+import { getUserLang } from "../../utils/getUserLang";
 
 interface Props {
   translation: Translation;
@@ -24,13 +25,12 @@ interface Translation {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const langCookie = context.req.cookies.selectedLanguage || "original";
+  const userLang: string = getUserLang(context);
 
   let loadedTranslation: Translation;
-
   try {
     const translationModule = await import(
-      `../../translate/${langCookie}/pages/thread/Create_${langCookie}.tsx`
+      `../../translate/${userLang}/pages/thread/Create_${userLang}.tsx`
     );
     loadedTranslation = translationModule.default;
   } catch (error) {
@@ -46,7 +46,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const ThreadCreate: NextPage<Props> = (props) => {
-  const langCookie = useCookie(COOKIE.SELECTED_LANGUAGE) || "original";
+  const userLang = useCookie(COOKIE.SELECTED_LANGUAGE) || "original";
 
   // スレッド投稿フォーム用
   const {
@@ -73,7 +73,7 @@ const ThreadCreate: NextPage<Props> = (props) => {
       "10",
       data.author,
       data.description,
-      langCookie
+      userLang
     );
     reset();
   };
@@ -81,11 +81,11 @@ const ThreadCreate: NextPage<Props> = (props) => {
   return (
     <>
       <Meta
-        title={PAGE_META.THREAD_CREATE.title}
-        description={PAGE_META.THREAD_CREATE.description}
+        title={props.translation.new_thread_creation}
+        description={props.translation.create_thread}
       />
 
-      <Header lang={langCookie} />
+      <Header lang={userLang} />
       <Container maxWidth="sm">
         <Typography variant="h4" gutterBottom>
           {props.translation.new_thread_creation}
