@@ -63,14 +63,12 @@ export const fetchUpdatedThreadData = async (
 
 export const fetchSpecificThreadData = async (
   threadId: string,
-  lang: string
+  lang: string,
+  isClient?: boolean
 ) => {
-  const url: string = createUrlWithParams(
-    `${baseURLServer}${API.ENDPOINT.THREAD}/${threadId}`,
-    {
-      lang: lang,
-    }
-  );
+  const base = isClient ? baseURLClient : baseURLServer;
+  const params = { thread_id: threadId, lang: lang };
+  const url = createUrlWithParams(`${base}${API.ENDPOINT.THREAD}`, params);
   return await fetchData(url);
 };
 

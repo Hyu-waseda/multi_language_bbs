@@ -17,7 +17,7 @@ import {
 } from "../../utils/api";
 import "moment-timezone";
 import { ThreadData } from "../../interfaces/ThreadData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "../../components/organisms/Header/Header";
 import TextWithNewLines from "../../components/Atoms/TextWithNewLines/TextWithNewLines";
 import CustomTextField from "../../components/Atoms/CustomTextField/CustomTextField";
@@ -27,13 +27,15 @@ import { FormField } from "../../interfaces/FormField";
 import { convertUtcToUserTimezone } from "../../utils/convertUtcUserTimezone";
 import Meta from "../../components/organisms/Meta/Meta";
 import Index_EN from "../../translate/en/pages/thread/Index_en";
+import Footer from "../../components/organisms/Footer/Footer";
+import { getUserLang } from "../../utils/getUserLang";
 
 interface Props {
   threadId: string;
   comments: CommentData[];
   resultThreadData: ThreadData[];
-  langCookie: string;
   translation: Translation;
+  userLang: string;
 }
 
 interface Translation {
@@ -46,17 +48,17 @@ interface Translation {
 export const getServerSideProps: GetServerSideProps<Props> = async (
   context
 ) => {
-  const { query, req } = context;
-  // langCookieの値を取得する
-  const langCookie = req.cookies.selectedLanguage || "original";
-  const { threadId, lang } = query as { threadId: string; lang?: string };
+  const { req, query } = context;
+
+  const userLang: string = getUserLang(context);
+  const threadId: string = query.threadId as string;
 
   // fetchCommentData 開始時間
   const fetchCommentDataStartTime = Date.now();
   const comments: CommentData[] = await fetchCommentData(
     threadId,
     false,
-    langCookie
+    userLang
   );
   // fetchCommentData 終了時間
   const fetchCommentDataEndTime = Date.now();
@@ -66,7 +68,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 
   // fetchSpecificThreadData 開始時間
   const fetchSpecificThreadDataStartTime = Date.now();
-  const resultThreadData = await fetchSpecificThreadData(threadId, langCookie);
+  const resultThreadData = await fetchSpecificThreadData(
+    threadId,
+    userLang,
+    false
+  );
   // fetchSpecificThreadData 終了時間
   const fetchSpecificThreadDataEndTime = Date.now();
   // fetchSpecificThreadData の経過時間（ミリ秒）
@@ -81,10 +87,9 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   );
 
   let loadedTranslation: Translation;
-
   try {
     const translationModule = await import(
-      `../../translate/${langCookie}/pages/thread/Index_${langCookie}.tsx`
+      `../../translate/${userLang}/pages/thread/Index_${userLang}.tsx`
     );
     loadedTranslation = translationModule.default;
   } catch (error) {
@@ -97,14 +102,41 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
       threadId,
       comments,
       resultThreadData,
-      langCookie,
       translation: loadedTranslation,
+      userLang: userLang,
     },
   };
 };
 
 const Thread: NextPage<Props> = (props) => {
   const [comments, setComments] = useState<CommentData[]>(props.comments);
+  const [threadData, setThreadData] = useState<ThreadData[]>(
+    props.resultThreadData
+  );
+  const [isFirstRender, setIsFirstRender] = useState<Boolean>(true);
+
+  useEffect(() => {
+    if (isFirstRender) {
+      setIsFirstRender(false);
+      return;
+    }
+
+    const fetchData = async () => {
+      const resultComment: CommentData[] = await fetchCommentData(
+        props.threadId,
+        true,
+        props.userLang
+      );
+      setComments(resultComment);
+      const resultThreadData: ThreadData[] = await fetchSpecificThreadData(
+        props.threadId,
+        props.userLang,
+        true
+      );
+      setThreadData(resultThreadData);
+    };
+    fetchData();
+  }, [props.userLang]);
 
   // コメント送信ハンドラ
   const handleCommentSubmit = async (data: CommentFormValues) => {
@@ -114,13 +146,13 @@ const Thread: NextPage<Props> = (props) => {
       "10",
       data.author,
       data.comment,
-      props.langCookie
+      props.userLang
     );
     reset();
     const newCommentsData: CommentData[] = await fetchCommentData(
       props.threadId,
       true,
-      props.langCookie
+      props.userLang
     );
     setComments(newCommentsData);
   };
@@ -140,21 +172,14 @@ const Thread: NextPage<Props> = (props) => {
 
   return (
     <>
-      <Meta
-        title={props.resultThreadData[0].title}
-        description={props.resultThreadData[0].content}
-      />
+      <Meta title={threadData[0].title} description={threadData[0].content} />
 
-      <Header lang={props.langCookie} />
+      <Header lang={props.userLang} />
       <Container maxWidth="md">
         {/* タイトルなど */}
         <Box>
-          <Typography variant="h4">
-            {props.resultThreadData[0].title}
-          </Typography>
-          <Typography variant="body1">
-            {props.resultThreadData[0].content}
-          </Typography>
+          <Typography variant="h4">{threadData[0].title}</Typography>
+          <Typography variant="body1">{threadData[0].content}</Typography>
         </Box>
         {/* コメント表示 */}
         <Box mt={3}>
@@ -225,6 +250,8 @@ const Thread: NextPage<Props> = (props) => {
             </Button>
           </Box>
         </form>
+
+        <Footer lang={props.userLang} />
       </Container>
     </>
   );

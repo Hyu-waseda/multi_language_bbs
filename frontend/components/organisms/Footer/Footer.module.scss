@@ -10,6 +10,19 @@
   background-color: $color-white-primary;
 }
 
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
 .footerLink {
   margin: 5px;
   border-bottom: none;

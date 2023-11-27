@@ -21,6 +21,7 @@ import Cookies from "js-cookie";
 import Link from "next/link";
 import MenuListItem from "../../Atoms/MenuListItem/MenuListItem";
 import Header_EN from "../../../translate/en/components/organisms/Header_en";
+import { useRouter } from "next/router";
 
 interface HeaderProps {
   lang: string;
@@ -39,15 +40,16 @@ export const Header: React.FC<HeaderProps> = (props) => {
     setDrawerOpen(!isDrawerOpen);
   };
 
+  const router = useRouter();
   const handleLanguageChange = (value: string) => {
-    Cookies.set(COOKIE.SELECTED_LANGUAGE, value);
+    Cookies.set(COOKIE.SELECTED_LANGUAGE, value, { expires: 365 });
 
     const currentPath = window.location.pathname;
     const currentParams = new URLSearchParams(window.location.search);
     currentParams.set("lang", value);
 
     const newUrl = createURL(currentPath, currentParams);
-    window.location.href = newUrl;
+    router.push(newUrl);
   };
 
   const [translation, setTranslation] = useState<Translation>(Header_EN);
@@ -84,7 +86,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Link href={PAGE_URL.HOME}>
+          <Link href={{ pathname: PAGE_URL.HOME, query: { lang: props.lang } }}>
             <Typography variant="h6">The Channel</Typography>
           </Link>
 
@@ -127,18 +129,16 @@ export const Header: React.FC<HeaderProps> = (props) => {
             <MenuListItem
               name={translation.homepage}
               icon={<HomeIcon />}
-              link={PAGE_URL.HOME}
+              link={{ pathname: PAGE_URL.HOME, query: { lang: props.lang } }}
             />
             <MenuListItem
               name={translation.new_thread_creation}
               icon={<AddIcon />}
-              link={PAGE_URL.THREAD_CREATE}
+              link={{
+                pathname: PAGE_URL.THREAD_CREATE,
+                query: { lang: props.lang },
+              }}
             />
-            {/* <MenuListItem
-              name={"ヘルプ"}
-              icon={<HelpIcon />}
-              link={PAGE_URL.HELP}
-            /> */}
           </List>
         </div>
       </Drawer>
