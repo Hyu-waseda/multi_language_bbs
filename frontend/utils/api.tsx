@@ -67,8 +67,11 @@ export const fetchSpecificThreadData = async (
   isClient?: boolean
 ) => {
   const base = isClient ? baseURLClient : baseURLServer;
-  const params = { thread_id: threadId, lang: lang };
-  const url = createUrlWithParams(`${base}${API.ENDPOINT.THREAD}`, params);
+  const params = { lang: lang };
+  const url = createUrlWithParams(
+    `${base}${API.ENDPOINT.THREAD}/${threadId}`,
+    params
+  );
   return await fetchData(url);
 };
 
