@@ -1,4 +1,4 @@
-export const policy_TL = {
+export const Policy_TL = {
   header: {
     title: "Patakaran sa Cookie",
     content:
@@ -24,4 +24,4 @@ export const policy_TL = {
   },
 };
 
-export default policy_TL;
+export default Policy_TL;

@@ -7,7 +7,7 @@ import { sendThreadData } from "../../utils/api";
 import CustomTextField from "../../components/Atoms/CustomTextField/CustomTextField";
 import { FormField } from "../../interfaces/FormField";
 import Meta from "../../components/organisms/Meta/Meta";
-import Create_EN from "../../translate/en/pages/thread/Create_en";
+import { Create_EN } from "../../translate/en/pages/thread/Create_en";
 import { getUserLang } from "../../utils/getUserLang";
 import Footer from "../../components/organisms/Footer/Footer";
 import { useRouter } from "next/router";

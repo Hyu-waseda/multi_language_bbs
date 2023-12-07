@@ -1,4 +1,4 @@
-export const policy_FI = {
+export const Policy_FI = {
   header: {
     title: "Evästekäytäntö",
     content:
@@ -24,4 +24,4 @@ export const policy_FI = {
   },
 };
 
-export default policy_FI;
+export default Policy_FI;

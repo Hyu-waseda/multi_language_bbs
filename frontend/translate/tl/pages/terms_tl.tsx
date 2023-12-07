@@ -1,4 +1,4 @@
-export const terms_TL = {
+export const Terms_TL = {
   header: {
     title: "mga Tuntunin ng Serbisyo",
     content:
@@ -119,4 +119,4 @@ export const terms_TL = {
   },
 };
 
-export default terms_TL;
+export default Terms_TL;

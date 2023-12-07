@@ -1,4 +1,4 @@
-export const terms_FI = {
+export const Terms_FI = {
   header: {
     title: "käyttöehdot",
     content:
@@ -118,4 +118,4 @@ export const terms_FI = {
   },
 };
 
-export default terms_FI;
+export default Terms_FI;
