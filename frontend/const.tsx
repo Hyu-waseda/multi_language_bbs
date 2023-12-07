@@ -82,6 +82,8 @@ export const LANGUAGES = [
   { code: "fr", language: "french", languageCapitalized: "French" },
   { code: "ja", language: "japanese", languageCapitalized: "Japanese" },
   { code: "es", language: "spanish", languageCapitalized: "Spanish" },
+  { code: "tl", language: "filipino", languageCapitalized: "Filipino" },
+  { code: "fi", language: "finnish", languageCapitalized: "Finnish" },
 ];
 
 export enum SORT_OPTIONS {
