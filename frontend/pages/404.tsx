@@ -2,10 +2,9 @@ import React from "react";
 import { Box, Typography, Button } from "@mui/material";
 import Link from "next/link";
 import { Header } from "../components/organisms/Header/Header";
-import { COOKIE, PAGE_META, PAGE_PATH } from "../const";
+import { COOKIE, PAGE_PATH } from "../const";
 import styles from "../styles/404.module.scss";
 import { useCookie } from "../utils/useCookie";
-import Meta from "../components/organisms/Meta/Meta";
 import { useRouter } from "next/router";
 import Footer from "../components/organisms/Footer/Footer";
 
