@@ -1,7 +1,7 @@
 import { GetServerSideProps, NextPage } from "next";
 import { Container, Typography, Box } from "@mui/material";
 import { Header } from "../components/organisms/Header/Header";
-import terms_EN from "../translate/en/pages/terms_en";
+import { Terms_EN } from "../translate/en/pages/Terms_en";
 import { getUserLang } from "../utils/getUserLang";
 import Footer from "../components/organisms/Footer/Footer";
 
@@ -33,12 +33,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   let translation;
   try {
     const translationModule = await import(
-      `../translate/${userLang}/pages/terms_${userLang}.tsx`
+      `../translate/${userLang}/pages/Terms_${userLang}.tsx`
     );
     translation = translationModule.default;
   } catch (error) {
     console.error("Failed to load translation:", error);
-    translation = terms_EN;
+    translation = Terms_EN;
   }
 
   return {
