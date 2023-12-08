@@ -7,6 +7,7 @@ import {
   Box,
   Grid,
   Button,
+  Skeleton,
 } from "@mui/material";
 import styles from "../../styles/thread.module.scss";
 import { CommentData } from "../../interfaces/CommentData";
@@ -33,7 +34,6 @@ import { useRouter } from "next/router";
 
 interface Props {
   threadId: string;
-  comments: CommentData[];
   resultThreadData: ThreadData[];
   translation: Translation;
   userLang: string;
@@ -49,23 +49,10 @@ interface Translation {
 export const getServerSideProps: GetServerSideProps<Props> = async (
   context
 ) => {
-  const { req, query } = context;
+  const { query } = context;
 
   const userLang: string = getUserLang(context);
   const threadId: string = query.threadId as string;
-
-  // fetchCommentData 開始時間
-  const fetchCommentDataStartTime = Date.now();
-  const comments: CommentData[] = await fetchCommentData(
-    threadId,
-    false,
-    userLang
-  );
-  // fetchCommentData 終了時間
-  const fetchCommentDataEndTime = Date.now();
-  // fetchCommentData の経過時間（ミリ秒）
-  const fetchCommentDataDuration =
-    fetchCommentDataEndTime - fetchCommentDataStartTime;
 
   // fetchSpecificThreadData 開始時間
   const fetchSpecificThreadDataStartTime = Date.now();
@@ -79,8 +66,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   // fetchSpecificThreadData の経過時間（ミリ秒）
   const fetchSpecificThreadDataDuration =
     fetchSpecificThreadDataEndTime - fetchSpecificThreadDataStartTime;
-
-  console.log("fetchCommentData Duration:", fetchCommentDataDuration, "ms");
   console.log(
     "fetchSpecificThreadData Duration:",
     fetchSpecificThreadDataDuration,
@@ -101,7 +86,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   return {
     props: {
       threadId,
-      comments,
       resultThreadData,
       translation: loadedTranslation,
       userLang: userLang,
@@ -110,17 +94,18 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 };
 
 const Thread: NextPage<Props> = (props) => {
-  const [comments, setComments] = useState<CommentData[]>(props.comments);
+  const [comments, setComments] = useState<CommentData[]>([]);
+  const [isLoadingComments, setIsLoadingComments] = useState<boolean>(false);
   const [threadData, setThreadData] = useState<ThreadData[]>(
     props.resultThreadData
   );
-  const [isFirstRender, setIsFirstRender] = useState<Boolean>(true);
+  const [dataFetched, setDataFetched] = useState<boolean>(false);
 
   useEffect(() => {
-    if (isFirstRender) {
-      setIsFirstRender(false);
-      return;
-    }
+    // 0.5秒経過後にスケルトンスクリーンを表示
+    let timer: NodeJS.Timeout = setTimeout(() => {
+      setIsLoadingComments(true);
+    }, 500);
 
     const fetchData = async () => {
       const resultComment: CommentData[] = await fetchCommentData(
@@ -129,15 +114,17 @@ const Thread: NextPage<Props> = (props) => {
         props.userLang
       );
       setComments(resultComment);
-      const resultThreadData: ThreadData[] = await fetchSpecificThreadData(
-        props.threadId,
-        props.userLang,
-        true
-      );
-      setThreadData(resultThreadData);
+      // 0.5秒以内にフェッチが完了した場合、スケルトンスクリーンを表示しない
+      if (!isLoadingComments) {
+        clearTimeout(timer);
+      }
+      setIsLoadingComments(false);
+      setDataFetched(true);
     };
+
     fetchData();
-  }, [props.userLang]);
+    return () => clearTimeout(timer);
+  }, [props.threadId, props.userLang]);
 
   // コメント送信ハンドラ
   const handleCommentSubmit = async (data: CommentFormValues) => {
@@ -174,6 +161,17 @@ const Thread: NextPage<Props> = (props) => {
   const router = useRouter();
   const currentPath = router.asPath;
 
+  const CommentSkeleton = () => (
+    <Grid item xs={12}>
+      <Card className={styles.card}>
+        <CardContent>
+          <Skeleton variant="text" />
+          <Skeleton variant="text" />
+          <Skeleton variant="text" />
+        </CardContent>
+      </Card>
+    </Grid>
+  );
   return (
     <>
       <Meta
@@ -191,7 +189,13 @@ const Thread: NextPage<Props> = (props) => {
         </Box>
         {/* コメント表示 */}
         <Box mt={3}>
-          {comments?.length === 0 ? (
+          {isLoadingComments ? (
+            <Grid container spacing={3}>
+              <CommentSkeleton />
+              <CommentSkeleton />
+              <CommentSkeleton />
+            </Grid>
+          ) : comments?.length === 0 ? (
             <Typography variant="body1">
               {props.translation.no_comment}
             </Typography>
@@ -201,7 +205,7 @@ const Thread: NextPage<Props> = (props) => {
                 <Grid item xs={12} key={comment.commentID}>
                   <Card className={styles.card}>
                     <CardContent>
-                      {/* コメントのヘッダー（コメント番号、ユーザー名、作成日、ユーザーID） */}
+                      {/* コメントのヘッダー（コメント番号、ユーザー名、作成日） */}
                       <Box
                         className={`${styles.comment_header} ${styles.commentBox}`}
                       >
