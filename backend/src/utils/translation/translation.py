@@ -14,9 +14,15 @@ async def translate(text, language_code_to_translate):
     if text == None:
         return text
     translator = Translator()
-    translated_text = translator.translate(
-        text, dest=language_code_to_translate)
-    return translated_text
+    try:
+        translated_text = translator.translate(
+            text, dest=language_code_to_translate)
+        return translated_text
+    except Exception as e:
+        print("翻訳中にエラーが発生しました:", e)
+        translated_text = translator.translate(
+            "このコメントは、適切に翻訳することができませんでした。", dest=language_code_to_translate)
+        return translated_text
 
 # デバッグ用
 # # 翻訳する文章
