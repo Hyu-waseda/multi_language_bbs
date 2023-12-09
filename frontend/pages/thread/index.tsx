@@ -34,7 +34,7 @@ import { useRouter } from "next/router";
 
 interface Props {
   threadId: string;
-  resultThreadData: ThreadData;
+  resultThreadDetail: ThreadData;
   translation: Translation;
   userLang: string;
 }
@@ -56,7 +56,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 
   // fetchThreadDetail 開始時間
   const fetchThreadDetailStartTime = Date.now();
-  const resultThreadData = await fetchThreadDetail(threadId, userLang, false);
+  const resultThreadDetail = await fetchThreadDetail(threadId, userLang, false);
   // fetchThreadDetail 終了時間
   const fetchThreadDetailEndTime = Date.now();
   // fetchThreadDetail の経過時間（ミリ秒）
@@ -78,7 +78,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   return {
     props: {
       threadId,
-      resultThreadData,
+      resultThreadDetail,
       translation: loadedTranslation,
       userLang: userLang,
     },
@@ -88,13 +88,41 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 const Thread: NextPage<Props> = (props) => {
   const [comments, setComments] = useState<CommentData[]>([]);
   const [isLoadingComments, setIsLoadingComments] = useState<boolean>(false);
-  const [threadData, setThreadData] = useState<ThreadData>(
-    props.resultThreadData
-  );
-
   const [isFirstCommentsLoadComplete, setIsFirstCommentsLoadComplete] =
     useState<boolean>(false);
 
+  const [threadDetail, setThreadDetail] = useState<ThreadData>(
+    props.resultThreadDetail
+  );
+  const [isLoadingThreadDetail, setIsLoadingThreadDetail] =
+    useState<boolean>(false);
+  const [lastLang, setLastLang] = useState<string>(props.userLang);
+
+  // スレッド詳細情報の更新
+  useEffect(() => {
+    if (props.userLang !== lastLang) {
+      let timer: NodeJS.Timeout = setTimeout(() => {
+        setIsLoadingThreadDetail(true);
+      }, 500);
+
+      const fetchData = async () => {
+        const resultThreadDetail: ThreadData = await fetchThreadDetail(
+          props.threadId,
+          props.userLang,
+          true
+        );
+        setThreadDetail(resultThreadDetail);
+        clearTimeout(timer);
+        setIsLoadingThreadDetail(false);
+        setLastLang(props.userLang);
+      };
+
+      fetchData();
+      return () => clearTimeout(timer);
+    }
+  }, [props.userLang, props.threadId]);
+
+  // コメントの取得・更新
   useEffect(() => {
     // 0.5秒経過後にスケルトンスクリーンを表示
     let timer: NodeJS.Timeout = setTimeout(() => {
@@ -166,21 +194,28 @@ const Thread: NextPage<Props> = (props) => {
       </Card>
     </Grid>
   );
+
   return (
     <>
       <Meta
-        title={threadData.title}
-        description={threadData.content}
+        title={threadDetail.title}
+        description={threadDetail.content}
         pagePath={currentPath}
       />
 
       <Header lang={props.userLang} />
       <Container maxWidth="md">
         {/* タイトルなど */}
-        <Box>
-          <Typography variant="h4">{threadData.title}</Typography>
-          <Typography variant="body1">{threadData.content}</Typography>
-        </Box>
+        {isLoadingThreadDetail ? (
+          // スケルトンスクリーン表示
+          <Skeleton variant="rectangular" width="100%" height={118} />
+        ) : (
+          // タイトルなど
+          <Box>
+            <Typography variant="h4">{threadDetail.title}</Typography>
+            <Typography variant="body1">{threadDetail.content}</Typography>
+          </Box>
+        )}
         {/* コメント表示 */}
         <Box mt={3}>
           {isLoadingComments || !isFirstCommentsLoadComplete ? (
