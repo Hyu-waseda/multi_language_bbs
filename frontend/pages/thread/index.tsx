@@ -34,7 +34,7 @@ import { useRouter } from "next/router";
 
 interface Props {
   threadId: string;
-  resultThreadData: ThreadData[];
+  resultThreadData: ThreadData;
   translation: Translation;
   userLang: string;
 }
@@ -88,7 +88,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 const Thread: NextPage<Props> = (props) => {
   const [comments, setComments] = useState<CommentData[]>([]);
   const [isLoadingComments, setIsLoadingComments] = useState<boolean>(false);
-  const [threadData, setThreadData] = useState<ThreadData[]>(
+  const [threadData, setThreadData] = useState<ThreadData>(
     props.resultThreadData
   );
 
@@ -169,8 +169,8 @@ const Thread: NextPage<Props> = (props) => {
   return (
     <>
       <Meta
-        title={threadData[0].title}
-        description={threadData[0].content}
+        title={threadData.title}
+        description={threadData.content}
         pagePath={currentPath}
       />
 
@@ -178,8 +178,8 @@ const Thread: NextPage<Props> = (props) => {
       <Container maxWidth="md">
         {/* タイトルなど */}
         <Box>
-          <Typography variant="h4">{threadData[0].title}</Typography>
-          <Typography variant="body1">{threadData[0].content}</Typography>
+          <Typography variant="h4">{threadData.title}</Typography>
+          <Typography variant="body1">{threadData.content}</Typography>
         </Box>
         {/* コメント表示 */}
         <Box mt={3}>
