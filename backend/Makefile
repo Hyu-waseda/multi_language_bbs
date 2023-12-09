@@ -13,4 +13,7 @@ run:
 # イメージ作成と起動
 build-run: build run
 
-.PHONY: build run build-run
+format: 
+	autopep8 src/ --recursive --in-place
+
+.PHONY: build run build-run format

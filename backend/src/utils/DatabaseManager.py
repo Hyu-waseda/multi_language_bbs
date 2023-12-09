@@ -2,6 +2,7 @@ from fastapi import HTTPException
 import mysql.connector
 import os
 
+
 class DatabaseManager:
     def __init__(self):
         self.host = "database"
@@ -29,4 +30,3 @@ class DatabaseManager:
             print(error_msg)
             # データベースエラーが発生した場合は、例外を再度投げる
             raise e
-
