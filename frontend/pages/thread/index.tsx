@@ -7,12 +7,13 @@ import {
   Box,
   Grid,
   Button,
+  Skeleton,
 } from "@mui/material";
 import styles from "../../styles/thread.module.scss";
 import { CommentData } from "../../interfaces/CommentData";
 import {
   fetchCommentData,
-  fetchSpecificThreadData,
+  fetchThreadDetail,
   sendCommentData,
 } from "../../utils/api";
 import "moment-timezone";
@@ -33,8 +34,7 @@ import { useRouter } from "next/router";
 
 interface Props {
   threadId: string;
-  comments: CommentData[];
-  resultThreadData: ThreadData[];
+  resultThreadDetail: ThreadData;
   translation: Translation;
   userLang: string;
 }
@@ -49,43 +49,20 @@ interface Translation {
 export const getServerSideProps: GetServerSideProps<Props> = async (
   context
 ) => {
-  const { req, query } = context;
+  const { query } = context;
 
   const userLang: string = getUserLang(context);
   const threadId: string = query.threadId as string;
 
-  // fetchCommentData 開始時間
-  const fetchCommentDataStartTime = Date.now();
-  const comments: CommentData[] = await fetchCommentData(
-    threadId,
-    false,
-    userLang
-  );
-  // fetchCommentData 終了時間
-  const fetchCommentDataEndTime = Date.now();
-  // fetchCommentData の経過時間（ミリ秒）
-  const fetchCommentDataDuration =
-    fetchCommentDataEndTime - fetchCommentDataStartTime;
-
-  // fetchSpecificThreadData 開始時間
-  const fetchSpecificThreadDataStartTime = Date.now();
-  const resultThreadData = await fetchSpecificThreadData(
-    threadId,
-    userLang,
-    false
-  );
-  // fetchSpecificThreadData 終了時間
-  const fetchSpecificThreadDataEndTime = Date.now();
-  // fetchSpecificThreadData の経過時間（ミリ秒）
-  const fetchSpecificThreadDataDuration =
-    fetchSpecificThreadDataEndTime - fetchSpecificThreadDataStartTime;
-
-  console.log("fetchCommentData Duration:", fetchCommentDataDuration, "ms");
-  console.log(
-    "fetchSpecificThreadData Duration:",
-    fetchSpecificThreadDataDuration,
-    "ms"
-  );
+  // fetchThreadDetail 開始時間
+  const fetchThreadDetailStartTime = Date.now();
+  const resultThreadDetail = await fetchThreadDetail(threadId, userLang, false);
+  // fetchThreadDetail 終了時間
+  const fetchThreadDetailEndTime = Date.now();
+  // fetchThreadDetail の経過時間（ミリ秒）
+  const fetchThreadDetailDuration =
+    fetchThreadDetailEndTime - fetchThreadDetailStartTime;
+  console.log("fetchThreadDetail Duration:", fetchThreadDetailDuration, "ms");
 
   let loadedTranslation: Translation;
   try {
@@ -101,8 +78,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   return {
     props: {
       threadId,
-      comments,
-      resultThreadData,
+      resultThreadDetail,
       translation: loadedTranslation,
       userLang: userLang,
     },
@@ -110,17 +86,48 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 };
 
 const Thread: NextPage<Props> = (props) => {
-  const [comments, setComments] = useState<CommentData[]>(props.comments);
-  const [threadData, setThreadData] = useState<ThreadData[]>(
-    props.resultThreadData
-  );
-  const [isFirstRender, setIsFirstRender] = useState<Boolean>(true);
+  const [comments, setComments] = useState<CommentData[]>([]);
+  const [isLoadingComments, setIsLoadingComments] = useState<boolean>(false);
+  const [isFirstCommentsLoadComplete, setIsFirstCommentsLoadComplete] =
+    useState<boolean>(false);
 
+  const [threadDetail, setThreadDetail] = useState<ThreadData>(
+    props.resultThreadDetail
+  );
+  const [isLoadingThreadDetail, setIsLoadingThreadDetail] =
+    useState<boolean>(false);
+  const [lastLang, setLastLang] = useState<string>(props.userLang);
+
+  // スレッド詳細情報の更新
   useEffect(() => {
-    if (isFirstRender) {
-      setIsFirstRender(false);
-      return;
+    if (props.userLang !== lastLang) {
+      let timer: NodeJS.Timeout = setTimeout(() => {
+        setIsLoadingThreadDetail(true);
+      }, 500);
+
+      const fetchData = async () => {
+        const resultThreadDetail: ThreadData = await fetchThreadDetail(
+          props.threadId,
+          props.userLang,
+          true
+        );
+        setThreadDetail(resultThreadDetail);
+        clearTimeout(timer);
+        setIsLoadingThreadDetail(false);
+        setLastLang(props.userLang);
+      };
+
+      fetchData();
+      return () => clearTimeout(timer);
     }
+  }, [props.userLang, props.threadId]);
+
+  // コメントの取得・更新
+  useEffect(() => {
+    // 0.5秒経過後にスケルトンスクリーンを表示
+    let timer: NodeJS.Timeout = setTimeout(() => {
+      setIsLoadingComments(true);
+    }, 500);
 
     const fetchData = async () => {
       const resultComment: CommentData[] = await fetchCommentData(
@@ -129,15 +136,17 @@ const Thread: NextPage<Props> = (props) => {
         props.userLang
       );
       setComments(resultComment);
-      const resultThreadData: ThreadData[] = await fetchSpecificThreadData(
-        props.threadId,
-        props.userLang,
-        true
-      );
-      setThreadData(resultThreadData);
+      // 0.5秒以内にフェッチが完了した場合、スケルトンスクリーンを表示しない
+      if (!isLoadingComments) {
+        clearTimeout(timer);
+      }
+      setIsLoadingComments(false);
+      setIsFirstCommentsLoadComplete(true);
     };
+
     fetchData();
-  }, [props.userLang]);
+    return () => clearTimeout(timer);
+  }, [props.threadId, props.userLang]);
 
   // コメント送信ハンドラ
   const handleCommentSubmit = async (data: CommentFormValues) => {
@@ -174,24 +183,48 @@ const Thread: NextPage<Props> = (props) => {
   const router = useRouter();
   const currentPath = router.asPath;
 
+  const CommentSkeleton = () => (
+    <Grid item xs={12}>
+      <Card className={styles.card}>
+        <CardContent>
+          <Skeleton variant="text" />
+          <Skeleton variant="text" />
+          <Skeleton variant="text" />
+        </CardContent>
+      </Card>
+    </Grid>
+  );
+
   return (
     <>
       <Meta
-        title={threadData[0].title}
-        description={threadData[0].content}
+        title={threadDetail.title}
+        description={threadDetail.content}
         pagePath={currentPath}
       />
 
       <Header lang={props.userLang} />
       <Container maxWidth="md">
         {/* タイトルなど */}
-        <Box>
-          <Typography variant="h4">{threadData[0].title}</Typography>
-          <Typography variant="body1">{threadData[0].content}</Typography>
-        </Box>
+        {isLoadingThreadDetail ? (
+          // スケルトンスクリーン表示
+          <Skeleton variant="rectangular" width="100%" height={118} />
+        ) : (
+          // タイトルなど
+          <Box>
+            <Typography variant="h4">{threadDetail.title}</Typography>
+            <Typography variant="body1">{threadDetail.content}</Typography>
+          </Box>
+        )}
         {/* コメント表示 */}
         <Box mt={3}>
-          {comments?.length === 0 ? (
+          {isLoadingComments || !isFirstCommentsLoadComplete ? (
+            <Grid container spacing={3}>
+              <CommentSkeleton />
+              <CommentSkeleton />
+              <CommentSkeleton />
+            </Grid>
+          ) : comments?.length === 0 ? (
             <Typography variant="body1">
               {props.translation.no_comment}
             </Typography>
@@ -201,7 +234,7 @@ const Thread: NextPage<Props> = (props) => {
                 <Grid item xs={12} key={comment.commentID}>
                   <Card className={styles.card}>
                     <CardContent>
-                      {/* コメントのヘッダー（コメント番号、ユーザー名、作成日、ユーザーID） */}
+                      {/* コメントのヘッダー（コメント番号、ユーザー名、作成日） */}
                       <Box
                         className={`${styles.comment_header} ${styles.commentBox}`}
                       >

@@ -123,7 +123,7 @@ class ThreadApplication:
         thread_data = thread_infrastructure.fetch_thread_by_id(
             self.params["thread_id"])
         res = await self.__format_thread_data(threads=[thread_data], lang=self.params["lang"])
-        return res
+        return res[0]
 
     def get_thread_count(self):
         """

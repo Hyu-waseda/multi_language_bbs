@@ -3,7 +3,9 @@ import {
   Divider,
   List,
   ListItem,
+  ListItemButton,
   ListItemText,
+  Skeleton,
   Typography,
 } from "@mui/material";
 import { ThreadData } from "../../../interfaces/ThreadData";
@@ -23,47 +25,64 @@ interface Props {
   sortOption: SORT_OPTIONS;
   labelForDate: string;
   lang: string;
+  showSkeleton: boolean;
 }
 
 const ThreadList: React.FC<Props> = (props) => {
   const createUrlToThread = (threadId: string): string => {
     const currentParams = new URLSearchParams();
-    // TODO: 丸め込み
     currentParams.set("threadId", threadId);
     currentParams.set("lang", props.lang);
-    const newUrl = createURL(PAGE_PATH.THREAD, currentParams);
-    return newUrl;
+    return createURL(PAGE_PATH.THREAD, currentParams);
   };
+
+  const createSkeleton = () => (
+    <ListItem>
+      <ListItemText
+        primary={<Skeleton variant="text" />}
+        secondary={<Skeleton variant="text" />}
+      />
+    </ListItem>
+  );
+
+  const createThreadItem = (thread: ThreadData) => (
+    <Link
+      key={thread.title}
+      href={createUrlToThread(String(thread.threadID))}
+      passHref
+    >
+      <ListItemButton>
+        <ListItemText
+          primary={thread.title}
+          secondary={`${props.labelForDate}: ${convertUtcToUserTimezone(
+            thread[props.sortOption]
+          )}`}
+        />
+      </ListItemButton>
+    </Link>
+  );
+
   return (
     <>
       <Typography variant="h4">{props.title}</Typography>
       <Divider />
       <Card>
         <List>
-          {props.threads.map((thread) => (
-            <Link
-              key={thread.title}
-              href={createUrlToThread(String(thread.threadID))}
-            >
-              <ListItem>
-                <ListItemText
-                  primary={thread.title}
-                  // TODO: ユーザのタイムゾーン予測など
-                  secondary={`${props.labelForDate}: ${convertUtcToUserTimezone(
-                    thread[props.sortOption]
-                  )}`}
-                />
-              </ListItem>
-            </Link>
-          ))}
+          {props.showSkeleton
+            ? Array.from(new Array(props.perPage)).map((_, index) =>
+                createSkeleton()
+              )
+            : props.threads.map(createThreadItem)}
         </List>
       </Card>
-      <Pager
-        totalCount={props.totalCount}
-        perPage={props.perPage}
-        page={props.page}
-        handlePager={props.handlePager}
-      />
+      {!props.showSkeleton && (
+        <Pager
+          totalCount={props.totalCount}
+          perPage={props.perPage}
+          page={props.page}
+          handlePager={props.handlePager}
+        />
+      )}
     </>
   );
 };
