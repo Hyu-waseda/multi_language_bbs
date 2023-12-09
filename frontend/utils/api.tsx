@@ -61,7 +61,7 @@ export const fetchUpdatedThreadData = async (
   return await fetchData(url);
 };
 
-export const fetchSpecificThreadData = async (
+export const fetchThreadDetail = async (
   threadId: string,
   lang: string,
   isClient?: boolean

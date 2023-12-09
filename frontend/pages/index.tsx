@@ -61,13 +61,29 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 const Home: NextPage<Props> = (props) => {
   const threadListInfo = { perPage: 5 };
+
+  // 新規作成スレッド関連
   const [newThreads, setNewThreads] = useState<ThreadData[]>([]);
   const [newThreadsPage, setNewThreadsPage] = useState<number>(1);
+  const [showSkeletonNewThreads, setShowSkeletonNewThreads] =
+    useState<boolean>(false);
+
+  // 最新更新スレッド関連
   const [updatedThreads, setUpdatedThreads] = useState<ThreadData[]>([]);
   const [updatedThreadsPage, setUpdatedThreadsPage] = useState<number>(1);
+  const [showSkeletonUpdatedThreads, setShowSkeletonUpdatedThreads] =
+    useState<boolean>(false);
 
+  // 新規作成スレッドの更新
   useEffect(() => {
     const fetchData = async () => {
+      setShowSkeletonNewThreads(false);
+
+      // スケルトンスクリーンの遅延表示
+      const skeletonTimer = setTimeout(() => {
+        setShowSkeletonNewThreads(true);
+      }, 500);
+
       const resultNewThreads: ThreadData[] = await fetchNewThreadData(
         newThreadsPage,
         threadListInfo.perPage,
@@ -75,13 +91,21 @@ const Home: NextPage<Props> = (props) => {
         props.userLang
       );
       setNewThreads(resultNewThreads);
+      setShowSkeletonNewThreads(false);
+      clearTimeout(skeletonTimer);
     };
 
     fetchData();
   }, [newThreadsPage, threadListInfo.perPage, props.userLang]);
 
+  // 最新更新スレッドの更新
   useEffect(() => {
     const fetchData = async () => {
+      setShowSkeletonUpdatedThreads(false);
+
+      const skeletonTimer = setTimeout(() => {
+        setShowSkeletonUpdatedThreads(true);
+      }, 500);
       const resultUpdatedThreads: ThreadData[] = await fetchUpdatedThreadData(
         updatedThreadsPage,
         threadListInfo.perPage,
@@ -89,6 +113,8 @@ const Home: NextPage<Props> = (props) => {
         props.userLang
       );
       setUpdatedThreads(resultUpdatedThreads);
+      setShowSkeletonUpdatedThreads(false);
+      clearTimeout(skeletonTimer);
     };
 
     fetchData();
@@ -96,7 +122,6 @@ const Home: NextPage<Props> = (props) => {
 
   const router = useRouter();
   const currentPath = router.asPath;
-
   return (
     <>
       <Meta
@@ -107,6 +132,7 @@ const Home: NextPage<Props> = (props) => {
 
       <Header lang={props.userLang} />
       <Container maxWidth="md">
+        {/* 最新更新スレッド */}
         <ThreadList
           threads={updatedThreads}
           title={props.translation.latest_update_thread}
@@ -117,7 +143,9 @@ const Home: NextPage<Props> = (props) => {
           handlePager={(selectedPage) => setUpdatedThreadsPage(selectedPage)}
           labelForDate={props.translation.update_date}
           lang={props.userLang}
+          showSkeleton={showSkeletonUpdatedThreads}
         />
+        {/* 新規作成スレッド */}
         <ThreadList
           threads={newThreads}
           title={props.translation.new_thread}
@@ -128,6 +156,7 @@ const Home: NextPage<Props> = (props) => {
           handlePager={(selectedPage) => setNewThreadsPage(selectedPage)}
           labelForDate={props.translation.created_date}
           lang={props.userLang}
+          showSkeleton={showSkeletonNewThreads}
         />
       </Container>
       <Footer lang={props.userLang} />
