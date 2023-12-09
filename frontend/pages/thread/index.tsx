@@ -13,7 +13,7 @@ import styles from "../../styles/thread.module.scss";
 import { CommentData } from "../../interfaces/CommentData";
 import {
   fetchCommentData,
-  fetchSpecificThreadData,
+  fetchThreadDetail,
   sendCommentData,
 } from "../../utils/api";
 import "moment-timezone";
@@ -54,23 +54,15 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   const userLang: string = getUserLang(context);
   const threadId: string = query.threadId as string;
 
-  // fetchSpecificThreadData 開始時間
-  const fetchSpecificThreadDataStartTime = Date.now();
-  const resultThreadData = await fetchSpecificThreadData(
-    threadId,
-    userLang,
-    false
-  );
-  // fetchSpecificThreadData 終了時間
-  const fetchSpecificThreadDataEndTime = Date.now();
-  // fetchSpecificThreadData の経過時間（ミリ秒）
-  const fetchSpecificThreadDataDuration =
-    fetchSpecificThreadDataEndTime - fetchSpecificThreadDataStartTime;
-  console.log(
-    "fetchSpecificThreadData Duration:",
-    fetchSpecificThreadDataDuration,
-    "ms"
-  );
+  // fetchThreadDetail 開始時間
+  const fetchThreadDetailStartTime = Date.now();
+  const resultThreadData = await fetchThreadDetail(threadId, userLang, false);
+  // fetchThreadDetail 終了時間
+  const fetchThreadDetailEndTime = Date.now();
+  // fetchThreadDetail の経過時間（ミリ秒）
+  const fetchThreadDetailDuration =
+    fetchThreadDetailEndTime - fetchThreadDetailStartTime;
+  console.log("fetchThreadDetail Duration:", fetchThreadDetailDuration, "ms");
 
   let loadedTranslation: Translation;
   try {
