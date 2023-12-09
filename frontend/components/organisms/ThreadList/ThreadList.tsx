@@ -3,6 +3,7 @@ import {
   Divider,
   List,
   ListItem,
+  ListItemButton,
   ListItemText,
   Skeleton,
   Typography,
@@ -50,14 +51,14 @@ const ThreadList: React.FC<Props> = (props) => {
       href={createUrlToThread(String(thread.threadID))}
       passHref
     >
-      <ListItem button component="a">
+      <ListItemButton>
         <ListItemText
           primary={thread.title}
           secondary={`${props.labelForDate}: ${convertUtcToUserTimezone(
             thread[props.sortOption]
           )}`}
         />
-      </ListItem>
+      </ListItemButton>
     </Link>
   );
 
