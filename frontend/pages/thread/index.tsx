@@ -99,7 +99,9 @@ const Thread: NextPage<Props> = (props) => {
   const [threadData, setThreadData] = useState<ThreadData[]>(
     props.resultThreadData
   );
-  const [dataFetched, setDataFetched] = useState<boolean>(false);
+
+  const [isFirstCommentsLoadComplete, setIsFirstCommentsLoadComplete] =
+    useState<boolean>(false);
 
   useEffect(() => {
     // 0.5秒経過後にスケルトンスクリーンを表示
@@ -119,7 +121,7 @@ const Thread: NextPage<Props> = (props) => {
         clearTimeout(timer);
       }
       setIsLoadingComments(false);
-      setDataFetched(true);
+      setIsFirstCommentsLoadComplete(true);
     };
 
     fetchData();
@@ -189,7 +191,7 @@ const Thread: NextPage<Props> = (props) => {
         </Box>
         {/* コメント表示 */}
         <Box mt={3}>
-          {isLoadingComments ? (
+          {isLoadingComments || !isFirstCommentsLoadComplete ? (
             <Grid container spacing={3}>
               <CommentSkeleton />
               <CommentSkeleton />
