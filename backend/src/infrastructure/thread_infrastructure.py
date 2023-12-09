@@ -19,7 +19,7 @@ class ThreadInfrastructure:
             raise HTTPException(
                 status_code=500, detail="データベースからスレッドを取得できませんでした。fetch_all_threads_sorted_by_created_at: " + str(e))
         return res
-    
+
     def fetch_all_threads_sorted_by_updated_at(self):
         """
         全てのスレッドを更新日時の降順で取得する関数
@@ -48,7 +48,7 @@ class ThreadInfrastructure:
             raise HTTPException(
                 status_code=500, detail="データベースからスレッドを取得できませんでした。fetch_threads_by_offset_sorted_by_created_at: " + str(e))
         return res
-    
+
     def fetch_threads_by_offset_sorted_by_updated_at(self, offset: int, count: int):
         """
         指定されたオフセットと件数でスレッドを更新日時の降順で取得する関数
@@ -97,7 +97,7 @@ class ThreadInfrastructure:
         except Exception as e:
             raise HTTPException(
                 status_code=500, detail="スレッドの総数を取得できませんでした。fetch_thread_count: " + str(e))
-        
+
     # スレッドの更新日時を更新する関数
     def update_thread_updated_at(self, thread_id: int, updated_at: str):
         """
@@ -114,13 +114,12 @@ class ThreadInfrastructure:
         except Exception as e:
             raise HTTPException(
                 status_code=500, detail="スレッドの更新日時の更新に失敗しました。update_thread_updated_at: " + str(e))
-        
+
     def create_thread(self, thread_data):
         query = """
             INSERT INTO Threads (Title, CreatedAt, UpdatedAt, UserID, UserName, Content, Language, Views, Likes, Tags, CategoryID, ImageURL)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
         """
-
 
         params = (
             thread_data["Title"],
