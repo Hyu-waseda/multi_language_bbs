@@ -1,0 +1,24 @@
+@import "variables";
+
+.welcome_message_title {
+  @media (max-width: 768px) {
+    padding: 10px 10px;
+    text-align: left;
+
+    font-size: 22px;
+  }
+}
+
+.welcome_message_text {
+  margin-bottom: 24px;
+  text-align: center;
+  align-items: center;
+  border-bottom: 1px solid $color-black-tertiary;
+  padding: 10px 24px;
+  margin: 10px auto;
+  max-width: 980px;
+  @media (max-width: 768px) {
+    padding: 10px 10px;
+    text-align: left;
+  }
+}

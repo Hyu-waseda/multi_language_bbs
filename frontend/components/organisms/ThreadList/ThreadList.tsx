@@ -57,6 +57,7 @@ const ThreadList: React.FC<Props> = (props) => {
           secondary={`${props.labelForDate}: ${convertUtcToUserTimezone(
             thread[props.sortOption]
           )}`}
+          key={`${thread.title}-${thread[props.sortOption]}`}
         />
       </ListItemButton>
     </Link>
