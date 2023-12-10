@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ThreadData } from "../interfaces/ThreadData";
-import { Container } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { GetServerSideProps, NextPage } from "next";
 import {
   fetchNewThreadData,
@@ -16,6 +16,7 @@ import { Index_EN } from "../translate/en/pages/Index_en";
 import Footer from "../components/organisms/Footer/Footer";
 import { getUserLang } from "../utils/getUserLang";
 import { useRouter } from "next/router";
+import styles from "../styles/index.module.scss";
 
 interface Props {
   threadCount: number;
@@ -28,6 +29,10 @@ interface Translation {
     title: string;
     description: string;
   };
+  welcome_message: string;
+  translation_instructions: string;
+  thread_creation_guide: string;
+  community_impact_message: string;
   latest_update_thread: string;
   new_thread: string;
   update_date: string;
@@ -131,6 +136,27 @@ const Home: NextPage<Props> = (props) => {
       />
 
       <Header lang={props.userLang} />
+      {/* ウェルカムメッセージ */}
+      <Typography
+        variant="h4"
+        gutterBottom
+        align="center"
+        className={styles.welcome_message_title}
+      >
+        {props.translation.welcome_message}
+      </Typography>
+      <Box className={styles.welcome_message_text}>
+        <Typography variant="body1" gutterBottom>
+          {props.translation.translation_instructions}
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          {props.translation.thread_creation_guide}
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          {props.translation.community_impact_message}
+        </Typography>
+      </Box>
+
       <Container maxWidth="md">
         {/* 最新更新スレッド */}
         <ThreadList
