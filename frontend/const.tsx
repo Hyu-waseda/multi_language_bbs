@@ -72,6 +72,9 @@ export const API = {
 // 翻訳用言語一覧
 export const LANGUAGES = [
   { code: "original", language: "original", languageCapitalized: "Original" },
+  { code: "af", language: "afrikaans", languageCapitalized: "Afrikaans" },
+  { code: "sq", language: "albanian", languageCapitalized: "Albanian" },
+  { code: "am", language: "amharic", languageCapitalized: "Amharic" },
   { code: "ar", language: "arabic", languageCapitalized: "Arabic" },
   {
     code: "zh-cn",
