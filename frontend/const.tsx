@@ -82,15 +82,17 @@ export const LANGUAGES = [
     languageCapitalized: "Chinese (Simplified)",
   },
   { code: "en", language: "english", languageCapitalized: "English" },
-  { code: "fr", language: "french", languageCapitalized: "French" },
-  { code: "ja", language: "japanese", languageCapitalized: "Japanese" },
-  { code: "es", language: "spanish", languageCapitalized: "Spanish" },
   {
     code: "tl",
     language: "filipino (Tagalog)",
     languageCapitalized: "Filipino (Tagalog)",
   },
   { code: "fi", language: "finnish", languageCapitalized: "Finnish" },
+  { code: "fr", language: "french", languageCapitalized: "French" },
+
+  { code: "ja", language: "japanese", languageCapitalized: "Japanese" },
+  { code: "fa", language: "persian", languageCapitalized: "Persian" },
+  { code: "es", language: "spanish", languageCapitalized: "Spanish" },
 ];
 
 export enum SORT_OPTIONS {
