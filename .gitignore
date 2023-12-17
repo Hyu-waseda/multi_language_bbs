@@ -7,6 +7,9 @@ latex
 
 tmp**
 
+# logs
+nginx_logs
+
 # database
 
 # Ignore binlog files

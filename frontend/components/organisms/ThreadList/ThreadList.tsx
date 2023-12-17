@@ -36,8 +36,8 @@ const ThreadList: React.FC<Props> = (props) => {
     return createURL(PAGE_PATH.THREAD, currentParams);
   };
 
-  const createSkeleton = () => (
-    <ListItem>
+  const createSkeleton = (index: number) => (
+    <ListItem key={`${props.sortOption}-skeleton-${index}`}>
       <ListItemText
         primary={<Skeleton variant="text" />}
         secondary={<Skeleton variant="text" />}
@@ -47,7 +47,7 @@ const ThreadList: React.FC<Props> = (props) => {
 
   const createThreadItem = (thread: ThreadData) => (
     <Link
-      key={thread.title}
+      key={`${thread.threadID}-${props.sortOption}`} // key をここに移動
       href={createUrlToThread(String(thread.threadID))}
       passHref
     >
@@ -57,7 +57,6 @@ const ThreadList: React.FC<Props> = (props) => {
           secondary={`${props.labelForDate}: ${convertUtcToUserTimezone(
             thread[props.sortOption]
           )}`}
-          key={`${thread.title}-${thread[props.sortOption]}`}
         />
       </ListItemButton>
     </Link>
@@ -68,10 +67,10 @@ const ThreadList: React.FC<Props> = (props) => {
       <Typography variant="h4">{props.title}</Typography>
       <Divider />
       <Card>
-        <List>
+        <List key={props.sortOption}>
           {props.showSkeleton
             ? Array.from(new Array(props.perPage)).map((_, index) =>
-                createSkeleton()
+                createSkeleton(index)
               )
             : props.threads.map(createThreadItem)}
         </List>

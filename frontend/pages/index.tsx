@@ -65,7 +65,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const Home: NextPage<Props> = (props) => {
-  const threadListInfo = { perPage: 5 };
+  const threadListInfo = { perPage: 8 };
 
   // 新規作成スレッド関連
   const [newThreads, setNewThreads] = useState<ThreadData[]>([]);
