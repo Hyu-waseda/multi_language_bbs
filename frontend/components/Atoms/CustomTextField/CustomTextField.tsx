@@ -12,12 +12,6 @@ interface Props {
 }
 
 const CustomTextField: React.FC<Props> = (props) => {
-  const preventEnterSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-    }
-  };
-
   const validationRules: Record<string, any> =
     props.isInputRequired !== false
       ? { required: `${props.label}は必須です` }
@@ -35,7 +29,6 @@ const CustomTextField: React.FC<Props> = (props) => {
       {...props.register(props.name, validationRules)}
       error={Boolean(props.errors[props.name])}
       helperText={props.errors[props.name]?.message}
-      onKeyDown={preventEnterSubmit}
       rows={props.rows}
       multiline
     />
