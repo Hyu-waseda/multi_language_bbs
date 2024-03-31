@@ -42,26 +42,26 @@ class ThreadApplication:
         res = []
         for thread_data in threads:
             if lang == "original":
-                title = thread_data[1]
-                content = thread_data[6]
+                title = thread_data['Title']
+                content = thread_data['Content']
             else:
-                title = await translate_with_cache(thread_data[1], lang) if thread_data[1] else ""
-                content = await translate_with_cache(thread_data[6], lang) if thread_data[6] else ""
+                title = await translate_with_cache(thread_data['Title'], lang) if thread_data['Title'] else ""
+                content = await translate_with_cache(thread_data['Content'], lang) if thread_data['Content'] else ""
 
             formatted_thread = {
-                "threadID": thread_data[0],
+                "threadID": thread_data['ThreadID'],
                 "title": title,
-                "createdAt": thread_data[2],
-                "updatedAt": thread_data[3],
-                "userID": thread_data[4],
-                "userName": thread_data[5],
+                "createdAt": thread_data['CreatedAt'],
+                "updatedAt": thread_data['UpdatedAt'],
+                "userID": thread_data['UserID'],
+                "userName": thread_data['UserName'],
                 "content": content,
-                "language": thread_data[7],
-                "views": thread_data[8],
-                "likes": thread_data[9],
-                "tags": thread_data[10],
-                "categoryID": thread_data[11],
-                "imageURL": thread_data[12]
+                "language": thread_data['Language'],
+                "views": thread_data['Views'],
+                "likes": thread_data['Likes'],
+                "tags": thread_data['Tags'],
+                "categoryID": thread_data['CategoryID'],
+                "imageURL": thread_data['ImageURL']
             }
             res.append(formatted_thread)
         return res

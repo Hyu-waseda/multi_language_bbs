@@ -58,19 +58,19 @@ class CommentApplication:
         res = []
         for comment_data in comments:
             if lang == "original":
-                text = comment_data[4]
+                text = comment_data["Content"]
             else:
-                text = await translate_with_cache(comment_data[4], lang) if comment_data[4] else ""
+                text = await translate_with_cache(comment_data["Content"], lang) if comment_data["Content"] else ""
 
             formatted_comment = {
-                "commentID": comment_data[0],
-                "threadID": comment_data[1],
-                "userID": comment_data[2],
-                "userName": comment_data[3],
+                "commentID": comment_data["CommentID"],
+                "threadID": comment_data["ThreadID"],
+                "userID": comment_data["UserID"],
+                "userName": comment_data["UserName"],
                 "content": text,
-                "createdAt": comment_data[5],
-                "updatedAt": comment_data[6],
-                "likes": comment_data[7]
+                "createdAt": comment_data["CreatedAt"],
+                "updatedAt": comment_data["UpdatedAt"],
+                "language": comment_data["Language"]
             }
             res.append(formatted_comment)
 
