@@ -1,5 +1,5 @@
-from enum import Enum
 from typing import Optional
+from src.schemas.thread_schemas import CreateThreadParams, GetSpecificThreadParams, GetThreadParams
 from src.enums.sort_option import SortOption
 from src.application.thread_application import ThreadApplication
 from fastapi import APIRouter, Path, Query
@@ -14,9 +14,10 @@ async def get_thread(sort: SortOption = SortOption["new"], offset: Optional[int]
 
     offset: 取得するスレッドのオフセット数（指定しない場合は最初から）
     """
-    params = {"offset": offset, "count": count, "sort": sort, "lang": lang}
-    thread_application = ThreadApplication(params=params)
-    res = await thread_application.get_threads()
+
+    params = GetThreadParams(offset=offset, count=count, sort=sort, lang=lang)
+    thread_application = ThreadApplication()
+    res = await thread_application.get_threads(params=params)
     return res
 
 
@@ -25,7 +26,7 @@ async def get_thread_count():
     """
     スレッドの総数を取得するAPI
     """
-    thread_application = ThreadApplication(params={})
+    thread_application = ThreadApplication()
     res = thread_application.get_thread_count()
     return res
 
@@ -37,9 +38,9 @@ async def get_specific_thread(thread_id: str = Path(..., description="取得す�
 
     thread_id: 取得するスレッドのID
     """
-    params = {"thread_id": thread_id, "lang": lang}
-    thread_application = ThreadApplication(params=params)
-    res = await thread_application.get_specific_thread()
+    params = GetSpecificThreadParams(thread_id=int(thread_id), lang=lang)
+    thread_application = ThreadApplication()
+    res = await thread_application.get_specific_thread(params=params)
     return res
 
 
@@ -60,13 +61,8 @@ async def create_thread(
     content: スレッドの内容
     language: 言語
     """
-    thread = {
-        "title": title,
-        "user_id": user_id,
-        "user_name": user_name,
-        "content": content,
-        "language": language,
-    }
-    thread_application = ThreadApplication(thread)
-    created_thread = thread_application.create_thread(thread)
+    params = CreateThreadParams(title=title, user_id=user_id,
+                                user_name=user_name, content=content, language=language)
+    thread_application = ThreadApplication()
+    created_thread = thread_application.create_thread(params=params)
     return created_thread

@@ -93,7 +93,8 @@ class ThreadInfrastructure:
         query = "SELECT COUNT(*) FROM Threads;"
         try:
             res = self.database_manager.execute_query(query)
-            return res[0][0]
+            print(res)
+            return res[0]['COUNT(*)']
         except Exception as e:
             raise HTTPException(
                 status_code=500, detail="スレッドの総数を取得できませんでした。fetch_thread_count: " + str(e))
