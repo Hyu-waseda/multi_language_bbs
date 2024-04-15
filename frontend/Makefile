@@ -12,8 +12,8 @@ run:
 # イメージ作成と起動
 build-run: build run
 
-# srcフォルダ配下の全ファイルを修正
-prettier:
+# srcフォルダ配下の全ファイルのフォーマットを整える
+format:
 	yarn prettier --write components const.tsx interfaces pages styles translate utils
 
 .PHONY: build run build-run prettier
