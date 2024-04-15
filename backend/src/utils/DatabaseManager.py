@@ -18,7 +18,8 @@ class DatabaseManager:
 
     # クエリを実行する関数
     def execute_query(self, query, params=None):
-        cursor = self.db.cursor()
+        # Set dictionary=True to return results as a dictionary
+        cursor = self.db.cursor(dictionary=True)
         try:
             cursor.execute(query, params)
             result = cursor.fetchall()

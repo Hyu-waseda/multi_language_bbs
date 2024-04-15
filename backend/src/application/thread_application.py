@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
-from typing import Optional, Dict
+from typing import Dict
+from src.schemas.thread_schemas import CreateThreadParams, GetSpecificThreadParams, GetThreadParams
 
 import pytz
 from src.enums.sort_option import SortOption
@@ -36,93 +37,78 @@ async def translate_with_cache(text: str, lang: str) -> str:
     return translation
 
 
-class Params(BaseModel):
-    offset: Optional[int]
-    count: Optional[int]
-    thread_id: Optional[int]
-    sort: Optional[SortOption]
-    title: Optional[str]
-    user_id: Optional[str]
-    user_name: Optional[str]
-    content: Optional[str]
-    lang: Optional[str]
-
-
-class PostParams(BaseModel):
-    title: str
-    user_id: int
-    user_name: str
-    content: str
-    language: str
-
-
 class ThreadApplication:
-    def __init__(self, params: Params):
-        self.params = params
-
     async def __format_thread_data(self, threads, lang):
         res = []
         for thread_data in threads:
             if lang == "original":
-                title = thread_data[1]
-                content = thread_data[6]
+                title = thread_data['Title']
+                content = thread_data['Content']
             else:
-                title = await translate_with_cache(thread_data[1], lang) if thread_data[1] else ""
-                content = await translate_with_cache(thread_data[6], lang) if thread_data[6] else ""
+                title = await translate_with_cache(thread_data['Title'], lang) if thread_data['Title'] else ""
+                content = await translate_with_cache(thread_data['Content'], lang) if thread_data['Content'] else ""
 
             formatted_thread = {
-                "threadID": thread_data[0],
+                "threadID": thread_data['ThreadID'],
                 "title": title,
-                "createdAt": thread_data[2],
-                "updatedAt": thread_data[3],
-                "userID": thread_data[4],
-                "userName": thread_data[5],
+                "createdAt": thread_data['CreatedAt'],
+                "updatedAt": thread_data['UpdatedAt'],
+                "userID": thread_data['UserID'],
+                "userName": thread_data['UserName'],
                 "content": content,
-                "language": thread_data[7],
-                "views": thread_data[8],
-                "likes": thread_data[9],
-                "tags": thread_data[10],
-                "categoryID": thread_data[11],
-                "imageURL": thread_data[12]
+                "language": thread_data['Language'],
+                "views": thread_data['Views'],
+                "likes": thread_data['Likes'],
+                "tags": thread_data['Tags'],
+                "categoryID": thread_data['CategoryID'],
+                "imageURL": thread_data['ImageURL']
             }
             res.append(formatted_thread)
         return res
 
-    async def get_threads(self):
+    async def get_threads(self, params: GetThreadParams):
         """
         スレッドを取得する関数
+
+        :param params: GetThreadParams
+            - sort: スレッドのソートオプション
+            - offset: 取得するスレッドの開始位置
+            - count: 一度に取得するスレッドの最大数, 0を指定すると全スレッドを取得
+            - lang: 取得するスレッドの言語
 
         :return: スレッドのリスト
         """
         thread_infrastructure = ThreadInfrastructure()
 
-        if self.params["sort"] == SortOption.new:
-            if self.params["count"] == 0:
+        if params.sort == SortOption.new:
+            if params.count == 0:
                 threads = thread_infrastructure.fetch_all_threads_sorted_by_created_at()
             else:
                 threads = thread_infrastructure.fetch_threads_by_offset_sorted_by_created_at(
-                    offset=self.params["offset"], count=self.params["count"])
-        elif self.params["sort"] == SortOption.update:
-            if self.params["count"] == 0:
+                    offset=params.offset, count=params.count)
+        elif params.sort == SortOption.update:
+            if params.count == 0:
                 threads = thread_infrastructure.fetch_all_threads_sorted_by_updated_at()
             else:
                 threads = thread_infrastructure.fetch_threads_by_offset_sorted_by_updated_at(
-                    offset=self.params["offset"], count=self.params["count"])
-
-        res = await self.__format_thread_data(threads=threads, lang=self.params["lang"])
+                    offset=params.offset, count=params.count)
+        res = await self.__format_thread_data(threads=threads, lang=params.lang)
         return res
 
-    async def get_specific_thread(self):
+    async def get_specific_thread(self, params: GetSpecificThreadParams):
         """
         特定のスレッドを取得する関数
 
-        :param thread_id: 取得するスレッドのID
-        :return: 特定のスレッドの情報
+        :param params: GetSpecificThreadParams
+            - thread_id: 取得したいスレッドのID。
+            - lang: 表示する言語（デフォルトは原文）
+
+        :return: 指定されたIDを持つスレッドの詳細情報
         """
         thread_infrastructure = ThreadInfrastructure()
         thread_data = thread_infrastructure.fetch_thread_by_id(
-            self.params["thread_id"])
-        res = await self.__format_thread_data(threads=[thread_data], lang=self.params["lang"])
+            params.thread_id)
+        res = await self.__format_thread_data(threads=[thread_data], lang=params.lang)
         return res[0]
 
     def get_thread_count(self):
@@ -133,11 +119,17 @@ class ThreadApplication:
         thread_count = thread_infrastructure.fetch_thread_count()
         return thread_count
 
-    def create_thread(self, params: PostParams):
+    def create_thread(self, params: CreateThreadParams):
         """
         スレッドを作成する関数
 
-        :params: リクエストパラメータ
+        :params params: CreateThreadParams
+            - title: スレッドのタイトル
+            - user_id: ユーザーID
+            - user_name: ユーザー名
+            - content: スレッドの内容
+            - language: 言語
+
         :return: 作成されたスレッドの情報
         """
         now = datetime.now(pytz.utc)
@@ -145,13 +137,13 @@ class ThreadApplication:
         # 指定された形式にフォーマット
         formatted_time = now.strftime("%Y-%m-%d %H:%M:%S")
         new_thread = {
-            "Title": params["title"],
+            "Title": params.title,
             "CreatedAt": formatted_time,
             "UpdatedAt": formatted_time,
-            "UserID": params["user_id"],
-            "UserName": params["user_name"],
-            "Content": params["content"],
-            "Language": params["language"],
+            "UserID": params.user_id,
+            "UserName": params.user_name,
+            "Content": params.content,
+            "Language": params.language,
             "Views": 0,
             "Likes": 0,
             "Tags": "",

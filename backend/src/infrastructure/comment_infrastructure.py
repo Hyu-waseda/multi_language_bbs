@@ -14,6 +14,7 @@ class CommentInfrastructure:
         """
         try:
             res = self.database_manager.execute_query(query)
+            # print(res)
         except Exception as e:
             raise HTTPException(
                 status_code=500, detail="データベースからコメントを取得できませんでした。fetch_all_comments: " + str(e))
@@ -30,6 +31,7 @@ class CommentInfrastructure:
         params = (thread_id,)
         try:
             res = self.database_manager.execute_query(query, params)
+            # print(res)
         except Exception as e:
             raise HTTPException(
                 status_code=500, detail="データベースからコメントを取得できませんでした。fetch_comments_by_thread_id: " + str(e))
