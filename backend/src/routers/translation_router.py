@@ -7,7 +7,7 @@ router = APIRouter()
 
 @router.post("/translate")
 async def translate_text(text: str, target_language: str):
-    result = translate(text, target_language)
+    result = await translate(text, target_language)
     print("result:")
     print(result)
 
