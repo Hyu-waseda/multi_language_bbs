@@ -47,16 +47,20 @@ const ThreadList: React.FC<Props> = (props) => {
 
   const createThreadItem = (thread: ThreadData) => (
     <Link
-      key={`${thread.threadID}-${props.sortOption}`} // key をここに移動
+      key={`${thread.threadID}-${props.sortOption}`}
       href={createUrlToThread(String(thread.threadID))}
       passHref
     >
       <ListItemButton>
         <ListItemText
           primary={thread.title}
-          secondary={`${props.labelForDate}: ${convertUtcToUserTimezone(
-            thread[props.sortOption]
-          )}`}
+          secondary={
+            props.sortOption === "commentCount"
+              ? `Comments: ${thread.commentCount}`
+              : `${props.labelForDate}: ${convertUtcToUserTimezone(
+                  String(thread[props.sortOption as keyof ThreadData])
+                )}`
+          }
         />
       </ListItemButton>
     </Link>

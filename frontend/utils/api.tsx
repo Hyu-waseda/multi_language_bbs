@@ -155,3 +155,20 @@ export const sendThreadData = async (
   );
   return await sendData(url);
 };
+
+export const fetchCommentCountThreadData = async (
+  page: number,
+  perPage: number,
+  isClient: boolean,
+  lang: string
+) => {
+  const offset: number = (page - 1) * perPage;
+  const base = isClient ? baseURLClient : baseURLServer;
+  const url: string = createUrlWithParams(base + API.ENDPOINT.THREAD, {
+    offset: String(offset),
+    count: String(perPage),
+    sort: "comment_count",
+    lang: lang,
+  });
+  return await fetchData(url);
+};

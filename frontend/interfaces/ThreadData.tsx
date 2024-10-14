@@ -11,5 +11,5 @@ export interface ThreadData {
   tags: string;
   categoryID: number;
   imageURL: string;
+  commentCount: number;
 }
-[];
