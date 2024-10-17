@@ -58,7 +58,7 @@ const ThreadList: React.FC<Props> = (props) => {
           secondary={
             props.sortOption === "commentCount"
               ? `${props.labelForDate}: ${convertUtcToUserTimezone(
-                String(thread["updatedAt" as keyof ThreadData])
+                String(thread["createdAt" as keyof ThreadData])
               )}`
               : `${props.labelForDate}: ${convertUtcToUserTimezone(
                   String(thread[props.sortOption as keyof ThreadData])

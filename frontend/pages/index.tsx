@@ -35,6 +35,7 @@ interface Translation {
   thread_creation_guide: string;
   community_impact_message: string;
   latest_update_thread: string;
+  comment_count_thread: string;
   new_thread: string;
   update_date: string;
   created_date: string;
@@ -217,13 +218,13 @@ const Home: NextPage<Props> = (props) => {
         {/* コメント数順スレッド */}
         <ThreadList
           threads={commentCountThreads}
-          title="コメント数順スレッド"
+          title={props.translation.comment_count_thread}
           page={commentCountThreadsPage}
           totalCount={props.threadCount}
           perPage={threadListInfo.perPage}
           sortOption={SORT_OPTIONS.COUNT}
           handlePager={(selectedPage) => setCommentCountThreadsPage(selectedPage)}
-          labelForDate={props.translation.update_date}
+          labelForDate={props.translation.created_date}
           lang={props.userLang}
           showSkeleton={showSkeletonCommentCountThreads}
         />
