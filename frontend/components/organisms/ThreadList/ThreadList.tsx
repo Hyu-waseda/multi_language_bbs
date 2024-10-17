@@ -54,7 +54,7 @@ const ThreadList: React.FC<Props> = (props) => {
       <ListItemButton>
         <ListItemText
           primary={thread.title}
-          // コメント順に表示するスレッドの時のみ、secondaryには更新日時を表示する
+          // コメント順スレッド の時のみ、secondaryには作成日時を表示する
           secondary={
             props.sortOption === "commentCount"
               ? `${props.labelForDate}: ${convertUtcToUserTimezone(

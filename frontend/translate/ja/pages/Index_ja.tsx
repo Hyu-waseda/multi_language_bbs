@@ -13,10 +13,10 @@ export const Index_JA = {
   community_impact_message:
     "あなたの投稿がコミュニティに新しい風を吹き込みます。",
   latest_update_thread: "最新更新スレッド",
+  comment_count_thread: "人気のスレッド",
   new_thread: "新着スレッド",
   update_date: "更新日",
   created_date: "作成日",
-  comment_count_thread: "人気のスレッド",
 };
 
 export default Index_JA;

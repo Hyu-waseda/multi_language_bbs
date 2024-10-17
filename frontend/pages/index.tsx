@@ -215,7 +215,7 @@ const Home: NextPage<Props> = (props) => {
           lang={props.userLang}
           showSkeleton={showSkeletonNewThreads}
         />
-        {/* コメント数順スレッド */}
+        {/* コメント数順スレッド(人気スレッド) */}
         <ThreadList
           threads={commentCountThreads}
           title={props.translation.comment_count_thread}
