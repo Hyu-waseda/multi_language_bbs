@@ -223,7 +223,7 @@ const Home: NextPage<Props> = (props) => {
           perPage={threadListInfo.perPage}
           sortOption={SORT_OPTIONS.COUNT}
           handlePager={(selectedPage) => setCommentCountThreadsPage(selectedPage)}
-          labelForDate="コメント数"
+          labelForDate={props.translation.update_date}
           lang={props.userLang}
           showSkeleton={showSkeletonCommentCountThreads}
         />
