@@ -15,6 +15,7 @@ export const Index_LB = {
   new_thread: "Neie Arrivée thread",
   update_date: "Ulafwenen Dag",
   created_date: "Erstwäerznet",
+  comment_count_thread: "Populär Threads",
 };
 
 export default Index_LB;

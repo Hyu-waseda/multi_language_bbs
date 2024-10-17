@@ -15,6 +15,7 @@ export const Index_YO = {
   new_thread: "Ajiya tuntun",
   update_date: "Ọjọ Imudojuiwọn",
   created_date: "Ọjọ ti a ṣẹda",
+  comment_count_thread: "Awọn akọle olokiki",
 };
 
 export default Index_YO;

@@ -15,6 +15,7 @@ export const Index_LT = {
   new_thread: "Nauja atvykimo gija",
   update_date: "Atnaujinimo diena",
   created_date: "Sukurta data",
+  comment_count_thread: "Populiarios temos",
 };
 
 export default Index_LT;

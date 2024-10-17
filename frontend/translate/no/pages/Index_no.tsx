@@ -15,6 +15,7 @@ export const Index_NO = {
   new_thread: "Ny ankomsttråd",
   update_date: "Oppdateringsdag",
   created_date: "Opprettet dato",
+  comment_count_thread: "Populære tråder",
 };
 
 export default Index_NO;

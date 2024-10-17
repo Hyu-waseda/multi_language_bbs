@@ -15,6 +15,7 @@ export const Index_IW = {
   new_thread: "שרשור הגעה חדש",
   update_date: "יום עדכון",
   created_date: "תאריך יצירה",
+  comment_count_thread: "אשכולות פופולריים",
 };
 
 export default Index_IW;

@@ -15,6 +15,7 @@ export const Index_ZH_CN = {
   new_thread: "新到达线程",
   update_date: "更新日",
   created_date: "创建日期",
+  comment_count_thread: "热门线程",
 };
 
 export default Index_ZH_CN;

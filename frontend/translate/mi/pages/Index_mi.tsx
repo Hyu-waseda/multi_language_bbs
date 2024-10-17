@@ -15,6 +15,7 @@ export const Index_MI = {
   new_thread: "Miro hou",
   update_date: "Whakahoutanga Ra",
   created_date: "Te rā i hangaia",
+  comment_count_thread: "Ngā miro rongonui",
 };
 
 export default Index_MI;

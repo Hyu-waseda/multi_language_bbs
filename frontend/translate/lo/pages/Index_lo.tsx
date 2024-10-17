@@ -15,6 +15,7 @@ export const Index_LO = {
   new_thread: "ກະທູ້ມາຮອດໃຫມ່",
   update_date: "ວັນປັບປຸງ",
   created_date: "ກໍານົດວັນທີ",
+  comment_count_thread: "ຫົວຂໍ້ທີ່ນິຍົມ",
 };
 
 export default Index_LO;

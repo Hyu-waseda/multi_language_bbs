@@ -15,6 +15,7 @@ export const Index_SW = {
   new_thread: "Uzi mpya wa kuwasili",
   update_date: "Sasisha siku",
   created_date: "Tarehe iliyoundwa",
+  comment_count_thread: "Nyuzi maarufu",
 };
 
 export default Index_SW;

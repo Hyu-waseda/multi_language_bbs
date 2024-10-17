@@ -15,6 +15,7 @@ export const Index_AZ = {
   new_thread: "Yeni gəliş ipi",
   update_date: "Gününü yeniləmək",
   created_date: "Yaradılmış tarix",
+  comment_count_thread: "Populyar mövzular",
 };
 
 export default Index_AZ;

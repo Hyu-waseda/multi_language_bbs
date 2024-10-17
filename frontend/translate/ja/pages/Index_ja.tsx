@@ -16,6 +16,7 @@ export const Index_JA = {
   new_thread: "新着スレッド",
   update_date: "更新日",
   created_date: "作成日",
+  comment_count_thread: "人気のスレッド",
 };
 
 export default Index_JA;

@@ -16,6 +16,7 @@ export const Index_MG = {
   new_thread: "Kofehy fahatongavana vaovao",
   update_date: "Fanavaozana ny andro",
   created_date: "Daty noforonina",
+  comment_count_thread: "Lohahevitra malaza",
 };
 
 export default Index_MG;

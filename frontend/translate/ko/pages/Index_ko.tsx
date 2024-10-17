@@ -16,6 +16,7 @@ export const Index_KO = {
   new_thread: "새로운 도착 스레드",
   update_date: "업데이트 일",
   created_date: "생성 날짜",
+  comment_count_thread: "인기 스레드",
 };
 
 export default Index_KO;

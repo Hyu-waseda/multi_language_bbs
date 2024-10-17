@@ -15,6 +15,7 @@ export const Index_HU = {
   new_thread: "Új érkezési szál",
   update_date: "Frissítési nap",
   created_date: "Létrehozás dátuma",
+  comment_count_thread: "Népszerű szálak",
 };
 
 export default Index_HU;

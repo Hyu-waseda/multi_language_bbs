@@ -15,6 +15,7 @@ export const Index_SL = {
   new_thread: "Nova nit prihoda",
   update_date: "Dan posodobitve",
   created_date: "Ustvarjen datum",
+  comment_count_thread: "Priljubljene teme",
 };
 
 export default Index_SL;

@@ -15,6 +15,7 @@ export const Index_XH = {
   new_thread: "I-Threak entsha",
   update_date: "Hlaziya usuku",
   created_date: "Umhla odaliweyo",
+  comment_count_thread: "Imixholo edumileyo",
 };
 
 export default Index_XH;

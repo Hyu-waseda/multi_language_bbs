@@ -15,6 +15,7 @@ export const Index_YI = {
   new_thread: "ניו אָנקומען פאָדעם",
   update_date: "דערהייַנטיקן טאָג",
   created_date: "באשאפן טאָג",
+  comment_count_thread: "פאָלקס טעמעס",
 };
 
 export default Index_YI;

@@ -16,6 +16,7 @@ export const Index_BN = {
   new_thread: "নতুন আগমনের থ্রেড",
   update_date: "আপডেট দিন",
   created_date: "তৈরীর তারিখ",
+  comment_count_thread: "জনপ্রিয় থ্রেড",
 };
 
 export default Index_BN;

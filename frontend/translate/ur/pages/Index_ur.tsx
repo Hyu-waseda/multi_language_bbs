@@ -15,6 +15,7 @@ export const Index_UR = {
   new_thread: "نیا آمد کا دھاگہ",
   update_date: "دن کو اپ ڈیٹ کریں",
   created_date: "تشکیل کی تاریخ",
+  comment_count_thread: "مشہور موضوعات",
 };
 
 export default Index_UR;

@@ -15,6 +15,7 @@ export const Index_HI = {
   new_thread: "नया आगमन धागा",
   update_date: "अद्यतन दिवस",
   created_date: "सृजित दिनांक",
+  comment_count_thread: "लोकप्रिय थ्रेड्स",
 };
 
 export default Index_HI;

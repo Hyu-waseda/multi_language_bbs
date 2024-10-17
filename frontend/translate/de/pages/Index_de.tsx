@@ -16,6 +16,7 @@ export const Index_DE = {
   new_thread: "Neuankömmling",
   update_date: "Update -Tag",
   created_date: "Datum erstellt",
+  comment_count_thread: "Beliebte Threads",
 };
 
 export default Index_DE;

@@ -16,6 +16,7 @@ export const Index_SO = {
   new_thread: "Xadhiga cusub ee imaatinka",
   update_date: "Maalinta Cusboonaysiinta",
   created_date: "Taariikh la sameeyay",
+  comment_count_thread: "Mawduucyada caanka ah",
 };
 
 export default Index_SO;

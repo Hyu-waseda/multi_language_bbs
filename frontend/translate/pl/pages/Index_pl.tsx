@@ -15,6 +15,7 @@ export const Index_PL = {
   new_thread: "Nowy wątek przylotu",
   update_date: "Dzień aktualizacji",
   created_date: "Stworz Date",
+  comment_count_thread: "Popularne wątki",
 };
 
 export default Index_PL;

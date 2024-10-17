@@ -16,6 +16,7 @@ export const Index_SU = {
   new_thread: "Benang dugi",
   update_date: "Dinten update",
   created_date: "Tanggal",
+  comment_count_thread: "Benang populer",
 };
 
 export default Index_SU;

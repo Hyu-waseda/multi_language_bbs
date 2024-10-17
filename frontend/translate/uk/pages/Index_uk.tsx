@@ -15,6 +15,7 @@ export const Index_UK = {
   new_thread: "Нова нитка прибуття",
   update_date: "День оновлення",
   created_date: "Створена дата",
+  comment_count_thread: "Популярні теми",
 };
 
 export default Index_UK;

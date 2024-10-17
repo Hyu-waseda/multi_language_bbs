@@ -15,6 +15,7 @@ export const Index_SV = {
   new_thread: "Ny ankomsttråd",
   update_date: "Uppdateringsdag",
   created_date: "Skapat Datum",
+  comment_count_thread: "Populära trådar",
 };
 
 export default Index_SV;

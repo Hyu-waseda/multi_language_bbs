@@ -16,6 +16,7 @@ export const Index_FR = {
   new_thread: "Nouveau fil d'arrivée",
   update_date: "Jour de mise à jour",
   created_date: "Date de création",
+  comment_count_thread: "Fils populaires",
 };
 
 export default Index_FR;

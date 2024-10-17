@@ -15,6 +15,7 @@ export const Index_TE = {
   new_thread: "కొత్త రాక థ్రెడ్",
   update_date: "నవీకరణ రోజు",
   created_date: "సృష్టించిన తేదీ",
+  comment_count_thread: "ప్రసిద్ధమైన థ్రెడ్‌లు",
 };
 
 export default Index_TE;

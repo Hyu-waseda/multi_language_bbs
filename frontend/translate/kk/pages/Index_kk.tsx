@@ -15,6 +15,7 @@ export const Index_KK = {
   new_thread: "Жаңа келу жіп",
   update_date: "Жаңарту күні",
   created_date: "Жасалған күн",
+  comment_count_thread: "Танымал жіптер",
 };
 
 export default Index_KK;

@@ -15,6 +15,7 @@ export const Index_MK = {
   new_thread: "Нова нишка за пристигнување",
   update_date: "Ажурирање на денот",
   created_date: "Создаден датум",
+  comment_count_thread: "Популарни теми",
 };
 
 export default Index_MK;

@@ -16,6 +16,7 @@ export const Index_HMN = {
   new_thread: "Tshiab Tuaj Txog Xov",
   update_date: "Hloov tshiab hnub",
   created_date: "Tsim hnub",
+  comment_count_thread: "Cov ncauj lus nrov",
 };
 
 export default Index_HMN;

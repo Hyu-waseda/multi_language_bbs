@@ -15,6 +15,7 @@ export const Index_SI = {
   new_thread: "නව පැමිණීමේ නූල්",
   update_date: "යාවත්කාලීන දිනය",
   created_date: "නිර්මාණය කරන ලද දිනය",
+  comment_count_thread: "ජනප්රිය ත්රෙඩ්",
 };
 
 export default Index_SI;

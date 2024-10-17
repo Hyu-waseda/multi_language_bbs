@@ -15,6 +15,7 @@ export const Index_SQ = {
   new_thread: "Fije e re e mbërritjes",
   update_date: "Dita e azhurnimit",
   created_date: "Data e krijuar",
+  comment_count_thread: "Tema të njohura",
 };
 
 export default Index_SQ;

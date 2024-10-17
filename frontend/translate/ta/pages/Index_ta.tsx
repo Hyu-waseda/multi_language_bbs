@@ -16,6 +16,7 @@ export const Index_TA = {
   new_thread: "புதிய வருகை நூல்",
   update_date: "புதுப்பிப்பு நாள்",
   created_date: "உருவாக்கப்பட்ட தேதி",
+  comment_count_thread: "பிரபலமான திரிகள்",
 };
 
 export default Index_TA;

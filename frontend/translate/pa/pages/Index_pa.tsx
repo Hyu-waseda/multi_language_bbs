@@ -16,6 +16,7 @@ export const Index_PA = {
   new_thread: "ਨਵਾਂ ਆਗਮਨ ਧਾਗਾ",
   update_date: "ਦਿਨ ਨੂੰ ਅਪਡੇਟ ਕਰੋ",
   created_date: "ਬਣਾਇਆ ਤਾਰੀਖ",
+  comment_count_thread: "ਪ੍ਰਸਿੱਧ ਥ੍ਰੇਡ",
 };
 
 export default Index_PA;

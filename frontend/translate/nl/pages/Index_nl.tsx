@@ -16,6 +16,7 @@ export const Index_NL = {
   new_thread: "Nieuwe aankomstdraad",
   update_date: "Updatedag",
   created_date: "Gemaakte datum",
+  comment_count_thread: "Populaire threads",
 };
 
 export default Index_NL;

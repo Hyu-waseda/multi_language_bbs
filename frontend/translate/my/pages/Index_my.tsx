@@ -16,6 +16,7 @@ export const Index_MY = {
   new_thread: "အသစ်ရောက်ရှိလာသော thread",
   update_date: "နေ့စွဲ",
   created_date: "ဖန်တီးထားသောရက်စွဲ",
+  comment_count_thread: "လူကြိုက်များသော ချည်",
 };
 
 export default Index_MY;

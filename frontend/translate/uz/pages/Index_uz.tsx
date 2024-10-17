@@ -15,6 +15,7 @@ export const Index_UZ = {
   new_thread: "Yangi kelish mavzusi",
   update_date: "Yangilash kuni",
   created_date: "Yaratilgan sana",
+  comment_count_thread: "Mashhur mavzular",
 };
 
 export default Index_UZ;

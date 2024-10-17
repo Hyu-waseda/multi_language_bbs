@@ -16,6 +16,7 @@ export const Index_CA = {
   new_thread: "Fil nou d’arribada",
   update_date: "Dia d'actualització",
   created_date: "Data creada",
+  comment_count_thread: "Fils populars",
 };
 
 export default Index_CA;

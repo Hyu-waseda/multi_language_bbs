@@ -15,6 +15,7 @@ export const Index_CS = {
   new_thread: "Nové vlákno příjezdu",
   update_date: "Aktualizovat den",
   created_date: "Datum vytvoření",
+  comment_count_thread: "Populární vlákna",
 };
 
 export default Index_CS;

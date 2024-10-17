@@ -15,6 +15,7 @@ export const Index_HT = {
   new_thread: "Nouvo fil arive",
   update_date: "Mete ajou jou",
   created_date: "Kreye dat",
+  comment_count_thread: "Fil popilè",
 };
 
 export default Index_HT;

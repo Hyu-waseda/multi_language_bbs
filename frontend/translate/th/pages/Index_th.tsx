@@ -15,6 +15,7 @@ export const Index_TH = {
   new_thread: "กระทู้มาถึงใหม่",
   update_date: "อัปเดตวัน",
   created_date: "วันที่สร้าง",
+  comment_count_thread: "หัวข้อยอดนิยม",
 };
 
 export default Index_TH;

@@ -15,6 +15,7 @@ export const Index_CO = {
   new_thread: "New Arrivu Filu",
   update_date: "Aghjurnamentu ghjornu",
   created_date: "Data creata",
+  comment_count_thread: "Fili populari",
 };
 
 export default Index_CO;

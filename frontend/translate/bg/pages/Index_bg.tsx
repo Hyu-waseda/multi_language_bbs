@@ -15,6 +15,7 @@ export const Index_BG = {
   new_thread: "Нова нишка за пристигане",
   update_date: "Ден на актуализиране",
   created_date: "Създадена дата",
+  comment_count_thread: "Популярни теми",
 };
 
 export default Index_BG;

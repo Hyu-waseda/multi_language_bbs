@@ -15,6 +15,7 @@ export const Index_RO = {
   new_thread: "Nou fir de sosire",
   update_date: "Actualizare zi",
   created_date: "Data creata",
+  comment_count_thread: "Subiecte populare",
 };
 
 export default Index_RO;

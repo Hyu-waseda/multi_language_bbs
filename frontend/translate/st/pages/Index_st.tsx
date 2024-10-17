@@ -15,6 +15,7 @@ export const Index_ST = {
   new_thread: "Khoele e ncha e fihlang",
   update_date: "Ntlafatsa letsatsi",
   created_date: "E thehiloe letsatsi",
+  comment_count_thread: "Li-threads tse tummeng",
 };
 
 export default Index_ST;

@@ -15,6 +15,7 @@ export const Index_GA = {
   new_thread: "Snáithe Teacht Nua",
   update_date: "Lá nuashonraithe",
   created_date: "Dáta cruthaithe",
+  comment_count_thread: "Snáitheanna coitianta",
 };
 
 export default Index_GA;

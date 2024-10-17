@@ -15,6 +15,7 @@ export const Index_ZU = {
   new_thread: "Intambo entsha yokufika",
   update_date: "Buyekeza usuku",
   created_date: "Usuku Olwenziwe",
+  comment_count_thread: "Izihloko ezidumile",
 };
 
 export default Index_ZU;

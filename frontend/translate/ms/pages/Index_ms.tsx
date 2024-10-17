@@ -16,6 +16,7 @@ export const Index_MS = {
   new_thread: "Benang ketibaan baru",
   update_date: "Hari Kemas kini",
   created_date: "Tarikh yang dibuat",
+  comment_count_thread: "Benang popular",
 };
 
 export default Index_MS;

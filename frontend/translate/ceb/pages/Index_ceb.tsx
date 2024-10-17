@@ -16,6 +16,7 @@ export const Index_CEB = {
   new_thread: "Bag-ong Pag-abut sa Thread",
   update_date: "Pag-update sa Adlaw",
   created_date: "Gilalang Petsa",
+  comment_count_thread: "Mga sikat nga hilo",
 };
 
 export default Index_CEB;
