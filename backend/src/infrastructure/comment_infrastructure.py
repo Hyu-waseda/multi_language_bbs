@@ -40,8 +40,8 @@ class CommentInfrastructure:
     def create_comment(self, comment_data):
         # コメントをデータベースに挿入するクエリ
         query = """
-            INSERT INTO Comments (ThreadID, UserID, UserName, Content, CreatedAt, UpdatedAt, Language)
-            VALUES (%s, %s, %s, %s, %s, %s, %s);
+            INSERT INTO Comments (ThreadID, UserID, UserName, Content, CreatedAt, UpdatedAt, Language, ImagePath)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
         """
 
         params = (
@@ -51,7 +51,8 @@ class CommentInfrastructure:
             comment_data["content"],
             comment_data["createdAt"],
             comment_data["updatedAt"],
-            comment_data["language"]
+            comment_data["language"],
+            comment_data.get("image_path")  # 画像のパスを追加
         )
         try:
             # クエリを実行してコメントを挿入
