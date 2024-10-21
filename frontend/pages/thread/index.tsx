@@ -31,6 +31,9 @@ import { Index_EN } from "../../translate/en/pages/thread/Index_en";
 import Footer from "../../components/organisms/Footer/Footer";
 import { getUserLang } from "../../utils/getUserLang";
 import { useRouter } from "next/router";
+import ImageIcon from '@mui/icons-material/Image';
+import React, { useRef } from 'react';
+import DeleteIcon from '@mui/icons-material/Delete'; // ゴミ箱アイコンをインポート
 
 interface Props {
   threadId: string;
@@ -195,6 +198,29 @@ const Thread: NextPage<Props> = (props) => {
     </Grid>
   );
 
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const handleButtonClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setSelectedFile(event.target.files[0]);
+    }
+  };
+
+  // ファイルをクリアする処理
+  const handleClearFile = () => {
+    setSelectedFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''; // ファイル入力をリセット
+    }
+  };
+
   return (
     <>
       <Meta
@@ -285,11 +311,50 @@ const Thread: NextPage<Props> = (props) => {
               />
             </Box>
           ))}
-          <Box textAlign="right" mt={1}>
+          <Box display="flex" justifyContent="space-between" alignItems="center" mt={1}>
+            <Box display="flex" alignItems="center">
+              <Button
+                variant="outlined"
+                startIcon={<ImageIcon />}
+                onClick={handleButtonClick}
+              >
+                画像を選択
+              </Button>
+              <Button
+                variant="outlined"
+                color="secondary"
+                startIcon={<DeleteIcon />} // ゴミ箱アイコンを使用
+                onClick={handleClearFile}
+                disabled={!selectedFile} // ファイルが選択されていない場合は無効化
+                sx={{ ml: 1 }} // 左マージンを追加してボタン間にスペースを作る
+              >
+                取り消し
+              </Button>
+            </Box>
+            <input
+              type="file"
+              ref={fileInputRef}
+              style={{ display: 'none' }}
+              onChange={handleFileChange}
+            />
             <Button variant="contained" color="primary" type="submit">
               {props.translation.submit}
             </Button>
           </Box>
+          {selectedFile && (
+            <Box mt={2}>
+              <img
+                src={URL.createObjectURL(selectedFile)}
+                alt="Selected"
+                style={{
+                  maxWidth: '100%', // コンテナの幅に合わせる
+                  maxHeight: '300px', // 高さを最大300pxに制限
+                  objectFit: 'contain', // 画像のアスペクト比を維持
+                }}
+              />
+            </Box>
+          )}
+          <Box mt={3} />
         </form>
 
         <Footer lang={props.userLang} />

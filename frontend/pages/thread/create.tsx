@@ -66,6 +66,7 @@ const ThreadCreate: NextPage<Props> = (props) => {
     },
   ];
 
+
   // フォーム送信時の処理
   const onSubmit = async (data: ThreadFormValues) => {
     await sendThreadData(
@@ -113,7 +114,9 @@ const ThreadCreate: NextPage<Props> = (props) => {
           </Box>
         </form>
       </Container>
-      <Footer lang={props.userLang} />
+      <Box sx={{ mt: 3 }}> {/* Add margin-top to create space above the footer */}
+        <Footer lang={props.userLang} />
+      </Box>
     </>
   );
 };
