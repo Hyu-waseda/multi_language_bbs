@@ -36,15 +36,16 @@ async def create_comment(
     language: str = Query(..., description="コメント時の言語"),
 ):
     """
-    コメントを作成するAPI
+    コメントを作成するAPIエンドポイント
 
-    thread_id: スレッドID
-    user_id: ユーザーID
-    content: コメントの内容
-    user_name: ユーザー名
-    language: コメント時の言語
+    :param thread_id: スレッドID
+    :param user_id: ユーザーID
+    :param user_name: ユーザー名
+    :param content: コメントの内容
+    :param language: コメント時の言語
+    :return: 作成されたコメントの情報
     """
-    comment_application = CommentApplication()
+    comment_application = CommentApplication()  # コメントアプリケーションのインスタンスを作成
     comment = {
         "thread_id": thread_id,
         "user_id": user_id,
@@ -52,5 +53,5 @@ async def create_comment(
         "content": content,
         "language": language
     }
-    created_comment = comment_application.create_comment(comment)
-    return created_comment
+    created_comment = comment_application.create_comment(comment)  # コメントを作成
+    return created_comment  # 作成されたコメントを返す

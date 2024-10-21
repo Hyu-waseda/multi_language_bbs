@@ -38,7 +38,7 @@ class CommentInfrastructure:
         return res
 
     def create_comment(self, comment_data):
-        # TODO: UserNameの登録, UserIdの削除
+        # コメントをデータベースに挿入するクエリ
         query = """
             INSERT INTO Comments (ThreadID, UserID, UserName, Content, CreatedAt, UpdatedAt, Language)
             VALUES (%s, %s, %s, %s, %s, %s, %s);
@@ -54,9 +54,11 @@ class CommentInfrastructure:
             comment_data["language"]
         )
         try:
+            # クエリを実行してコメントを挿入
             self.database_manager.execute_query(query, params)
-            res = comment_data
+            res = comment_data  # 挿入されたコメントデータを返す
         except Exception as e:
+            # エラーが発生した場合は例外を投げる
             raise HTTPException(
                 status_code=500, detail="コメントの作成に失敗しました。create_comment: " + str(e))
         return res
