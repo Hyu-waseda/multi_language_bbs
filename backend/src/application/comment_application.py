@@ -70,7 +70,8 @@ class CommentApplication:
                 "content": text,
                 "createdAt": comment_data["CreatedAt"],
                 "updatedAt": comment_data["UpdatedAt"],
-                "language": comment_data["Language"]
+                "language": comment_data["Language"],
+                "image_path": comment_data.get("image_path")
             }
             res.append(formatted_comment)
 
@@ -108,8 +109,10 @@ class CommentApplication:
             "content": params["content"],
             "createdAt": formatted_time,
             "updatedAt": formatted_time,
-            "language": params["language"]
+            "language": params["language"],
+            "image_path": params.get("image_path")
         }
+        print(new_comment)
         # コメントをデータベースに挿入
         res = self.comment_infrastructure.create_comment(comment_data=new_comment)
 

@@ -1,7 +1,8 @@
 from typing import Optional
 from src.application.comment_application import CommentApplication
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, Form, File, UploadFile
 from pydantic import BaseModel
+import os
 
 router = APIRouter()
 
@@ -29,29 +30,33 @@ class CommentCreateRequest(BaseModel):
 
 @router.post("/api/comment")
 async def create_comment(
-    thread_id: int = Query(..., description="スレッドID"),
-    user_id: int = Query(..., description="ユーザーID"),
-    user_name: str = Query(..., description="ユーザー名"),
-    content: str = Query(..., description="コメントの内容"),
-    language: str = Query(..., description="コメント時の言語"),
+    thread_id: str = Form(..., description="スレッドID"),
+    user_id: str = Form(..., description="ユーザーID"),
+    user_name: Optional[str] = Form(None, description="ユーザー名"),
+    content: str = Form(..., description="コメントの内容"),
+    language: str = Form(..., description="コメント時の言語"),
+    image: Optional[UploadFile] = File(None, description="添付画像")
 ):
-    """
-    コメントを作成するAPIエンドポイント
+    comment_application = CommentApplication()
+    image_path = None
 
-    :param thread_id: スレッドID
-    :param user_id: ユーザーID
-    :param user_name: ユーザー名
-    :param content: コメントの内容
-    :param language: コメント時の言語
-    :return: 作成されたコメントの情報
-    """
-    comment_application = CommentApplication()  # コメントアプリケーションのインスタンスを作成
+    if image:
+        # 画像を保存するディレクトリを作成
+        os.makedirs("uploads", exist_ok=True)
+        # 画像を保存する処理
+        image_path = f"uploads/{image.filename}"
+        with open(image_path, "wb") as buffer:
+            buffer.write(await image.read())
+
+    # コメントデータの作成
     comment = {
         "thread_id": thread_id,
         "user_id": user_id,
         "user_name": user_name,
         "content": content,
-        "language": language
+        "language": language,
+        "image_path": image_path
     }
+    print(comment)
     created_comment = comment_application.create_comment(comment)  # コメントを作成
     return created_comment  # 作成されたコメントを返す

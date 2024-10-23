@@ -68,6 +68,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   console.log("fetchThreadDetail Duration:", fetchThreadDetailDuration, "ms");
 
   let loadedTranslation: Translation;
+  console.log("あロード中");
   try {
     const translationModule = await import(
       `../../translate/${userLang}/pages/thread/Index_${userLang}.tsx`
@@ -153,13 +154,15 @@ const Thread: NextPage<Props> = (props) => {
 
   // コメント送信ハンドラ
   const handleCommentSubmit = async (data: CommentFormValues) => {
+    console.log("フォーム送信開始");
     // TODO: UserIdを各ユーザーごとに
     await sendCommentData(
       props.threadId,
       "10",
       data.author,
       data.comment,
-      props.userLang
+      props.userLang,
+      selectedFile || undefined
     );
     reset();
     const newCommentsData: CommentData[] = await fetchCommentData(
