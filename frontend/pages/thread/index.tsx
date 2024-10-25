@@ -164,7 +164,11 @@ const Thread: NextPage<Props> = (props) => {
       props.userLang,
       selectedFile || undefined
     );
-    reset();
+    reset(); // フォームのリセット
+    setSelectedFile(null); // 画像のリセット
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''; // ファイル入力をリセット
+    }
     const newCommentsData: CommentData[] = await fetchCommentData(
       props.threadId,
       true,
@@ -291,6 +295,17 @@ const Thread: NextPage<Props> = (props) => {
                         <Typography variant="body1">
                           <TextWithNewLines text={comment.content} />
                         </Typography>
+                        {comment.image_path && (
+                          <img
+                            src={`http://localhost:3000/${comment.image_path}`}
+                            alt="Comment Image"
+                            style={{
+                              maxWidth: '100%',
+                              maxHeight: '300px',
+                              objectFit: 'contain',
+                            }}
+                          />
+                        )}
                       </Box>
                     </CardContent>
                   </Card>
