@@ -71,7 +71,7 @@ class CommentApplication:
                 "createdAt": comment_data["CreatedAt"],
                 "updatedAt": comment_data["UpdatedAt"],
                 "language": comment_data["Language"],
-                "image_path": comment_data.get("image_path")
+                "image_path": comment_data.get("ImagePath")
             }
             res.append(formatted_comment)
 

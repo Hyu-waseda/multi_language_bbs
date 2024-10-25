@@ -66,6 +66,7 @@ export const API = {
     DUMMY: "/dummy",
     THREAD: "/thread",
     COMMENT: "/comment",
+    IMAGE: "/uploads",
   },
 };
 
