@@ -207,6 +207,7 @@ const Thread: NextPage<Props> = (props) => {
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const handleButtonClick = () => {
     if (fileInputRef.current) {
@@ -216,7 +217,17 @@ const Thread: NextPage<Props> = (props) => {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      setSelectedFile(event.target.files[0]);
+      const file = event.target.files[0];
+      setSelectedFile(file);
+
+      // 既存のBlob URLを解放
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+
+      // 新しいBlob URLを生成
+      const newPreviewUrl = URL.createObjectURL(file);
+      setPreviewUrl(newPreviewUrl);
     }
   };
 
@@ -226,7 +237,20 @@ const Thread: NextPage<Props> = (props) => {
     if (fileInputRef.current) {
       fileInputRef.current.value = ''; // ファイル入力をリセット
     }
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+      setPreviewUrl(null);
+    }
   };
+
+  // コンポーネントのクリーンアップ時にBlob URLを解放
+  useEffect(() => {
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
 
   return (
     <>
@@ -359,10 +383,10 @@ const Thread: NextPage<Props> = (props) => {
               {props.translation.submit}
             </Button>
           </Box>
-          {selectedFile && (
+          {previewUrl && (
             <Box mt={2}>
               <img
-                src={URL.createObjectURL(selectedFile)}
+                src={previewUrl}
                 alt="Selected"
                 style={{
                   maxWidth: '100%', // コンテナの幅に合わせる
