@@ -1,8 +1,12 @@
 from typing import Optional
 from src.application.comment_application import CommentApplication
-from fastapi import APIRouter, Query, Form, File, UploadFile
+from fastapi import APIRouter, Query, Form, File, UploadFile, HTTPException
 from pydantic import BaseModel
 import os
+import uuid
+import threading
+import time
+import shutil
 
 router = APIRouter()
 
@@ -39,14 +43,34 @@ async def create_comment(
 ):
     comment_application = CommentApplication()
     image_path = None
+    max_size_kb = 2000  # 最大サイズを2000KBに設定
 
     if image:
-        # 画像を保存するディレクトリを作成
-        os.makedirs("uploads", exist_ok=True)
-        # 画像を保存する処理
-        image_path = f"uploads/{image.filename}"
-        with open(image_path, "wb") as buffer:
-            buffer.write(await image.read())
+        # 画像ファイルのみを処理
+        if image.content_type.startswith("image/"):
+            # 画像をメモリに読み込む
+            image_data = await image.read()
+            if len(image_data) > max_size_kb * 1024:
+                # 画像サイズが2MBを超える場合、image_pathをNoneに設定
+                image_path = None
+            else:
+                # 画像を保存するディレクトリを作成
+                os.makedirs("uploads", exist_ok=True)
+                # ファイル名をサニタイズ
+                sanitized_filename = os.path.basename(image.filename)
+                # ファイル名が255文字を超えないようにトリミング
+                max_filename_length = 255 - len(str(uuid.uuid4())) - 1  # UUIDとアンダースコアの長さを考慮
+                if len(sanitized_filename) > max_filename_length:
+                    sanitized_filename = sanitized_filename[:max_filename_length]
+                # ユニークなファイル名を生成
+                unique_filename = f"{uuid.uuid4()}_{sanitized_filename}"
+                image_path = f"uploads/{unique_filename}"
+                with open(image_path, "wb") as buffer:
+                    await image.seek(0)  # ファイルポインタを先頭に戻す
+                    shutil.copyfileobj(image.file, buffer)
+
+                # ファイル削除をバックグラウンドで実行
+                # threading.Thread(target=delete_file_after_delay, args=(image_path,)).start()
 
     # コメントデータの作成
     comment = {
@@ -57,6 +81,12 @@ async def create_comment(
         "language": language,
         "image_path": image_path
     }
-    print(comment)
-    created_comment = comment_application.create_comment(comment)  # コメントを作成
-    return created_comment  # 作成されたコメントを返す
+    created_comment = comment_application.create_comment(comment)
+    return created_comment
+
+
+def delete_file_after_delay(file_path, delay=3):
+    """指定された遅延時間後にファイルを削除する"""
+    time.sleep(delay)
+    if os.path.exists(file_path):
+        os.remove(file_path)

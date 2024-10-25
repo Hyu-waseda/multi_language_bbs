@@ -166,6 +166,7 @@ const Thread: NextPage<Props> = (props) => {
     );
     reset(); // フォームのリセット
     setSelectedFile(null); // 画像のリセット
+    setPreviewUrl(null); // プレビューURLのリセット
     if (fileInputRef.current) {
       fileInputRef.current.value = ''; // ファイル入力をリセット
     }
@@ -218,6 +219,13 @@ const Thread: NextPage<Props> = (props) => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
+      
+      // Check if the file size is greater than 2MB
+      if (file.size > 2 * 1024 * 1024) {
+        alert("File size exceeds 2MB. Please select a smaller file.");
+        return;
+      }
+
       setSelectedFile(file);
 
       // 既存のBlob URLを解放
@@ -321,7 +329,7 @@ const Thread: NextPage<Props> = (props) => {
                         </Typography>
                         {comment.image_path && (
                           <img
-                            src={`http://localhost:3000/${comment.image_path}`}
+                            src={`http://localhost:8080/${comment.image_path}`}
                             alt="Comment Image"
                             style={{
                               maxWidth: '100%',
@@ -360,7 +368,7 @@ const Thread: NextPage<Props> = (props) => {
                 startIcon={<ImageIcon />}
                 onClick={handleButtonClick}
               >
-                画像を選択
+                ≦ 2MB
               </Button>
               <Button
                 variant="outlined"
@@ -370,7 +378,7 @@ const Thread: NextPage<Props> = (props) => {
                 disabled={!selectedFile} // ファイルが選択されていない場合は無効化
                 sx={{ ml: 1 }} // 左マージンを追加してボタン間にスペースを作る
               >
-                取り消し
+              
               </Button>
             </Box>
             <input
@@ -378,6 +386,7 @@ const Thread: NextPage<Props> = (props) => {
               ref={fileInputRef}
               style={{ display: 'none' }}
               onChange={handleFileChange}
+              accept="image/*" // Optional: restrict to image files only
             />
             <Button variant="contained" color="primary" type="submit">
               {props.translation.submit}
