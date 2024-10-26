@@ -34,6 +34,7 @@ import { useRouter } from "next/router";
 import ImageIcon from '@mui/icons-material/Image';
 import React, { useRef } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete'; // ゴミ箱アイコンをインポート
+import { useInView } from 'react-intersection-observer';
 
 interface Props {
   threadId: string;
@@ -299,7 +300,7 @@ const Thread: NextPage<Props> = (props) => {
                 <Grid item xs={12} key={comment.commentID}>
                   <Card className={styles.card}>
                     <CardContent>
-                      {/* コメントのヘッダー（コメント番号、ユーザー名、作成日） */}
+                      {/* コメントのヘッダー（コメ���ト番号、ユーザ��名、作成日） */}
                       <Box
                         className={`${styles.comment_header} ${styles.commentBox}`}
                       >
@@ -328,7 +329,7 @@ const Thread: NextPage<Props> = (props) => {
                           <TextWithNewLines text={comment.content} />
                         </Typography>
                         {comment.image_path && (
-                          <img
+                          <LazyImage
                             src={`http://localhost:8080/${comment.image_path}`}
                             alt="Comment Image"
                             style={{
@@ -411,6 +412,25 @@ const Thread: NextPage<Props> = (props) => {
         <Footer lang={props.userLang} />
       </Container>
     </>
+  );
+};
+
+interface LazyImageProps {
+  src: string;
+  alt: string;
+  style?: React.CSSProperties;
+}
+
+const LazyImage: React.FC<LazyImageProps> = ({ src, alt, style }) => {
+  const { ref, inView } = useInView({
+    triggerOnce: true, // 一度表示されたら再度トリガーしない
+    threshold: 0.1, // 10%表示されたらトリガー
+  });
+
+  return (
+    <div ref={ref} style={{ minHeight: '300px', ...style }}>
+      {inView && <img src={src} alt={alt} style={{ maxWidth: '100%', maxHeight: '300px', objectFit: 'contain' }} />}
+    </div>
   );
 };
 
