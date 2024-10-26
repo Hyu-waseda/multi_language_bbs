@@ -11,6 +11,7 @@ import { Create_EN } from "../../translate/en/pages/thread/Create_en";
 import { getUserLang } from "../../utils/getUserLang";
 import Footer from "../../components/organisms/Footer/Footer";
 import { useRouter } from "next/router";
+import { toast } from 'react-toastify';
 
 interface Props {
   translation: Translation;
@@ -69,14 +70,19 @@ const ThreadCreate: NextPage<Props> = (props) => {
 
   // フォーム送信時の処理
   const onSubmit = async (data: ThreadFormValues) => {
-    await sendThreadData(
-      data.title,
-      "10",
-      data.author,
-      data.description,
-      props.userLang
-    );
-    reset();
+    try {
+      await sendThreadData(
+        data.title,
+        "10",
+        data.author,
+        data.description,
+        props.userLang
+      );
+      reset();
+      toast.success('Success！');
+    } catch (error) {
+      toast.error('スレッドの作成に失敗しました。Please try again.');
+    }
   };
 
   const router = useRouter();
