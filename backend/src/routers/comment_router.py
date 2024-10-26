@@ -54,8 +54,9 @@ async def create_comment(
                 # 画像サイズが2MBを超える場合、image_pathをNoneに設定
                 image_path = None
             else:
-                # 画像を保存するディレクトリを作成
-                os.makedirs("uploads", exist_ok=True)
+                # スレッドIDごとのディレクトリを作成
+                thread_dir = os.path.join("uploads", thread_id)
+                os.makedirs(thread_dir, exist_ok=True)
                 # ファイル名をサニタイズ
                 sanitized_filename = os.path.basename(image.filename)
                 # ファイル名が255文字を超えないようにトリミング
@@ -64,7 +65,7 @@ async def create_comment(
                     sanitized_filename = sanitized_filename[:max_filename_length]
                 # ユニークなファイル名を生成
                 unique_filename = f"{uuid.uuid4()}_{sanitized_filename}"
-                image_path = f"uploads/{unique_filename}"
+                image_path = os.path.join(thread_dir, unique_filename)
                 with open(image_path, "wb") as buffer:
                     await image.seek(0)  # ファイルポインタを先頭に戻す
                     shutil.copyfileobj(image.file, buffer)
