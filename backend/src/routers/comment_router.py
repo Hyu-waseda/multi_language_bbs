@@ -57,20 +57,10 @@ async def create_comment(
                 # スレッドIDごとのディレクトリを作成
                 thread_dir = os.path.join("uploads", thread_id)
                 os.makedirs(thread_dir, exist_ok=True)
-
-                # 既存のImage_ファイルを確認して次の番号を決定
-                existing_files = os.listdir(thread_dir)
-                image_numbers = [
-                    int(f.split('_')[1].split('.')[0]) for f in existing_files if f.startswith("Image_")
-                ]
-                next_number = max(image_numbers, default=0) + 1
-
-                # ファイル名を「Image_次の番号」に設定
-                file_extension = os.path.splitext(image.filename)[1]
-                sanitized_filename = f"Image_{next_number}{file_extension}"
-
+                # ファイル名から拡張子を取得
+                file_extension = os.path.splitext(image.filename)[1].lower()
                 # ユニークなファイル名を生成
-                unique_filename = f"{uuid.uuid4()}_{sanitized_filename}"
+                unique_filename = f"{uuid.uuid4()}{file_extension}"
                 image_path = os.path.join(thread_dir, unique_filename)
                 with open(image_path, "wb") as buffer:
                     await image.seek(0)  # ファイルポインタを先頭に戻す
