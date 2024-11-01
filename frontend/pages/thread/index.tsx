@@ -300,7 +300,7 @@ const Thread: NextPage<Props> = (props) => {
                 <Grid item xs={12} key={comment.commentID}>
                   <Card className={styles.card}>
                     <CardContent>
-                      {/* コメントのヘッダー（コメ���ト番号、ユーザ��名、作成日） */}
+                      {/* コメントのヘッダー（コメント番号、ユーザ名、作成日） */}
                       <Box
                         className={`${styles.comment_header} ${styles.commentBox}`}
                       >
@@ -330,7 +330,7 @@ const Thread: NextPage<Props> = (props) => {
                         </Typography>
                         {comment.image_path && (
                           <LazyImage
-                            src={`http://localhost:8080/${comment.image_path}`}
+                            src={`${process.env.NEXT_PUBLIC_DOMAIN}/api/${comment.image_path}`}
                             alt="Comment Image"
                             style={{
                               maxWidth: '100%',
