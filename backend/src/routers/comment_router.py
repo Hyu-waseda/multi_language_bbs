@@ -4,7 +4,6 @@ from fastapi import APIRouter, Query, Form, File, UploadFile, HTTPException
 from pydantic import BaseModel
 import os
 import uuid
-import threading
 import time
 import shutil
 
@@ -66,8 +65,6 @@ async def create_comment(
                     await image.seek(0)  # ファイルポインタを先頭に戻す
                     shutil.copyfileobj(image.file, buffer)
 
-                # ファイル削除をバックグラウンドで実行
-                # threading.Thread(target=delete_file_after_delay, args=(image_path,)).start()
 
     # コメントデータの作成
     comment = {
