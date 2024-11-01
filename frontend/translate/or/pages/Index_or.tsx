@@ -15,6 +15,7 @@ export const Index_OR = {
   new_thread: "ନୂତନ ଆଗମନ ସୂତା |",
   update_date: "ଦିନ ଅଦ୍ୟତନ",
   created_date: "ସୃଷ୍ଟି ତାରିଖ",
+  comment_count_thread: "ଜନପ୍ରିୟ ଥ୍ରେଡ୍",
 };
 
 export default Index_OR;

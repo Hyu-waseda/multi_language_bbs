@@ -15,6 +15,7 @@ export const Index_NE = {
   new_thread: "नयाँ आगमन थ्रेड",
   update_date: "अद्यावधिक दिन",
   created_date: "सिर्जना गरिएको मिति",
+  comment_count_thread: "लोकप्रिय थ्रेडहरू",
 };
 
 export default Index_NE;

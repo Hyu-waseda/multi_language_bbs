@@ -15,6 +15,7 @@ export const Index_NY = {
   new_thread: "Ulusi watsopano watsopano",
   update_date: "Sinthani tsiku",
   created_date: "Adapangidwa tsiku",
+  comment_count_thread: "Mitu yotchuka",
 };
 
 export default Index_NY;

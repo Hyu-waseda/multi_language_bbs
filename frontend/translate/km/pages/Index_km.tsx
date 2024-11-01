@@ -16,6 +16,7 @@ export const Index_KM = {
   new_thread: "ខ្សែស្រឡាយមកដល់ថ្មី",
   update_date: "ធ្វើបច្ចុប្បន្នភាពថ្ងៃ",
   created_date: "កាលបរិច្ឆេទបង្កើត",
+  comment_count_thread: "ប្រធានបទពេញនិយម",
 };
 
 export default Index_KM;

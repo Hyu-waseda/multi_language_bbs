@@ -15,6 +15,7 @@ export const Index_MT = {
   new_thread: "Ħajt tal-wasla ġdid",
   update_date: "Aġġornament tal-Jum",
   created_date: "Data maħluqa",
+  comment_count_thread: "Ħjut popolari",
 };
 
 export default Index_MT;

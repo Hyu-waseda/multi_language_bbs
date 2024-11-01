@@ -16,6 +16,7 @@ export const Index_GD = {
   new_thread: "Snàithlean ruighinn ùr",
   update_date: "Latha ùrachaidh",
   created_date: "Ceann-latha Cruthaichte",
+  comment_count_thread: "Snàithleanan mòr-chòrdte",
 };
 
 export default Index_GD;

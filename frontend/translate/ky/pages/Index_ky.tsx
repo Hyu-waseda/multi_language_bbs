@@ -15,6 +15,7 @@ export const Index_KY = {
   new_thread: "Жаңы Келүү жип",
   update_date: "Күндүзү",
   created_date: "Тандалган датасы",
+  comment_count_thread: "Популярдуу темалар",
 };
 
 export default Index_KY;

@@ -15,6 +15,7 @@ export const Index_FA = {
   new_thread: "موضوع جدید ورود",
   update_date: "روز به روزرسانی",
   created_date: "تاریخ ایجاد شده",
+  comment_count_thread: "موضوعات محبوب",
 };
 
 export default Index_FA;

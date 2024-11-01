@@ -16,6 +16,7 @@ export const Index_JW = {
   new_thread: "Thread Kedatangan Baru",
   update_date: "Nganyari dina",
   created_date: "Tanggal Digawe",
+  comment_count_thread: "Benang populer",
 };
 
 export default Index_JW;

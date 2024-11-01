@@ -16,6 +16,7 @@ export const Index_HAW = {
   new_thread: "ʻO ke kaulahao hou",
   update_date: "Hōʻano lā",
   created_date: "Hanaʻia",
+  comment_count_thread: "Nā kumuhana kaulana",
 };
 
 export default Index_HAW;

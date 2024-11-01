@@ -15,6 +15,7 @@ export const Index_HR = {
   new_thread: "Nova nit dolaska",
   update_date: "Dan ažuriranja",
   created_date: "Stvoreni datum",
+  comment_count_thread: "Popularne teme",
 };
 
 export default Index_HR;

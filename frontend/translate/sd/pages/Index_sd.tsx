@@ -15,6 +15,7 @@ export const Index_SD = {
   new_thread: "نئين آمد جو سلسلو",
   update_date: "ڏينهن کي اپڊيٽ ڪيو",
   created_date: "تاريخ",
+  comment_count_thread: "مشهور موضوعون",
 };
 
 export default Index_SD;

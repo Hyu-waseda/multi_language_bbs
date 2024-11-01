@@ -16,6 +16,7 @@ export const Index_TL = {
   new_thread: "Bagong thread ng pagdating",
   update_date: "Araw ng pag -update",
   created_date: "Nilikha na petsa",
+  comment_count_thread: "Mga sikat na thread",
 };
 
 export default Index_TL;

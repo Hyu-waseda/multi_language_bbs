@@ -15,6 +15,7 @@ export const Index_KN = {
   new_thread: "ಹೊಸ ಆಗಮನದ ಥ್ರೆಡ್",
   update_date: "ನವೀಕರಿಸಿ ದಿನ",
   created_date: "ರಚಿಸಿದ ದಿನಾಂಕ",
+  comment_count_thread: "ಜನಪ್ರಿಯ ತಂತಿಗಳು",
 };
 
 export default Index_KN;

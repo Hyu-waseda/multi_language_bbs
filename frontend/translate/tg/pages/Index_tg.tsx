@@ -15,6 +15,7 @@ export const Index_TG = {
   new_thread: "Риштаи нави ташриф",
   update_date: "Рӯзи навсозӣ",
   created_date: "Таърихи офарида",
+  comment_count_thread: "Мавзӯъҳои машҳур",
 };
 
 export default Index_TG;

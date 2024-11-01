@@ -92,6 +92,12 @@ class ThreadApplication:
             else:
                 threads = thread_infrastructure.fetch_threads_by_offset_sorted_by_updated_at(
                     offset=params.offset, count=params.count)
+        elif params.sort == SortOption.comment_count:
+            if params.count == 0:
+                threads = thread_infrastructure.fetch_all_threads_sorted_by_comment_count()
+            else:
+                threads = thread_infrastructure.fetch_threads_by_offset_sorted_by_comment_count(
+                    offset=params.offset, count=params.count)
         res = await self.__format_thread_data(threads=threads, lang=params.lang)
         return res
 

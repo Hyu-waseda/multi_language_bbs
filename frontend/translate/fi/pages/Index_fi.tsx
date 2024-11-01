@@ -15,6 +15,7 @@ export const Index_FI = {
   new_thread: "Uusi saapumislanka",
   update_date: "Päivityspäivä",
   created_date: "Luotu päivämäärä",
+  comment_count_thread: "Suositut ketjut",
 };
 
 export default Index_FI;

@@ -7,4 +7,5 @@ export interface CommentData {
   updatedAt: string;
   likes: number;
   userName: string;
+  image_path: string | null; // Updated to be optional and nullable
 }

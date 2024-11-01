@@ -15,6 +15,7 @@ export const Index_SR = {
   new_thread: "Нова нит доласка",
   update_date: "Дан ажурирања",
   created_date: "Датум креирања",
+  comment_count_thread: "Популарне теме",
 };
 
 export default Index_SR;

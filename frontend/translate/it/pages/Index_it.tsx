@@ -15,6 +15,7 @@ export const Index_IT = {
   new_thread: "Nuovo thread di arrivo",
   update_date: "Giorno di aggiornamento",
   created_date: "Data di Creazione",
+  comment_count_thread: "Discussioni popolari",
 };
 
 export default Index_IT;

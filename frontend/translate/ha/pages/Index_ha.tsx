@@ -15,6 +15,7 @@ export const Index_HA = {
   new_thread: "Sabon zaren da",
   update_date: "Sabunta ranar",
   created_date: "Ranar da aka kirkira",
+  comment_count_thread: "Shahararrun zaren",
 };
 
 export default Index_HA;

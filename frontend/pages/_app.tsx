@@ -5,6 +5,8 @@ import { LanguageContextData } from "../contexts/UserLanguageContext";
 import { useState } from "react";
 import styles from "../styles/app.module.scss";
 import { Box } from "@mui/material";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   return (
@@ -12,6 +14,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
       <Box className={styles.contentWrapper}>
         <Component {...pageProps} />
       </Box>
+      <ToastContainer position="top-right" autoClose={2500} hideProgressBar={false} />
     </div>
   );
 }

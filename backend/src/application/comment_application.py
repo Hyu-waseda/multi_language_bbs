@@ -70,7 +70,8 @@ class CommentApplication:
                 "content": text,
                 "createdAt": comment_data["CreatedAt"],
                 "updatedAt": comment_data["UpdatedAt"],
-                "language": comment_data["Language"]
+                "language": comment_data["Language"],
+                "image_path": comment_data.get("ImagePath")
             }
             res.append(formatted_comment)
 
@@ -97,7 +98,7 @@ class CommentApplication:
         :params: リクエストパラメータ
         :return: 作成されたコメントの情報
         """
-        now = datetime.now(pytz.utc)
+        now = datetime.now(pytz.utc)  # 現在のUTC時間を取得
 
         # 指定された形式にフォーマット
         formatted_time = now.strftime("%Y-%m-%d %H:%M:%S")
@@ -108,13 +109,15 @@ class CommentApplication:
             "content": params["content"],
             "createdAt": formatted_time,
             "updatedAt": formatted_time,
-            "language": params["language"]
+            "language": params["language"],
+            "image_path": params.get("image_path")
         }
-        res = self.comment_infrastructure.create_comment(
-            comment_data=new_comment)
+        print(new_comment)
+        # コメントをデータベースに挿入
+        res = self.comment_infrastructure.create_comment(comment_data=new_comment)
 
         # スレッドの更新日時を更新
         thread_infrastructure = ThreadInfrastructure()
         thread_infrastructure.update_thread_updated_at(
             thread_id=params["thread_id"], updated_at=formatted_time)
-        return res
+        return res  # 作成されたコメントの情報を返す

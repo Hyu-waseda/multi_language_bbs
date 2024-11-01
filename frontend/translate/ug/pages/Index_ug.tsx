@@ -15,6 +15,7 @@ export const Index_UG = {
   new_thread: "يېڭى كەلگەن تېما",
   update_date: "يېڭىلاش كۈنى",
   created_date: "قۇرۇلغان ۋاقىت",
+  comment_count_thread: "ئومۇمىي تېمىلار",
 };
 
 export default Index_UG;

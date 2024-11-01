@@ -66,6 +66,7 @@ export const API = {
     DUMMY: "/dummy",
     THREAD: "/thread",
     COMMENT: "/comment",
+    IMAGE: "/uploads",
   },
 };
 
@@ -236,6 +237,7 @@ export const LANGUAGES = [
 export enum SORT_OPTIONS {
   UPDATED = "updatedAt",
   CREATED = "createdAt",
+  COUNT = "commentCount",
 }
 
 export const COOKIE = {

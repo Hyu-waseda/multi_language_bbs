@@ -16,6 +16,7 @@ export const Index_ML = {
   new_thread: "പുതിയ വരവ് ത്രെഡ്",
   update_date: "അപ്ഡേറ്റുചെയ്യുക ദിവസം",
   created_date: "സൃഷ്ടിച്ച തീയതി",
+  comment_count_thread: "പ്രശസ്തമായ ത്രെഡുകൾ",
 };
 
 export default Index_ML;

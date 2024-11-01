@@ -47,16 +47,23 @@ const ThreadList: React.FC<Props> = (props) => {
 
   const createThreadItem = (thread: ThreadData) => (
     <Link
-      key={`${thread.threadID}-${props.sortOption}`} // key をここに移動
+      key={`${thread.threadID}-${props.sortOption}`}
       href={createUrlToThread(String(thread.threadID))}
       passHref
     >
       <ListItemButton>
         <ListItemText
           primary={thread.title}
-          secondary={`${props.labelForDate}: ${convertUtcToUserTimezone(
-            thread[props.sortOption]
-          )}`}
+          // コメント順スレッド の時のみ、secondaryには作成日時を表示する
+          secondary={
+            props.sortOption === "commentCount"
+              ? `${props.labelForDate}: ${convertUtcToUserTimezone(
+                String(thread["createdAt" as keyof ThreadData])
+              )}`
+              : `${props.labelForDate}: ${convertUtcToUserTimezone(
+                  String(thread[props.sortOption as keyof ThreadData])
+                )}`
+          }
         />
       </ListItemButton>
     </Link>

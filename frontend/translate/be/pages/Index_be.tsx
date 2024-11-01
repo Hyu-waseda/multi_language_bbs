@@ -15,6 +15,7 @@ export const Index_BE = {
   new_thread: "Новая нітка прыбыцця",
   update_date: "Абнаўленне дзень",
   created_date: "Створана дата",
+  comment_count_thread: "Папулярныя тэмы",
 };
 
 export default Index_BE;

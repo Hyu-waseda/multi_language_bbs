@@ -16,6 +16,7 @@ export const Index_VI = {
   new_thread: "Chủ đề mới đến",
   update_date: "Cập nhật ngày",
   created_date: "Ngày tạo ra",
+  comment_count_thread: "Chủ đề phổ biến",
 };
 
 export default Index_VI;

@@ -15,6 +15,7 @@ export const Index_RU = {
   new_thread: "Новое приезд",
   update_date: "Обновление дня",
   created_date: "Дата создания",
+  comment_count_thread: "Популярные темы",
 };
 
 export default Index_RU;

@@ -16,6 +16,7 @@ export const Index_GL = {
   new_thread: "Novo fío de chegada",
   update_date: "Día da actualización",
   created_date: "Data creada",
+  comment_count_thread: "Fíos populares",
 };
 
 export default Index_GL;

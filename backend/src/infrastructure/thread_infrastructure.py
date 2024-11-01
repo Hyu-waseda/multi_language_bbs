@@ -48,6 +48,26 @@ class ThreadInfrastructure:
             raise HTTPException(
                 status_code=500, detail="データベースからスレッドを取得できませんでした。fetch_threads_by_offset_sorted_by_created_at: " + str(e))
         return res
+    
+    def fetch_all_threads_sorted_by_comment_count(self):
+        """
+        全てのスレッドをコメント数の降順で取得する関数
+        :return: スレッドのリスト
+        """
+        
+        query = """
+            SELECT Threads.*, COUNT(Comments.ThreadID) as CommentCount
+            FROM Threads
+            LEFT JOIN Comments ON Threads.ThreadID = Comments.ThreadID
+            GROUP BY Threads.ThreadID
+            ORDER BY CommentCount DESC;
+            """
+        try:
+            res = self.database_manager.execute_query(query)
+        except Exception as e:
+            raise HTTPException(
+                status_code=500, detail="データベースからスレッドを取得できませんでした。fetch_all_threads_sorted_by_comment_count: " + str(e))
+        return res
 
     def fetch_threads_by_offset_sorted_by_updated_at(self, offset: int, count: int):
         """
@@ -143,4 +163,27 @@ class ThreadInfrastructure:
         except Exception as e:
             raise HTTPException(
                 status_code=500, detail="スレッドの作成に失敗しました。create_thread: " + str(e))
+        return res
+
+    def fetch_threads_by_offset_sorted_by_comment_count(self, offset: int, count: int):
+        """
+        指定されたオフセットと件数でスレッドをコメント数の降順で取得する関数
+        :param offset: オフセット値
+        :param count: 取得する件数
+        :return: スレッドのリスト
+        """
+        query = """
+            SELECT Threads.*, COUNT(Comments.ThreadID) as CommentCount
+            FROM Threads
+            LEFT JOIN Comments ON Threads.ThreadID = Comments.ThreadID
+            GROUP BY Threads.ThreadID
+            ORDER BY CommentCount DESC
+            LIMIT %s OFFSET %s;
+        """
+        params = (count, offset)
+        try:
+            res = self.database_manager.execute_query(query, params)
+        except Exception as e:
+            raise HTTPException(
+                status_code=500, detail="データベースからスレッドを取得できませんでした。fetch_threads_by_offset_sorted_by_comment_count: " + str(e))
         return res

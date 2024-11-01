@@ -6,6 +6,7 @@ import {
   fetchNewThreadData,
   fetchThreadCount,
   fetchUpdatedThreadData,
+  fetchCommentCountThreadData,
 } from "../utils/api";
 import { Header } from "../components/organisms/Header/Header";
 import ThreadList from "../components/organisms/ThreadList/ThreadList";
@@ -34,6 +35,7 @@ interface Translation {
   thread_creation_guide: string;
   community_impact_message: string;
   latest_update_thread: string;
+  comment_count_thread: string;
   new_thread: string;
   update_date: string;
   created_date: string;
@@ -77,6 +79,12 @@ const Home: NextPage<Props> = (props) => {
   const [updatedThreads, setUpdatedThreads] = useState<ThreadData[]>([]);
   const [updatedThreadsPage, setUpdatedThreadsPage] = useState<number>(1);
   const [showSkeletonUpdatedThreads, setShowSkeletonUpdatedThreads] =
+    useState<boolean>(false);
+
+  // コメント数順スレッド関連
+  const [commentCountThreads, setCommentCountThreads] = useState<ThreadData[]>([]);
+  const [commentCountThreadsPage, setCommentCountThreadsPage] = useState<number>(1);
+  const [showSkeletonCommentCountThreads, setShowSkeletonCommentCountThreads] =
     useState<boolean>(false);
 
   // 新規作成スレッドの更新
@@ -124,6 +132,29 @@ const Home: NextPage<Props> = (props) => {
 
     fetchData();
   }, [updatedThreadsPage, threadListInfo.perPage, props.userLang]);
+
+  // コメント数順スレッドの更新
+  useEffect(() => {
+    const fetchData = async () => {
+      setShowSkeletonCommentCountThreads(false);
+
+      const skeletonTimer = setTimeout(() => {
+        setShowSkeletonCommentCountThreads(true);
+      }, 500);
+
+      const resultCommentCountThreads: ThreadData[] = await fetchCommentCountThreadData(
+        commentCountThreadsPage,
+        threadListInfo.perPage,
+        true,
+        props.userLang
+      );
+      setCommentCountThreads(resultCommentCountThreads);
+      setShowSkeletonCommentCountThreads(false);
+      clearTimeout(skeletonTimer);
+    };
+
+    fetchData();
+  }, [commentCountThreadsPage, threadListInfo.perPage, props.userLang]);
 
   const router = useRouter();
   const currentPath = router.asPath;
@@ -183,6 +214,19 @@ const Home: NextPage<Props> = (props) => {
           labelForDate={props.translation.created_date}
           lang={props.userLang}
           showSkeleton={showSkeletonNewThreads}
+        />
+        {/* コメント数順スレッド(人気スレッド) */}
+        <ThreadList
+          threads={commentCountThreads}
+          title={props.translation.comment_count_thread}
+          page={commentCountThreadsPage}
+          totalCount={props.threadCount}
+          perPage={threadListInfo.perPage}
+          sortOption={SORT_OPTIONS.COUNT}
+          handlePager={(selectedPage) => setCommentCountThreadsPage(selectedPage)}
+          labelForDate={props.translation.created_date}
+          lang={props.userLang}
+          showSkeleton={showSkeletonCommentCountThreads}
         />
       </Container>
       <Footer lang={props.userLang} />

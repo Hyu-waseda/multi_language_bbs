@@ -15,6 +15,7 @@ export const Index_MN = {
   new_thread: "Ирэх шинэ утас",
   update_date: "Шинэ шинэчлэх",
   created_date: "Үлдсэн хугацаа",
+  comment_count_thread: "Алдартай сэдэв",
 };
 
 export default Index_MN;

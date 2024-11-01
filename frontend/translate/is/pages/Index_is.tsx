@@ -15,6 +15,7 @@ export const Index_IS = {
   new_thread: "Nýr komu þráður",
   update_date: "Uppfærsludagur",
   created_date: "Búið til dagsetningu",
+  comment_count_thread: "Vinsælir þræðir",
 };
 
 export default Index_IS;

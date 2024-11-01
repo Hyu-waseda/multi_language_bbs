@@ -11,8 +11,9 @@ export const Index_EN = {
   thread_creation_guide:
     'Do you want to share something?For example, any topic is welcome, such as "Impressions about books I have read recently" and "best advice for travel planning".Access the thread creation screen from the menu on the upper left and try a new post with your interest.',
   community_impact_message: "Your post blows a new wind into the community.",
-  latest_update_thread: "The latest update thread",
-  new_thread: "New arrival thread",
+  latest_update_thread: "The latest update threads",
+  new_thread: "New arrival threads",
+  comment_count_thread: "Popular threads",
   update_date: "Update day",
   created_date: "Created date",
 };

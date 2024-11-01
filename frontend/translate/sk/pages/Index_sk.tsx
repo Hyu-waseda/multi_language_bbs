@@ -15,6 +15,7 @@ export const Index_SK = {
   new_thread: "Nové vlákno príchodu",
   update_date: "Deň aktualizácie",
   created_date: "Vytvorený dátum",
+  comment_count_thread: "Populárne vlákna",
 };
 
 export default Index_SK;

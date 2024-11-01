@@ -15,6 +15,7 @@ export const Index_ID = {
   new_thread: "Utas kedatangan baru",
   update_date: "Perbarui Hari",
   created_date: "Tanggal yang dibuat",
+  comment_count_thread: "Thread populer",
 };
 
 export default Index_ID;

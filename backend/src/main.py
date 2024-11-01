@@ -1,8 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from src.routers import translation_router, db_test_router, thread_router, comment_router
 
 app = FastAPI()
+
+# "uploads"ディレクトリを"/uploads"パスで提供
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 # アクセス許可する先
 # TODO: 公開ドメインに変更する必要あり
@@ -22,6 +26,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 app.include_router(translation_router.router)
 app.include_router(db_test_router.router)

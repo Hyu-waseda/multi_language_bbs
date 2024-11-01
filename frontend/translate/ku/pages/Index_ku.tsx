@@ -15,6 +15,7 @@ export const Index_KU = {
   new_thread: "Mijara hatina nû",
   update_date: "Roja nûvekirinê",
   created_date: "Dîroka afirandî",
+  comment_count_thread: "Mijara nêzîk",
 };
 
 export default Index_KU;

@@ -16,6 +16,7 @@ export const Index_EU = {
   new_thread: "Sarrera hari berria",
   update_date: "Eguneratu eguna",
   created_date: "Data sortua",
+  comment_count_thread: "Hilo ezagunak",
 };
 
 export default Index_EU;

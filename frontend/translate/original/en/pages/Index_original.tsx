@@ -3,6 +3,7 @@ export const Index_EN = {
   new_thread: "New arrival thread",
   update_date: "Update day",
   created_date: "Created date",
+  comment_count_thread: "Popular threads",
 };
 
 export default Index_EN;

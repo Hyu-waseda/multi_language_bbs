@@ -15,6 +15,7 @@ export const Index_LV = {
   new_thread: "Jauns ierašanās pavediens",
   update_date: "Atjaunināšanas diena",
   created_date: "Izveidots datums",
+  comment_count_thread: "Populāri pavedieni",
 };
 
 export default Index_LV;

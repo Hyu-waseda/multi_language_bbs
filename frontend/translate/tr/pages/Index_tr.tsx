@@ -15,6 +15,7 @@ export const Index_TR = {
   new_thread: "Yeni Varış Konu",
   update_date: "Güncelleme Günü",
   created_date: "Oluşturulan Tarih",
+  comment_count_thread: "Popüler konular",
 };
 
 export default Index_TR;

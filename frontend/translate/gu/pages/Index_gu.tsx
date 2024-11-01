@@ -15,6 +15,7 @@ export const Index_GU = {
   new_thread: "નવો આગમન થ્રેડ",
   update_date: "અપડેટ દિવસ",
   created_date: "બનાવેલી તારીખ",
+  comment_count_thread: "લોકપ્રિય થ્રેડ્સ",
 };
 
 export default Index_GU;

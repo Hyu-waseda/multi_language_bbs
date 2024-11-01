@@ -15,6 +15,7 @@ export const Index_ET = {
   new_thread: "Uus saabumisniit",
   update_date: "Värskenduspäev",
   created_date: "Loodud kuupäev",
+  comment_count_thread: "Populaarsed teemad",
 };
 
 export default Index_ET;

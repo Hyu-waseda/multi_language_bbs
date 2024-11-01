@@ -16,6 +16,7 @@ export const Index_SM = {
   new_thread: "Fou Tautua",
   update_date: "Faafou le aso",
   created_date: "Faia aso",
+  comment_count_thread: "Filo lauiloa",
 };
 
 export default Index_SM;

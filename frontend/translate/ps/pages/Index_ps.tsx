@@ -15,6 +15,7 @@ export const Index_PS = {
   new_thread: "د نوي راتګ موضوع",
   update_date: "تازه ورځ",
   created_date: "جوړه نیټه",
+  comment_count_thread: "مشهور تارونه",
 };
 
 export default Index_PS;

@@ -15,6 +15,7 @@ export const Index_IG = {
   new_thread: "Ihu Ọhụrụ",
   update_date: "Daybọchị Mmelite",
   created_date: "Datebọchị Emepụtara",
+  comment_count_thread: "Ọtụtụ ndị na -ekwu okwu",
 };
 
 export default Index_IG;

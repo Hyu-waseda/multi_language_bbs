@@ -15,6 +15,7 @@ export const Index_KA = {
   new_thread: "ახალი ჩამოსვლის თემა",
   update_date: "განაახლეთ დღე",
   created_date: "შექმნილი თარიღი",
+  comment_count_thread: "პოპულარული თემები",
 };
 
 export default Index_KA;

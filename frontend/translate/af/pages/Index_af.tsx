@@ -15,6 +15,7 @@ export const Index_AF = {
   new_thread: "Nuwe aankomsdraad",
   update_date: "Opdateringsdag",
   created_date: "Geskep datum",
+  comment_count_thread: "Gewilde drade",
 };
 
 export default Index_AF;

@@ -119,20 +119,45 @@ export const sendCommentData = async (
   userId: string,
   userName: string,
   content: string,
-  lang: string
+  lang: string,
+  imageFile?: File
 ) => {
-  const params = {
-    thread_id: threadId,
-    user_id: userId,
-    user_name: userName,
-    content: content,
-    language: lang,
-  };
-  const url = createUrlWithParams(
-    `${baseURLClient}${API.ENDPOINT.COMMENT}`,
-    params
-  );
-  return await sendData(url);
+  const formData = new FormData();
+  formData.append('thread_id', threadId);
+  formData.append('user_id', userId);
+  formData.append('user_name', userName);
+  formData.append('content', content);
+  formData.append('language', lang);
+  if (imageFile) {
+    formData.append('image', imageFile);
+  }
+  
+  // FormDataの中身を出力
+  Array.from(formData.entries()).forEach(([key, value]) => {
+    console.log(`${key}: ${value}`);
+  });
+  const url = `${baseURLClient}${API.ENDPOINT.COMMENT}`;
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      // レスポンスが正常でない場合、エラーメッセージを投げる
+      const errorMessage = `Error: ${response.status} ${response.statusText}`;
+      console.error(errorMessage);
+      throw new Error(errorMessage);
+    }
+
+    // レスポンスの内容をJSONとして取得
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    // ネットワークエラーやその他のエラーをキャッチ
+    console.error('Fetch error:', error);
+    throw error; // 必要に応じてエラーを再スロー
+  }
 };
 
 export const sendThreadData = async (
@@ -154,4 +179,21 @@ export const sendThreadData = async (
     params
   );
   return await sendData(url);
+};
+
+export const fetchCommentCountThreadData = async (
+  page: number,
+  perPage: number,
+  isClient: boolean,
+  lang: string
+) => {
+  const offset: number = (page - 1) * perPage;
+  const base = isClient ? baseURLClient : baseURLServer;
+  const url: string = createUrlWithParams(base + API.ENDPOINT.THREAD, {
+    offset: String(offset),
+    count: String(perPage),
+    sort: "comment_count",
+    lang: lang,
+  });
+  return await fetchData(url);
 };

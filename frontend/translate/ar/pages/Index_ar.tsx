@@ -15,6 +15,7 @@ export const Index_AR = {
   new_thread: "موضوع وصول جديد",
   update_date: "تحديث يوم",
   created_date: "تاريخ الإنشاء",
+  comment_count_thread: "موضوع شعبي",
 };
 
 export default Index_AR;

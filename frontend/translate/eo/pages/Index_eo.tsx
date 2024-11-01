@@ -15,6 +15,7 @@ export const Index_EO = {
   new_thread: "Nova Alvena Fadeno",
   update_date: "Ĝisdatiga Tago",
   created_date: "Kreita Dato",
+  comment_count_thread: "Popularaj fadenoj",
 };
 
 export default Index_EO;

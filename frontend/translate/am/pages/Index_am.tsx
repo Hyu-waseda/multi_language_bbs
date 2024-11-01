@@ -15,6 +15,7 @@ export const Index_AM = {
   new_thread: "አዲስ የመድረሻ ክር ክር",
   update_date: "ቀን ያዘምኑ",
   created_date: "የተፈጠረው ቀን",
+  comment_count_thread: "ታዋቂ ክር",
 };
 
 export default Index_AM;

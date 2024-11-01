@@ -15,6 +15,7 @@ export const Index_FY = {
   new_thread: "Nije oankomstdraad",
   update_date: "Update dei",
   created_date: "Oanmakke datum",
+  comment_count_thread: "Populêre threads",
 };
 
 export default Index_FY;

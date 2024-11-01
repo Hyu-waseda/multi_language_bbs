@@ -16,6 +16,7 @@ export const Index_ES = {
   new_thread: "Nuevo hilo de llegada",
   update_date: "Día de actualización",
   created_date: "Fecha de creación",
+  comment_count_thread: "Hilos populares",
 };
 
 export default Index_ES;

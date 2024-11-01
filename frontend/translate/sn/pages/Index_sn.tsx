@@ -16,6 +16,7 @@ export const Index_SN = {
   new_thread: "Nyowani yekusvika tambo",
   update_date: "Kuwedzeredza Zuva",
   created_date: "Yakagadzirwa zuva",
+  comment_count_thread: "Musoro wenyaya unozivikanwa",
 };
 
 export default Index_SN;

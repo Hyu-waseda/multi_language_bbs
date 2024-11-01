@@ -16,6 +16,7 @@ export const Index_CY = {
   new_thread: "Edau cyrraedd newydd",
   update_date: "Diwrnod Diweddaru",
   created_date: "Dyddiad wedi'i greu",
+  comment_count_thread: "Edafedd poblogaidd",
 };
 
 export default Index_CY;

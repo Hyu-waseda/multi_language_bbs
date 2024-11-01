@@ -15,6 +15,7 @@ export const Index_MR = {
   new_thread: "नवीन आगमन धागा",
   update_date: "दिवस अद्यतनित करा",
   created_date: "तयार तारीख",
+  comment_count_thread: "लोकप्रिय धागे",
 };
 
 export default Index_MR;

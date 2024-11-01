@@ -15,6 +15,7 @@ export const Index_LA = {
   new_thread: "Novum adventu filum",
   update_date: "Update die",
   created_date: "DATE",
+  comment_count_thread: "Filum popularis",
 };
 
 export default Index_LA;

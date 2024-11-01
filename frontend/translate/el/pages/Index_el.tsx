@@ -16,6 +16,7 @@ export const Index_EL = {
   new_thread: "Νέο νήμα άφιξης",
   update_date: "Ημέρα ενημέρωσης",
   created_date: "Δημιουργημένη ημερομηνία",
+  comment_count_thread: "Δημοφιλή νήματα",
 };
 
 export default Index_EL;
