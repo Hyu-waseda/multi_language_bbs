@@ -131,7 +131,7 @@ export const sendCommentData = async (
   if (imageFile) {
     formData.append('image', imageFile);
   }
-  console.log("あファファファファ");
+  
   // FormDataの中身を出力
   Array.from(formData.entries()).forEach(([key, value]) => {
     console.log(`${key}: ${value}`);

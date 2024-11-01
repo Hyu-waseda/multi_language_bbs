@@ -69,7 +69,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   console.log("fetchThreadDetail Duration:", fetchThreadDetailDuration, "ms");
 
   let loadedTranslation: Translation;
-  console.log("あロード中");
+  console.log("ロード中");
   try {
     const translationModule = await import(
       `../../translate/${userLang}/pages/thread/Index_${userLang}.tsx`
