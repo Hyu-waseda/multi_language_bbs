@@ -330,7 +330,7 @@ const Thread: NextPage<Props> = (props) => {
                         </Typography>
                         {comment.image_path && (
                           <LazyImage
-                            src={`${process.env.NEXT_PUBLIC_DOMAIN}/api/${comment.image_path}`}
+                            src={`${process.env.NEXT_PUBLIC_API_BASE_URL_CLIENT}/${comment.image_path}`}
                             alt="Comment Image"
                             style={{
                               maxWidth: '100%',
