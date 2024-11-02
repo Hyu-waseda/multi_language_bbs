@@ -1,6 +1,7 @@
 from typing import Optional
 from src.application.comment_application import CommentApplication
 from fastapi import APIRouter, Query, Form, File, UploadFile, HTTPException
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 import os
 import uuid
@@ -9,6 +10,8 @@ import shutil
 
 router = APIRouter()
 
+# アップロードディレクトリのベースパスを定義
+BASE_DIR = os.path.abspath("uploads")
 
 @router.get("/api/comment")
 async def get_comment(thread_id: Optional[str] = Query(None, description="コメントを取得するスレッドID"),
@@ -78,9 +81,28 @@ async def create_comment(
     created_comment = comment_application.create_comment(comment)
     return created_comment
 
-
 def delete_file_after_delay(file_path, delay=3):
     """指定された遅延時間後にファイルを削除する"""
     time.sleep(delay)
     if os.path.exists(file_path):
         os.remove(file_path)
+
+@router.get("/api/{filename:path}")
+async def get_image(filename: str):
+    # filenameが"uploads/"から始まる場合、それを取り除く
+    if filename.startswith("uploads/"):
+        filename = filename[len("uploads/"):]
+    
+    # ファイルの絶対パスを構築
+    file_path = os.path.abspath(os.path.join(BASE_DIR, filename))
+    
+    # パストラバーサルを防ぐため、ファイルパスがベースディレクトリ内にあることを確認
+    if not file_path.startswith(BASE_DIR):
+        raise HTTPException(status_code=403, detail="アクセスが禁止されています")
+    
+    # ファイルが存在しない場合は404エラーを返す
+    if not os.path.exists(file_path):
+        raise HTTPException(status_code=404, detail="画像が見つかりません")
+    
+    # 画像ファイルを返す
+    return FileResponse(file_path)
