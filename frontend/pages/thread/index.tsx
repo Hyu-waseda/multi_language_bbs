@@ -35,7 +35,6 @@ import ImageIcon from '@mui/icons-material/Image';
 import React, { useRef } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete'; // ゴミ箱アイコンをインポート
 import { useInView } from 'react-intersection-observer';
-
 interface Props {
   threadId: string;
   resultThreadDetail: ThreadData;
@@ -261,6 +260,37 @@ const Thread: NextPage<Props> = (props) => {
     };
   }, [previewUrl]);
 
+  // URLをリンクに変換する関数
+  function linkify(text: string): JSX.Element {
+    const urlPattern = /(https?:\/\/[^\s]+)/g;
+    const parts = text.split(urlPattern);
+
+    return (
+      <>
+        {parts.map((part, index) =>
+          urlPattern.test(part) ? (
+            <a
+              key={index}
+              href={part}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: 'blue', textDecoration: 'underline' }}
+            >
+              {part}
+            </a>
+          ) : (
+            part
+          )
+        )}
+      </>
+    );
+  }
+
+  // コメントを表示する部分でlinkify関数を使用
+  const CommentContent: React.FC<{ content: string }> = ({ content }) => {
+    return <Typography variant="body1">{linkify(content)}</Typography>;
+  };
+
   return (
     <>
       <Meta
@@ -325,9 +355,7 @@ const Thread: NextPage<Props> = (props) => {
                       </Box>
                       {/* コメント本文 */}
                       <Box>
-                        <Typography variant="body1">
-                          <TextWithNewLines text={comment.content} />
-                        </Typography>
+                        <CommentContent content={comment.content} />
                         {comment.image_path && (
                           <LazyImage
                             src={`${process.env.NEXT_PUBLIC_API_BASE_URL_CLIENT}/${comment.image_path}`}
@@ -435,3 +463,4 @@ const LazyImage: React.FC<LazyImageProps> = ({ src, alt, style }) => {
 };
 
 export default Thread;
+
